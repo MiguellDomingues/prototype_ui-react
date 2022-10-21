@@ -1,10 +1,42 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+//import React from "react";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
+import Header from './components/header'
+import Footer from './components/footer'
+
+import ContextBuilder from './features/ContextBuilder'
+
+import './App.css';
+
+function App() {
+
+  return (<>
+      <Container style={ {border: "1px solid #ccc" , maxWidth: "100%", maxHeight: "100%", height: "85%"} }>
+
+        <Row style={ {border: "1px dashed green" , maxWidth: "100%", maxHeight: "25%", height: "15%"} } >
+          <Header/>
+        </Row>
+
+        <Row style={ { border: "1px dashed green" , maxWidth: "100%", maxHeight: "70%", height: "70%",box_sizing: "border-box"} } >
+          <ContextBuilder/>
+        </Row>
+
+        <Row style={ {border: "1px dashed red" , margin:"0px", maxWidth: "100%", maxHeight: "25%", height: "15%"} }>
+          <Footer/>
+        </Row>
+        
+      </Container>
+  </>);
+}
+
+export default App;
+
+
+
+/*
+import { Routes, Route} from "react-router-dom";
 import GuestPage from './pages/guest/GuestPage'
 import UserPage from './pages/user/UserPage'
 import StoreOwnerPage from './pages/storeowner/StoreOwnerPage'
@@ -12,23 +44,57 @@ import AdminPage from './pages/admin/AdminPage'
 import Authenticate from './pages/auth/authenticate'
 import Register from './pages/auth/register'
 import NotFound from './pages/error/notfound'
+import About from './pages/about/About'
+import Profile from './pages/profile/Profile'
 
-import './App.css';
+<Routes>
+            <Route index path="/user/" element={<UserPage/>} />
+            <Route index path="/storeowner/" element={<StoreOwnerPage/>} />
+            <Route index path="/admin/" element={<AdminPage/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/" element={<GuestPage/>} />
+            <Route path="/register" element={<Register/>} />
+            <Route path="/login" element={<Authenticate/>} />
+            <Route path="/about" element={<About/>} />
+            <Route path="*" element={<NotFound/>} />
+        </Routes>*/ 
+
 
 /*
-(routes)
-(public routes props=token)
-(route)()
-
-(/routes)
+<Router>
+      <Routes>
+        <Route index path="/user/:apiKey" element={<UserPage/>} />
+        <Route index path="/storeowner/:apiKey" element={<StoreOwnerPage/>} />
+        <Route index path="/admin/:apiKey" element={<AdminPage/>} />
+        
+        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={<Authenticate/>} />
+        <Route path="/" element={<GuestPage/>} />
+        <Route path="*" element={<NotFound/>} />
+      </Routes>  
+    </Router>
 */
 
-function App() {
 
+  /*
   return (<>
     <Router>
       <Routes>
-        {/*
+        <Route index path="/user/:apiKey" element={<UserPage/>} />
+        <Route index path="/storeowner/:apiKey" element={<StoreOwnerPage/>} />
+        <Route index path="/admin/:apiKey" element={<AdminPage/>} />
+        
+        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={<Authenticate/>} />
+        <Route path="/" element={<GuestPage/>} />
+        <Route path="*" element={<NotFound/>} />
+      </Routes>  
+    </Router>
+  </>);
+  */
+
+
+ /*
         parse the current url
           - read type/key off of params
 
@@ -66,21 +132,7 @@ function App() {
           
         
         Route path="/user/:apiKey" element={<UserPageBuilder props=type,key/>} />
-        */}
-          <Route path="/user/:apiKey" element={<UserPage/>} />
-          <Route path="/storeowner/:apiKey" element={<StoreOwnerPage/>} />
-          <Route path="/admin/:apiKey" element={<AdminPage/>} />
-        {/*public routes*/}
-        <Route path="/register" element={<Register/>} />
-        <Route path="/login" element={<Authenticate/>} />
-        <Route path="/" element={<GuestPage/>} />
-        <Route path="*" element={<NotFound/>} />
-      </Routes>  
-    </Router>
-  </>);
-}
-
-export default App;
+        */
 
 /*
 
