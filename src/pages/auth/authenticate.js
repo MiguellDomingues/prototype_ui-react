@@ -60,7 +60,7 @@ function Authenticate() {
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="UserName: " value={credentials.username} name="username" onChange={onChange}/>
                 <input type="password" placeholder="Password: " value={credentials.password} name="password" onChange={onChange}/>     
-                <button disabled={submitting} name="status">Register</button><br/>
+                <button disabled={submitting} name="status">Log In</button><br/>
             </form>
             {authStatus.status_msg}
             </>)

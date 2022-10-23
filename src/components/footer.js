@@ -1,7 +1,9 @@
+import './footer.css'
+
 function Footer() {
 
     return (
-       <div>  
+       <div className="footer">  
           Hello Footer {Date()}
        </div>);
   }

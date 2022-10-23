@@ -1,20 +1,50 @@
 
-import Footer from '../../components/footer'
-import Header from '../../components/header'
 
-//import Container from 'react-bootstrap/Container';
-//import Row from 'react-bootstrap/Row';
+import { Container, Row, Col } from "react-grid-system";
 
-//import './guestpage.css'
+import './guestpage.css'
 
 function GuestPage() {
 
-    return (
-       <div>
-        <p>Hello Guest Page</p>      
-       </div>);
+    return (<>
+
+    <div className="guestpage_container">
+
+      <div className="left_container">
+          <p>
+            <b>content</b> (fills remaining space)
+          </p>
+          <p>
+            <b>content</b> (fills remaining space)
+          </p>
+          <p>
+            <b>content</b> (fills remaining space)
+          </p>
+          <p>
+            <b>content</b> (fills remaining space)
+          </p>
+      </div>
+      
+      <div className="topright_container">
+        <p>
+          <b>content</b> (fills remaining space)
+        </p>
+        <p>
+          <b>content</b> (fills remaining space)
+        </p>
+        <p>
+          <b>content</b> (fills remaining space)
+        </p>
+        <p>
+          <b>content</b> (fills remaining space)
+        </p>
+      </div>
+
+    </div>
+
+    </> );
   }
   
   export default GuestPage;
 
-  //style={ {backgroundColor: "red", margin:"0px", maxWidth: "100%", maxHeight: "85%", height: "85%"} }
+ 

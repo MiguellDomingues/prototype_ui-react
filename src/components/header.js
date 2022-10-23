@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 //import { useContext } from 'react'
 import { useAuth } from '../features/AuthProvider'
 
+import './header.css'
+
 const Header = (props) => {
 
    const { token, onLogout } = useAuth()
@@ -19,7 +21,7 @@ const Header = (props) => {
    const buildAuthLinks = (type, path) =>{
       return <> <strong>{type} Links: </strong>
          <Link to={path}>{type} Home </Link> | {" "}
-         <Link to="./profile"> Profile </Link> | {" "}
+         <Link to={"./" + type + "/profile"}> Profile </Link> | {" "}
          <Link to="./login" onClick={ onLogout } > Logout </Link> 
       </>
    }
@@ -33,7 +35,7 @@ const Header = (props) => {
    }
 
     return (
-       <div>  
+       <div className="header">  
           {token ? <><p>Hello Auth Header</p></> : <><p>Hello noauth Header</p></>}
           <nav>
             {token ? buildAuthLinks(token.type, token.path) : buildNoAuthLinks() } 

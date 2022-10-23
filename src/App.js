@@ -1,7 +1,9 @@
 //import React from "react";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+//import Container from 'react-bootstrap/Container';
+//import Row from 'react-bootstrap/Row';
+
+import { Container, Row, Col } from "react-grid-system";
 
 import Header from './components/header'
 import Footer from './components/footer'
@@ -13,7 +15,82 @@ import './App.css';
 function App() {
 
   return (<>
-      <Container style={ {border: "1px solid #ccc" , maxWidth: "100%", maxHeight: "100%", height: "85%"} }>
+
+  <div className="container">
+        <div className="row header">
+          <Header/>
+        </div>
+        <div className="row content">
+          <ContextBuilder/>
+        </div>
+        <div className="row footer">
+          <Footer/>
+        </div>
+  </div>
+
+  </>);
+}
+
+export default App;
+
+/*
+
+<Container >
+<Row debug>
+   header
+  </Row> 
+<Row debug>
+  
+        <Col debug>
+          gdfgfdfdgdf
+        </Col>
+          <Col debug>
+            <Row debug>A</Row>
+            <Row debug>B</Row>
+            <Row debug>C</Row>
+            <Row debug>D</Row>
+            <Row debug>E</Row>
+            <Row debug>F</Row>
+            <Row debug>G</Row>
+          </Col>
+        
+      </Row>
+  <Row debug>
+    footer
+  </Row>
+</Container>
+  
+
+<Container>
+        <Row>
+          <Col>
+            <h1>Hello CodeSandbox</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h2>Start editing to see some magic happen!</h2>
+          </Col>
+        </Row>
+        <Row align="stretch" justify="initial">
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+        </Row>
+        <Row align="stretch" justify="initial">
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+          <ColButton label="Hello world" />
+        </Row>
+      </Container>
+*/
+
+
+/*
+
+<Container style={ {border: "1px solid #ccc" , maxWidth: "100%", maxHeight: "100%", height: "85%"} }>
 
         <Row style={ {border: "1px dashed green" , maxWidth: "100%", maxHeight: "25%", height: "15%"} } >
           <Header/>
@@ -26,16 +103,16 @@ function App() {
         <Row style={ {border: "1px dashed red" , margin:"0px", maxWidth: "100%", maxHeight: "25%", height: "15%"} }>
           <Footer/>
         </Row>
-        
-      </Container>
-  </>);
-}
-
-export default App;
 
 
 
-/*
+
+
+
+
+
+
+
 import { Routes, Route} from "react-router-dom";
 import GuestPage from './pages/guest/GuestPage'
 import UserPage from './pages/user/UserPage'

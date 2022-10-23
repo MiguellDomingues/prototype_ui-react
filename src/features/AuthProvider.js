@@ -35,12 +35,8 @@ export const AuthProvider = ({ children }) => {
         return myPromise;
       }
   
-    const handleLogin = async (request, callback) => {
-      //console.log("handle login: ", request, callback)
-      //const token = 
-      await fakeAuth(request).then(setToken, callback)
-      //console.log("after await")
-      //setToken(token);
+    const handleLogin = async (request, callback) => { 
+      await fakeAuth(request).then(setToken, callback)  
     };
   
     const handleLogout = () => {

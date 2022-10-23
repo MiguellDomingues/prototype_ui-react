@@ -1,0 +1,6 @@
+.footer{
+    margin: 5px;
+  padding: 5px;
+  border: 1px dotted grey;
+  flex: 0 1 40px;
+}
