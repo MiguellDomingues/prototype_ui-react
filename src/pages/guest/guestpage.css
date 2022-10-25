@@ -11,32 +11,45 @@
   height: 100%;
   width: 100%;
   
-  
-  
-  
 }
 
-.left_container{
-
-  /*
-  display: flex;
-  flex-flow: column;
-  */
-  
-  flex: 1 1 auto;
-  margin: 2px;
-  padding: 2px;
+.row{
+  padding:5px;
   border: 1px dotted grey;
 }
 
-.topright_container{
+.col{
+  border: 1px dotted grey;
+}
+
+.map_container{
+
+  flex: 1 1 auto;
+}
+
+.right_container{
   display: flex;
   flex-flow: column;
-  flex: 1 1 auto;
-  border: 1px dotted grey;
 
-  margin: 2px;
-  padding: 2px;
-  height: 50%;
+ /*width: 50%;*/
+  flex: 1 1 auto;
+  height: 100%;
 }
+
+/* sub-containers have heights that add up to 100%*/
+.top_child{
+  flex: 1 1 75%;
+  background-color: purple;
+  /* overflow-y is what allows the container to be scrollable */
+  overflow-y: auto;
+}
+
+.bottom_child{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: 1 1 25%;
+  background-color: red;
+}
+
+
 

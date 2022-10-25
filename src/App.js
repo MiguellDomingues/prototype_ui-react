@@ -16,14 +16,14 @@ function App() {
 
   return (<>
 
-  <div className="container">
-        <div className="row header">
+  <div className="app_container">
+        <div className="row header_child">
           <Header/>
         </div>
-        <div className="row content">
+        <div className="row content_child">
           <ContextBuilder/>
         </div>
-        <div className="row footer">
+        <div className="row footer_child">
           <Footer/>
         </div>
   </div>

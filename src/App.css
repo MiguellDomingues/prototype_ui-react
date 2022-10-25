@@ -5,7 +5,7 @@ body {
   
 }
 
-.container {
+.app_container {
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -17,22 +17,17 @@ body {
 }
 
 
-.header {
+.header_child {
   flex: 0 1 auto;
   
 }
 
-.content {
-  display: flex;
-  flex-flow: row;
+.content_child {
+  
   flex: 1 1 auto;
   overflow-y: auto;
-
-  
-  
-  
 }
 
-.footer {
+.footer_child {
   flex: 0 1 40px;
 }
