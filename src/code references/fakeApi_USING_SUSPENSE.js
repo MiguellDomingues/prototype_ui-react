@@ -7,19 +7,51 @@ order of operations is:
 we can also return data from multiple fetches to a single source
 */
 
-export async function  fetchProfileData(succeed, onSuccess , onFail, onFinish) {
+export function fetchProfileData(success) {
 
-  //return a promise object
-  //let postsPromise = await fetchPostsMock(success);
+    //return a promise object
+    let postsPromise = fetchPostsMock(success);
 
-  // can also return data from multiple async operations performed in parallel
-  //return {
-   // posts: postsPromise.posts,
-  //};
+    // can also return data from multiple async operations performed in parallel
+    return {
+      posts: wrapPromise(postsPromise),
+    };
 
-  await fetchPostsMock(succeed).then(onSuccess, onFail).finally(onFinish)  
-
-}
+  }
+  
+  function wrapPromise(promise) {
+    let status = "pending";
+    let result;
+    let suspender = promise.then(
+      (r) => {
+        status = "success";
+        result = r;
+      },
+      (e) => {
+        status = "error";
+        result = e;
+      }
+    );
+    return {
+      read() {
+        if (status === "pending") {
+            //console.log("pending...")
+          throw suspender;
+        } else if (status === "error") {
+           // console.log("err", result)
+           /*  
+                we get around the limitation of Suspense not handling status = error by RETURNING a result and handling it inside the consumer component
+                this means we need to append a boolean flag to return objects which gets consumed by wrapped component
+                otherwise if we throw the result, we need to wrap Suspense inside a class Component that uses onError lifecycle methods
+           */
+          return result;
+        } else if (status === "success") {
+           // console.log("success")
+          return result;
+        }
+      }
+    };
+  }
   
 /*
     mocking an async fetch

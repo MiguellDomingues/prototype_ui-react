@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 
 import './LocationList.css'
 
@@ -6,35 +6,82 @@ import Location from '../components/Location'
 
 import  { fetchProfileData } from '../utils/fakeApi' 
 
-let resource = fetchProfileData(false);
+
 
 const LocationList = () =>{
 
-    const [ reload, setReload ] = useState(false)
+    const [data, setData] = useState([]);
+    const [reason, setReason] = useState();
+    const [loading, setLoading] = useState(true);
 
-    //const {posts, success, reason} = resource.posts.read();
+    const c1 = (r) => {
+        console.log("setposts: ", r)
+        setData(r.posts);    
+    }
+    
+    const c2 = (r) => {
+       console.log("error", r.reason)
+       setReason(r.reason); 
+    }
+    
+    const c3 = (r) => {
+        console.log("setloading")
+        setLoading(false)
+    }
 
-    //const posts = resource.posts.read();
-
-    /*
-        showing how we can force another fetch by pressing a button in the data consumer wrapped in <Suspense> 
-        this is in case the data fails to load; or we want to refresh with new data
-    */
     const handleClick = (e) => {
-        setReload(!reload)
-        resource = fetchProfileData(true);    
+        //setReload(!reload)
+        //resource = fetchProfileData(true);    
+    }
+
+    useEffect( () => {
+        const dataFetch = async () => {
+          fetchProfileData(true, c1, c2, c3)
+        };
+        dataFetch();
+      }, []);
+
+    const render = () =>{
+
+        if(loading){
+            return <>loading....</>
+        }
+
+        if(!reason){
+            return <>
+                {data.map( location => (
+                <div className="list_child col display">           
+                    <Location props={location}/>
+                </div> )) }
+            </>
+        }else{
+            return <p>load fail: {reason}</p>
+        }
     }
 
     return (
     <>
-    <div className="list_container">
-        <Suspense fallback={<h1> Loading profile...</h1>}>
-           <WrappedLocationList props={handleClick}/>
-        </Suspense> 
-    </div>
+        {render()}
     </>
     );  
 }
+
+
+/*
+
+ <div className="list_container">
+        { loading ? (!reason ? 
+            data.map( location => (
+                <div className="list_child col display">           
+                    <Location props={location}/>
+                </div> ))  
+            : <p>load fail: {reason}</p> )
+         : <>loading....</>}    
+    </div>
+
+
+
+
 
 const WrappedLocationList = ( { props }) =>{
 
@@ -45,10 +92,7 @@ const WrappedLocationList = ( { props }) =>{
       return (<>     
         { success ? posts.map( location => (
             <div className="list_child col display">
-                {/*ID: {location.id}<br/>
-                address: {location.address}<br/>
-                x: {location.x}<br/>
-        y: {location.y}<br/>*/}
+               
                 <Location props={location}/>
             </div>
         )) : <>
@@ -58,6 +102,6 @@ const WrappedLocationList = ( { props }) =>{
         </>}
       </>)
 }
-
+*/
 export default LocationList
 
