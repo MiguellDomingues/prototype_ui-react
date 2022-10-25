@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import './LocationList.css'
 
-import Location from '../components/Location'
+import LocationWidget from '../components/LocationWidget'
 
-import  { fetchProfileData } from '../utils/fakeApi' 
+import  { fetchProfileData } from '../utils/fakeApi'
+
+import { InfinitySpin } from 'react-loader-spinner'
 
 
 
@@ -13,18 +15,21 @@ const LocationList = () =>{
     const [data, setData] = useState([]);
     const [reason, setReason] = useState();
     const [loading, setLoading] = useState(true);
+    const [selected, setSelected] = useState(-1);
 
-    const c1 = (r) => {
+    const dataFetchedRef = useRef(false);
+
+    const success = (r) => {
         console.log("setposts: ", r)
         setData(r.posts);    
     }
     
-    const c2 = (r) => {
+    const failure = (r) => {
        console.log("error", r.reason)
        setReason(r.reason); 
     }
     
-    const c3 = (r) => {
+    const finish = (r) => {
         console.log("setloading")
         setLoading(false)
     }
@@ -35,23 +40,34 @@ const LocationList = () =>{
     }
 
     useEffect( () => {
-        const dataFetch = async () => {
-          fetchProfileData(true, c1, c2, c3)
+        if(dataFetchedRef.current) return
+        const dataFetch = async () => {     
+          fetchProfileData(true, success, failure, finish)
         };
+        dataFetchedRef.current = true;
         dataFetch();
+        console.log("useEffect in LL", data)
       }, []);
+
+    const handleSelectedLocation = (e, id) => {
+
+       // console.log("sdfsfds", id, e)
+        setSelected(id)
+    }
 
     const render = () =>{
 
+        console.log("rendering LL......");
+
         if(loading){
-            return <>loading....</>
+            return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
         }
 
         if(!reason){
             return <>
-                {data.map( location => (
-                <div className="list_child col display">           
-                    <Location props={location}/>
+                {data.map( (location,index) => (
+                <div className={"list_child col display" + (location.id === selected ? " selected-bg-col" : " bg-col")}>           
+                   <LocationWidget location={location} selectedHandler={handleSelectedLocation}/>
                 </div> )) }
             </>
         }else{
@@ -59,10 +75,7 @@ const LocationList = () =>{
         }
     }
 
-    return (
-    <>
-        {render()}
-    </>
+    return (<>{render()}</>
     );  
 }
 

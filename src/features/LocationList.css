@@ -1,7 +1,19 @@
+
+/*
 .list_container{
     display: flex;
     flex-flow: column;  
   }
+  */
+
+  .spinner_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+
   
   .list_child{
     flex: 1 1 auto;
@@ -15,11 +27,18 @@
   }
 
   .display{
-    text-align: left;
-    background-color: orange;
+    text-align: left; 
   }
 
   .col{
-  
     border: 1px dotted grey;
   }
+
+  .selected-bg-col{
+      background-color: aqua;
+  }
+
+  .bg-col{
+    
+    background-color: orange;
+}
