@@ -1,4 +1,5 @@
 import LocationList from '../../features/LocationList'
+import MyMap from '../../components/Map.tsx'
 
 import './guestpage.css'
 
@@ -9,18 +10,7 @@ function GuestPage() {
     <div className="guestpage_container">
 
       <div className="map_container col">
-          <p>
-            <b>content</b> (fills remaining space)
-          </p>
-          <p>
-            <b>content</b> (fills remaining space)
-          </p>
-          <p>
-            <b>content</b> (fills remaining space)
-          </p>
-          <p>
-            <b>content</b> (fills remaining space)
-          </p>
+        <MyMap/>
       </div>
       
       <div className="right_container col">

@@ -5,7 +5,6 @@ const LocationWidget = (props) =>{
 
     return (
         <li onClick={ (e) => {props.selectedHandler(e, id)} }>
-            {console.log("rendering L......")}
         ID: {id}<br/>
         address: {address}<br/>
         x: {x}<br/>

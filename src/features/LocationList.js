@@ -1,22 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 
 import './LocationList.css'
-
 import LocationWidget from '../components/LocationWidget'
-
 import  { fetchProfileData } from '../utils/fakeApi'
-
 import { InfinitySpin } from 'react-loader-spinner'
-
-
 
 const LocationList = () =>{
 
+    /*  fetched data */
     const [data, setData] = useState([]);
     const [reason, setReason] = useState();
+
+    /* UI state */
     const [loading, setLoading] = useState(true);
     const [selected, setSelected] = useState(-1);
 
+    /* prevent the double useEffect call/double fetch() on first render */
     const dataFetchedRef = useRef(false);
 
     const success = (r) => {
@@ -34,11 +33,6 @@ const LocationList = () =>{
         setLoading(false)
     }
 
-    const handleClick = (e) => {
-        //setReload(!reload)
-        //resource = fetchProfileData(true);    
-    }
-
     useEffect( () => {
         if(dataFetchedRef.current) return
         const dataFetch = async () => {     
@@ -47,17 +41,13 @@ const LocationList = () =>{
         dataFetchedRef.current = true;
         dataFetch();
         console.log("useEffect in LL", data)
-      }, []);
+      }, );
 
     const handleSelectedLocation = (e, id) => {
-
-       // console.log("sdfsfds", id, e)
         setSelected(id)
     }
 
     const render = () =>{
-
-        console.log("rendering LL......");
 
         if(loading){
             return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>

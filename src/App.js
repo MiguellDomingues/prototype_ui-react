@@ -8,6 +8,8 @@ import { Container, Row, Col } from "react-grid-system";
 import Header from './components/header'
 import Footer from './components/footer'
 
+
+
 import ContextBuilder from './features/ContextBuilder'
 
 import './App.css';
@@ -21,7 +23,7 @@ function App() {
           <Header/>
         </div>
         <div className="row content_child">
-          <ContextBuilder/>
+          <ContextBuilder/>    
         </div>
         <div className="row footer_child">
           <Footer/>
