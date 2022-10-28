@@ -10,50 +10,48 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         return <h1>{status}</h1>;
       };
       
-      const MyMap = () => {
+      const MyMap = (props) => {
 
-        const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([
-          {id:0, LatLng: { lat: -33.919617760254686, lng: -0.7844604492}, data: "mydata1" },
-          
-          {id: 1, LatLng: { lat: -36.919617760254686, lng: -0.7844604492}, data: "mydata2" },    
-          {id: 2, LatLng: { lat: -39.919617760254686, lng: -0.7844604492}, data: "mydata3" },    
-        ]);
-        const [zoom, setZoom] = React.useState(3); // initial zoom
-        const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
-          lat: 0,
-          lng: 0,
+        console.log("Map start: props: ", props)
+
+        const clicks = !props.data ? [] : props.data.posts;
+        const {selectedLocationHandler, selected} = props
+        /* */
+       // const selectedCenter = isNaN(selected) || !props.data.posts ? {lat: 0, lng: 0} : props.data.posts.find( item => item.id === selected).LatLng
+
+       // console.log("cen: ", selectedCenter)
+
+       const [zoom, setZoom] = React.useState(4); // initial zoom
+
+      const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
+          lat: 45.91961776025469,
+          lng: -0.7844604492,
         });
-
+        
         const onMarkerClick = (iw: google.maps.InfoWindow, e: google.maps.MapMouseEvent, id: Number) => {
 
-          console.log("onmarkerclick: ", iw, e, id)
-
-          //iw.setContent("ssfdsfsdfds")
+          //console.log("onmarkerclick: ", iw, e, id)
 
           const {lat, lng} = e.latLng.toJSON()
 
+          console.log("lat: ", lat, " lng: ", lng)
           setCenter({lat: lat, lng: lng})
 
-          //console.log("clicks: ", clicks)
-          //setClicks([...clicks, e.latLng!]);
-          
-          //setZoom(15)
+          selectedLocationHandler(null, id)
+
+          setZoom(4)
         };
       
         const onClick = (e: google.maps.MapMouseEvent) => {
 
           const {lat, lng} = e.latLng.toJSON()
-
-          console.log("map onClick: ", e)
-
-          //console.log("clicks: ", clicks)
           //setClicks([...clicks, e.latLng!]);
           //setCenter({lat: lat, lng: lng})
           //setZoom(15)
         };
       
         const onIdle = (m: google.maps.Map) => {
-          console.log("onIdle");
+          //console.log("onIdle");
           setZoom(m.getZoom()!);
           setCenter(m.getCenter()!.toJSON());
         };
@@ -107,8 +105,6 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         );
         */
 
-        
-      
         return (
           <div style={{ display: "flex", height: "100%" }}>
             <Wrapper apiKey={"AIzaSyDqveqKgLlKG9gO1NCrs-iHmSjx10TUTkE"} render={render}>
@@ -122,17 +118,18 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
                 {clicks.map((data, i) => (
                   <Marker                               /* instantiate a new marker object for each entry in the list */
                     key={data.id}
-                    id={data.id} 
+                    id={data.id}
+                    selected={data.id === selected} 
                     position={data.LatLng}
                     title={"marker title"} 
                     label={i.toString()}
-                    content={data.data}
+                    content={data.info}
                     onClick={onMarkerClick}              
                   />
                 ))}
               </Map>
             </Wrapper>
-            {/* Basic form for controlling center and zoom of map. */}
+
             {/*form*/}
           </div>
         );
@@ -159,7 +156,8 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         /* when a markers info window is open, close the current open info window */
         const toggleInfoWindow = (iw: google.maps.InfoWindow, m: google.maps.Marker) =>{
 
-          //console.log("hello info window: ", iw, m)
+          
+          console.log("hello info window: ", iw, m)
 
           /* if there exists an openInfoWindow, close it..*/
           if(openInfoWindow){
@@ -197,7 +195,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
             }
       
             if (onIdle) {
-              //map.addListener("idle", () => onIdle(map));
+              map.addListener("idle", () => onIdle(map));
             }
           }
         }, [map, onClick, onIdle]);
@@ -216,13 +214,6 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         );
       };
 
-      /*
- id={data.id} 
-                    position={data.LatLng}
-                    title={"marker title"} 
-                    label={i.toString()}
-                    content={data.data}
-      */
 /*
       interface MarkerProps extends google.maps.MarkerOptions {
         
@@ -235,11 +226,15 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
       const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindow>();
 
-      console.log("marker: ", options)
+      //.log("marker: ", options)
 
-      const { map, content, id, toggleInfoWindow } = options;
+      const { map, content, id, selected, toggleInfoWindow } = options;
+
+      //console.log("marker selected: ", selected)
 
         React.useEffect(() => {
+
+          //console.log("marker useeffect: ", id)
 
           if (!marker) {
             const myMarker = new google.maps.Marker({title: options.title});
@@ -247,6 +242,11 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
             
             setInfoWindow(infowindow)
             setMarker(myMarker);
+
+            if(selected){
+              toggleInfoWindow(infoWindow, marker)
+            }
+            
           }
       
           // remove marker from map on unmount
@@ -271,110 +271,25 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
             marker.setOptions(options);
 
             marker.addListener("click", (e) => {
-
-              /*
-              infoWindow.open({
-                anchor: marker,
-                map: options.map,
-              });
-              */
-              
-              options.onClick(infoWindow, e)
-              toggleInfoWindow(infoWindow, marker, id)
+              options.onClick(infoWindow, e, id)
+              toggleInfoWindow(infoWindow, marker)
             });
 
-          }
-            
-          
+            /* when a marker is selected; either by clicking on it on the map or clicking the cooresponding list widget */
+            if(selected){
+              toggleInfoWindow(infoWindow, marker) // close the current info window (if open) and open this one
+              map.setCenter(marker.getPosition()) // and center the map on the marker
+            }
+          }      
         }, [marker, options, infoWindow]);
       
         return null;
       };
 
-      /*
-      const InfoWindow: React.FC<google.maps.InfoWindowOptions> = (options) => {
-
-        //const [marker, setMarker] = React.useState<google.maps.Marker>();
-        const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindow>();
-        
-          React.useEffect(() => {
-  
-            //console.log("marker // useEffect 221: ", options)
-            //console.log("marker 222 before: ", marker)
-  
-            if (!infoWindow) {
-
-              const myMarker = new google.maps.Marker();
-  
-              //console.log("marker 227: ", marker)
-  
-              
-  
-              setMarker(myMarker);
-            }
-  
-            //console.log("marker 237: ", marker)
-        
-            // remove marker from map on unmount
-            return () => {
-              if (marker) {
-                marker.setMap(null);
-              }
-            };
-          }, [marker]);
-        
-          React.useEffect(() => {
-  
-            //console.log("marker // useEffect 238: ")
-  
-            if (marker) {
-              //console.log("marker 247 before setOptions: ", marker, options)
-              marker.setOptions(options);
-              //console.log("marker 249 after setOptions: ", marker, options)
-  
-              const infowindow = new google.maps.InfoWindow({
-                content: "aaaaaa",
-                ariaLabel: "Uluru",
-              });          
-  
-              marker.addListener("click", () => {
-                
-                infowindow.open({
-                  anchor: marker,
-                  map: options.map,
-                });
-              });
-  
-              infowindow.close();
-  
-              //console.log("marker 249 after setOptions: ", marker, options)
-  
-            }
-          }, [marker, options]);
-        
-          return null;
-        };
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
       const deepCompareEqualsForMaps = createCustomEqual(
         (deepEqual) => (a: any, b: any) => {
 
-          console.log("188")
+         // console.log("188")
 
           if (
             isLatLngLiteral(a) ||

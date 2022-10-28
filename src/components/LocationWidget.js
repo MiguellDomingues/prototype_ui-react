@@ -1,14 +1,16 @@
 
 const LocationWidget = (props) =>{
 
-    const {id, address, x, y} = props.location
+    const {id, address, info} = props.location
+    const {lat, lng} = props.location.LatLng
 
     return (
         <li onClick={ (e) => {props.selectedHandler(e, id)} }>
         ID: {id}<br/>
         address: {address}<br/>
-        x: {x}<br/>
-        y: {y}<br/>  
+        lat: {lat}<br/>
+        lng: {lng}<br/> 
+        info: {info} <br/>
         </li>
     );
 

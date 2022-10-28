@@ -24,6 +24,11 @@ export async function  fetchProfileData(succeed, onSuccess , onFail, onFinish) {
 /*
     mocking an async fetch
     returns a resolved() or rejected() promise with object containing relevant data
+
+    id:0, LatLng: { lat: -33.919617760254686, lng: -0.7844604492}, data: "mydata1" },
+          
+          {id: 1, LatLng: { lat: -36.919617760254686, lng: -0.7844604492}, data: "mydata2" },    
+          {id: 2, LatLng: { lat: -39.919617760254686, lng: -0.7844604492}, data: "mydata3" },  
 */
   function fetchPostsMock(success) {
     console.log("fetch posts...");
@@ -38,20 +43,20 @@ export async function  fetchProfileData(succeed, onSuccess , onFail, onFinish) {
             {
                 id: 0,
                 address: "abc ave 123456",
-                x: 34.234234,
-                y: 33.2342343,
+                LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+                info: "some info stuffs 0"
             },
             {
                 id: 1,
                 address: "abcd ave 123456",
-                x: 35.234234,
-                y: 36.2342343,
+                LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+                info: "some info stuffs 1" 
             },
             {
                 id: 2,
                 address: "abcdef ave 123456",
-                x: 37.234234,
-                y: 38.2342343,
+                LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+                info: "some info stuffs 2"
             }
             ]});}
 

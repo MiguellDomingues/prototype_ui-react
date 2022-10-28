@@ -2,66 +2,34 @@ import { useState, useEffect, useRef } from 'react'
 
 import './LocationList.css'
 import LocationWidget from '../components/LocationWidget'
-import  { fetchProfileData } from '../utils/fakeApi'
 import { InfinitySpin } from 'react-loader-spinner'
 
-const LocationList = () =>{
+const LocationList = ( props ) =>{
 
-    /*  fetched data */
-    const [data, setData] = useState([]);
-    const [reason, setReason] = useState();
+   // console.log("LL start: props: ", props)
 
-    /* UI state */
-    const [loading, setLoading] = useState(true);
-    const [selected, setSelected] = useState(-1);
-
-    /* prevent the double useEffect call/double fetch() on first render */
-    const dataFetchedRef = useRef(false);
-
-    const success = (r) => {
-        console.log("setposts: ", r)
-        setData(r.posts);    
-    }
-    
-    const failure = (r) => {
-       console.log("error", r.reason)
-       setReason(r.reason); 
-    }
-    
-    const finish = (r) => {
-        console.log("setloading")
-        setLoading(false)
+    if(props.isLoading){
+        return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
 
-    useEffect( () => {
-        if(dataFetchedRef.current) return
-        const dataFetch = async () => {     
-          fetchProfileData(true, success, failure, finish)
-        };
-        dataFetchedRef.current = true;
-        dataFetch();
-        console.log("useEffect in LL", data)
-      }, );
-
-    const handleSelectedLocation = (e, id) => {
-        setSelected(id)
-    }
+    const locations = props.data.posts 
+    const {success, reason } = props.data
+    const {selected} = props
+    const selectedLocationHandler = props.selectedLocationHandler
 
     const render = () =>{
 
-        if(loading){
-            return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
-        }
+        //console.log("LL data: ", locations, success, reason, selected)
 
-        if(!reason){
+        if(success){
             return <>
-                {data.map( (location,index) => (
-                <div className={"list_child col display" + (location.id === selected ? " selected-bg-col" : " bg-col")}>           
-                   <LocationWidget location={location} selectedHandler={handleSelectedLocation}/>
+                {locations.map( (location) => (
+                <div className={"list_child col display" + (!isNaN(selected) && selected === location.id ? " selected-bg-col" : " bg-col")}>           
+                   <LocationWidget key={location.id} location={location} selectedHandler={selectedLocationHandler}/>
                 </div> )) }
             </>
         }else{
-            return <p>load fail: {reason}</p>
+            return <p>load fail: {reason ? reason : <>unknown reason</>}</p>
         }
     }
 
@@ -69,42 +37,5 @@ const LocationList = () =>{
     );  
 }
 
-
-/*
-
- <div className="list_container">
-        { loading ? (!reason ? 
-            data.map( location => (
-                <div className="list_child col display">           
-                    <Location props={location}/>
-                </div> ))  
-            : <p>load fail: {reason}</p> )
-         : <>loading....</>}    
-    </div>
-
-
-
-
-
-const WrappedLocationList = ( { props }) =>{
-
-    console.log("inner: ", resource)
-
-    const {success, posts, reason} = resource.posts.read();
-
-      return (<>     
-        { success ? posts.map( location => (
-            <div className="list_child col display">
-               
-                <Location props={location}/>
-            </div>
-        )) : <>
-            <h1>{reason}</h1>
-            <button onClick={props} name="status">Reload</button><br/>
-                
-        </>}
-      </>)
-}
-*/
 export default LocationList
 
