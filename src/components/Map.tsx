@@ -1,5 +1,23 @@
 //AIzaSyDqveqKgLlKG9gO1NCrs-iHmSjx10TUTkE
 
+/*
+todo:
+- make the map move and pan smoothly when switching locations
+  -- right now it just jarringly moves suddenly
+
+- save the zoom levels between re-renders
+  -- save it on the map object
+
+  - make selected icons glow or something?
+  - make icons with appointments distinguishable
+
+  - add a custom loading screen?
+    -- should probabley be added to the entire screen
+
+  - look into why the right side of the map is getting pushed out
+    -- prob the flexbox css on the right container
+*/
+
 import * as React from "react";
 
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
@@ -38,6 +56,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
           setCenter({lat: lat, lng: lng})
 
           selectedLocationHandler(null, id)
+          
 
           setZoom(4)
         };
@@ -106,7 +125,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         */
 
         return (
-          <div style={{ display: "flex", height: "100%" }}>
+          <div style={{ display: "flex", height: "100%" , width: "100%"}}>
             <Wrapper apiKey={"AIzaSyDqveqKgLlKG9gO1NCrs-iHmSjx10TUTkE"} render={render}>
               <Map
                 center={center}

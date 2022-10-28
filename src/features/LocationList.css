@@ -33,12 +33,3 @@
   .col{
     border: 1px dotted grey;
   }
-
-  .selected-bg-col{
-      background-color: aqua;
-  }
-
-  .bg-col{
-    
-    background-color: orange;
-}

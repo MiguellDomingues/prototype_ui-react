@@ -24,8 +24,12 @@ const LocationList = ( props ) =>{
         if(success){
             return <>
                 {locations.map( (location) => (
-                <div className={"list_child col display" + (!isNaN(selected) && selected === location.id ? " selected-bg-col" : " bg-col")}>           
-                   <LocationWidget key={location.id} location={location} selectedHandler={selectedLocationHandler}/>
+                <div className={"list_child col display"}>           
+                   <LocationWidget 
+                        key={location.id}
+                        selected={selected} 
+                        location={location} 
+                        selectedHandler={selectedLocationHandler}/>
                 </div> )) }
             </>
         }else{

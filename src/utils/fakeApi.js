@@ -24,11 +24,6 @@ export async function  fetchProfileData(succeed, onSuccess , onFail, onFinish) {
 /*
     mocking an async fetch
     returns a resolved() or rejected() promise with object containing relevant data
-
-    id:0, LatLng: { lat: -33.919617760254686, lng: -0.7844604492}, data: "mydata1" },
-          
-          {id: 1, LatLng: { lat: -36.919617760254686, lng: -0.7844604492}, data: "mydata2" },    
-          {id: 2, LatLng: { lat: -39.919617760254686, lng: -0.7844604492}, data: "mydata3" },  
 */
   function fetchPostsMock(success) {
     console.log("fetch posts...");
@@ -44,19 +39,22 @@ export async function  fetchProfileData(succeed, onSuccess , onFail, onFinish) {
                 id: 0,
                 address: "abc ave 123456",
                 LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
-                info: "some info stuffs 0"
+                info: "some info stuffs 0",
+                icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
             },
             {
                 id: 1,
                 address: "abcd ave 123456",
                 LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 1" 
+                info: "some info stuffs 1",
+                icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
             },
             {
                 id: 2,
                 address: "abcdef ave 123456",
                 LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 2"
+                info: "some info stuffs 2",
+                icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
             }
             ]});}
 
