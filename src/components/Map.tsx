@@ -12,20 +12,43 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
       
       const MyMap = () => {
 
-        const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+        const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([
+          {id:0, LatLng: { lat: -33.919617760254686, lng: -0.7844604492}, data: "mydata1" },
+          
+          {id: 1, LatLng: { lat: -36.919617760254686, lng: -0.7844604492}, data: "mydata2" },    
+          {id: 2, LatLng: { lat: -39.919617760254686, lng: -0.7844604492}, data: "mydata3" },    
+        ]);
         const [zoom, setZoom] = React.useState(3); // initial zoom
         const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
           lat: 0,
           lng: 0,
         });
+
+        const onMarkerClick = (iw: google.maps.InfoWindow, e: google.maps.MapMouseEvent, id: Number) => {
+
+          console.log("onmarkerclick: ", iw, e, id)
+
+          //iw.setContent("ssfdsfsdfds")
+
+          const {lat, lng} = e.latLng.toJSON()
+
+          setCenter({lat: lat, lng: lng})
+
+          //console.log("clicks: ", clicks)
+          //setClicks([...clicks, e.latLng!]);
+          
+          //setZoom(15)
+        };
       
         const onClick = (e: google.maps.MapMouseEvent) => {
 
           const {lat, lng} = e.latLng.toJSON()
 
-          console.log("clicks: ", clicks)
-          setClicks([...clicks, e.latLng!]);
-          setCenter({lat: lat, lng: lng})
+          console.log("map onClick: ", e)
+
+          //console.log("clicks: ", clicks)
+          //setClicks([...clicks, e.latLng!]);
+          //setCenter({lat: lat, lng: lng})
           //setZoom(15)
         };
       
@@ -35,6 +58,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
           setCenter(m.getCenter()!.toJSON());
         };
       
+        /*
         const form = (
           <div
             style={{
@@ -76,29 +100,40 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
             />
             <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
             {clicks.map((latLng, i) => (
-              <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
+              <pre key={i}><></>{ JSON.stringify(latLng.toJSON(), null, 2)}</pre>
             ))}
             <button onClick={() => setClicks([])}>Clear</button>
           </div>
         );
+        */
+
+        
       
         return (
           <div style={{ display: "flex", height: "100%" }}>
             <Wrapper apiKey={"AIzaSyDqveqKgLlKG9gO1NCrs-iHmSjx10TUTkE"} render={render}>
               <Map
                 center={center}
-                onClick={onClick}
-                onIdle={onIdle}
+                //onClick={onClick}
+                //onIdle={onIdle}
                 zoom={zoom}
                 style={{ flexGrow: "1", height: "100%" }}
               >
-                {clicks.map((latLng, i) => (
-                  <Marker key={i} position={latLng} />
+                {clicks.map((data, i) => (
+                  <Marker                               /* instantiate a new marker object for each entry in the list */
+                    key={data.id}
+                    id={data.id} 
+                    position={data.LatLng}
+                    title={"marker title"} 
+                    label={i.toString()}
+                    content={data.data}
+                    onClick={onMarkerClick}              
+                  />
                 ))}
               </Map>
             </Wrapper>
             {/* Basic form for controlling center and zoom of map. */}
-            {form}
+            {/*form*/}
           </div>
         );
       };
@@ -119,8 +154,23 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         const ref = React.useRef<HTMLDivElement>(null);
         const [map, setMap] = React.useState<google.maps.Map>();
 
-        console.log("119 Map")
-      
+        const [openInfoWindow, setOpenInfoWindow] = React.useState<google.maps.InfoWindow>();
+        
+        /* when a markers info window is open, close the current open info window */
+        const toggleInfoWindow = (iw: google.maps.InfoWindow, m: google.maps.Marker) =>{
+
+          //console.log("hello info window: ", iw, m)
+
+          /* if there exists an openInfoWindow, close it..*/
+          if(openInfoWindow){
+            openInfoWindow.close()
+          }
+
+          /* open the passed in infoWindow and set it to the component */
+          iw.open({anchor: m, map: map});
+          setOpenInfoWindow(iw)    
+        }
+
         React.useEffect(() => {
           if (ref.current && !map) {
             setMap(new window.google.maps.Map(ref.current, {}));
@@ -136,18 +186,18 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         }, [map, options]);
       
         React.useEffect(() => {
-          console.log("Map useffect")
+          
           if (map) {
-            ["click", "idle"].forEach((eventName) =>
+            ["click", "idle"].forEach( (eventName) => {
               google.maps.event.clearListeners(map, eventName)
-            );
+          });
       
             if (onClick) {
-              map.addListener("click", onClick);
+              //map.addListener("click", onClick);
             }
       
             if (onIdle) {
-              map.addListener("idle", () => onIdle(map));
+              //map.addListener("idle", () => onIdle(map));
             }
           }
         }, [map, onClick, onIdle]);
@@ -159,39 +209,167 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
               if (React.isValidElement(child)) {
                 // set the map prop on the child component
                 // @ts-ignore
-                return React.cloneElement(child, { map });
+                return React.cloneElement(child, { map, toggleInfoWindow });
               }
             })}
           </>
         );
       };
-      
+
+      /*
+ id={data.id} 
+                    position={data.LatLng}
+                    title={"marker title"} 
+                    label={i.toString()}
+                    content={data.data}
+      */
+/*
+      interface MarkerProps extends google.maps.MarkerOptions {
+        
+        onClick?: (e: google.maps.MapMouseEvent) => void;
+      }
+  */    
       const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
-        const [marker, setMarker] = React.useState<google.maps.Marker>();
-      
-        console.log("168 Marker: ", options)
+
+      const [marker, setMarker] = React.useState<google.maps.Marker>();
+
+      const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindow>();
+
+      console.log("marker: ", options)
+
+      const { map, content, id, toggleInfoWindow } = options;
 
         React.useEffect(() => {
+
           if (!marker) {
-            setMarker(new google.maps.Marker());
+            const myMarker = new google.maps.Marker({title: options.title});
+            const infowindow = new google.maps.InfoWindow({content: content}); 
+            
+            setInfoWindow(infowindow)
+            setMarker(myMarker);
           }
       
           // remove marker from map on unmount
           return () => {
             if (marker) {
+              //console.log("marker removal")
               marker.setMap(null);
+              
             }
           };
-        }, [marker]);
+        }, [marker, infoWindow]);
+
       
-        React.useEffect(() => {
+        React.useEffect(
+          () => {
           if (marker) {
+
+            ["click"].forEach( (eventName) => {
+                google.maps.event.clearListeners(marker, eventName)
+            });
+
             marker.setOptions(options);
+
+            marker.addListener("click", (e) => {
+
+              /*
+              infoWindow.open({
+                anchor: marker,
+                map: options.map,
+              });
+              */
+              
+              options.onClick(infoWindow, e)
+              toggleInfoWindow(infoWindow, marker, id)
+            });
+
           }
-        }, [marker, options]);
+            
+          
+        }, [marker, options, infoWindow]);
       
         return null;
       };
+
+      /*
+      const InfoWindow: React.FC<google.maps.InfoWindowOptions> = (options) => {
+
+        //const [marker, setMarker] = React.useState<google.maps.Marker>();
+        const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindow>();
+        
+          React.useEffect(() => {
+  
+            //console.log("marker // useEffect 221: ", options)
+            //console.log("marker 222 before: ", marker)
+  
+            if (!infoWindow) {
+
+              const myMarker = new google.maps.Marker();
+  
+              //console.log("marker 227: ", marker)
+  
+              
+  
+              setMarker(myMarker);
+            }
+  
+            //console.log("marker 237: ", marker)
+        
+            // remove marker from map on unmount
+            return () => {
+              if (marker) {
+                marker.setMap(null);
+              }
+            };
+          }, [marker]);
+        
+          React.useEffect(() => {
+  
+            //console.log("marker // useEffect 238: ")
+  
+            if (marker) {
+              //console.log("marker 247 before setOptions: ", marker, options)
+              marker.setOptions(options);
+              //console.log("marker 249 after setOptions: ", marker, options)
+  
+              const infowindow = new google.maps.InfoWindow({
+                content: "aaaaaa",
+                ariaLabel: "Uluru",
+              });          
+  
+              marker.addListener("click", () => {
+                
+                infowindow.open({
+                  anchor: marker,
+                  map: options.map,
+                });
+              });
+  
+              infowindow.close();
+  
+              //console.log("marker 249 after setOptions: ", marker, options)
+  
+            }
+          }, [marker, options]);
+        
+          return null;
+        };
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
       
       const deepCompareEqualsForMaps = createCustomEqual(
         (deepEqual) => (a: any, b: any) => {
