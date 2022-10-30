@@ -1,48 +1,40 @@
 import React from "react";
+import  { API } from '../utils/fakeApi'
+import  { useAuth } from './AuthProvider'
 
 const DataContext = React.createContext(null);
 
 export const DataProvider = ({ children }) => {
 
-  
+  const { token } = useAuth()
 
+  // the only way i can really put data in here is to make sure it does not redraw
+  // entire UI when a single part of the UI changes
+
+  //because this wraps the entire app, any updates will redraw ENTIRE UI\
+  // the reason I set this is to prevent needing to RELOAD DATA when user navigates
+  // diff pages of app
+  // add a check to see if data was fetched already (or some time elapased, to refresh)
+  // prevents needing to reload as i navigate
+  
   const [data, setData] = React.useState({});
 
+  //return a promise object
+    //let postsPromise = await fetchPostsMock(success);
+  
+    // can also return data from multiple async operations performed in parallel
+    //return {
+     // posts: postsPromise.posts,
+    //};
 
-  const fakeFetch = (request) => {
-    const success = true
-    const myPromise = new Promise( (resolve, reject) => {
-      setTimeout(() => {
-        if(success){
-          return resolve({type: "noauth", data: [{address: "abc", geocoords: {x: 34.2342423, y: 33.4234234234}}] }) 
-        }else{
-          return reject({reason: "server down"})  
-        }
-      }, 1000);
-    });
-    return myPromise;
+  const handleFetch = async (onSuccess , onFail, onFinish) => {
+    console.log("DataProvider/fetchUserPageData: ", token)
+    await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)  
   }
-
-
-
-  const handleGetData = async (request, callback) => { 
-    await fakeFetch(request).then(setData, callback)
-    
-    /*
-    const guestData = [
-      {address: "abc", geocoords: {x: 34.2342423, y: 33.4234234234} },
-      {address: "def", geocoords: {x: 34.2342423, y: 33.4234234234} },
-      {address: "ghi", geocoords: {x: 34.2342423, y: 33.4234234234} },
-      {address: "jkl", geocoords: {x: 34.2342423, y: 33.4234234234} },
-      {address: "mno", geocoords: {x: 34.2342423, y: 33.4234234234} },
-  ]*/
-
-    
-  };
 
   const value = {
     data,
-    onFetch:handleGetData
+    onFetch:handleFetch
   };
 
   return (
@@ -52,79 +44,6 @@ export const DataProvider = ({ children }) => {
   );
 }
 
-export const useData = () => {
+export const useAPI = () => {
   return React.useContext(DataContext);
 };
-
-/*
-const AuthContext = React.createContext(null);
-
-export const AuthProvider = ({ children }) => {
-
-    const [token, setToken] = React.useState(null);
-  
-      const fakeAuth = (request) => {
-        const success = true
-        const myPromise = new Promise( (resolve, reject) => {
-          setTimeout(() => {
-            if(success){
-              return resolve({...request, type: 'user', key: '2342f2f1d131rf12' , path: '/user/'}) 
-            }else{
-              return reject({reason: "bad creds"})  
-            }
-          }, 1000);
-        });
-        return myPromise;
-      }
-  
-      const fakeRegister = (request) => {
-        const success = true
-        const myPromise = new Promise( (resolve, reject) => {
-          setTimeout(() => {
-            if(success){
-              return resolve({type: request.type, key: '2342f2f1d131rf12' , path: '/' + request.type + '/'}) 
-            }else{
-              return reject({reason: "username taken"})  
-            }
-          }, 1000);
-        });
-        return myPromise;
-      }
-  
-    const handleLogin = async (request, callback) => { 
-      await fakeAuth(request).then(setToken, callback)  
-    };
-  
-    const handleLogout = () => {
-      console.log("handle logout")
-      setToken(null);
-    };
-  
-    const handleRegistration  = async (request, callback) => {
-      console.log("handle regis: ", request)
-      //const token = await fakeAuth();
-      //setToken(token);
-      await fakeRegister(request).then(setToken, callback)
-    };
-  
-    const value = {
-      token,
-      onLogin: handleLogin,
-      onLogout: handleLogout,
-      onRegistration: handleRegistration
-    };
-  
-    console.log("auth provider:", value)
-  
-    return (
-      <AuthContext.Provider value={value}>
-        {children}
-      </AuthContext.Provider>
-    );
-  };
-
-export const useAuth = () => {
-  return React.useContext(AuthContext);
-};
-
-*/

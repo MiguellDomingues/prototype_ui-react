@@ -14,11 +14,7 @@ function Authenticate() {
     const [authStatus, setStatus] = useState({result: false , status_msg: ""})
     const [submitting, setSubmit] =  useState(false)
 
-    const onChange = e => {
-        setCredentials({
-          ...credentials,
-          [e.target.name]: e.target.value})
-     }
+    const onChange = e => {setCredentials({...credentials,[e.target.name]: e.target.value})}
 
      const handleResult = (response) =>{
         console.log("handle fail login: ", response)

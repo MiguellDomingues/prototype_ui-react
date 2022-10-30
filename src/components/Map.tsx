@@ -30,7 +30,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
       
       const MyMap = (props) => {
 
-        console.log("Map start: props: ", props)
+        //console.log("Map start: props: ", props)
 
         const clicks = !props.data ? [] : props.data.posts;
         const {selectedLocationHandler, selected} = props
@@ -52,7 +52,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
           const {lat, lng} = e.latLng.toJSON()
 
-          console.log("lat: ", lat, " lng: ", lng)
+          //console.log("lat: ", lat, " lng: ", lng)
           setCenter({lat: lat, lng: lng})
 
           selectedLocationHandler(null, id)
@@ -176,7 +176,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         const toggleInfoWindow = (iw: google.maps.InfoWindow, m: google.maps.Marker) =>{
 
           
-          console.log("hello info window: ", iw, m)
+          //console.log("hello info window: ", iw, m)
 
           /* if there exists an openInfoWindow, close it..*/
           if(openInfoWindow){

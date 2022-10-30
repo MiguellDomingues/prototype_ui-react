@@ -13,17 +13,31 @@ todo:
   - takes data from auth token, does a switch() on type to resolve user data
 - put the diff callouts into a single module
 - clean up file structure
+
+- add a filter for the diff types
+  - put in corner of list
+  - 
+
+- COMBINE AUTHPROVIDER AND DATA PROVIDER INTO SINGLE obj:
+  - ContextProvider
+    - stores the auth key AND the data for the UI
+      - users list, profile, config, etc
 */
 
 
 import {useState, useEffect, useRef} from 'react'
 import LocationList from '../../features/LocationList'
+import LocationFilter from '../../features/LocationFilter'
 import MyMap from '../../components/Map.tsx'
-import  { fetchProfileData } from '../../utils/fakeApi'
+//import  { fetchUserData } from '../../utils/fakeApi'
+
+import { useAPI } from '../../features/DataProvider'
 
 import './guestpage.css'
 
 const GuestPage = () =>{
+
+    const { onFetch } = useAPI()
 
     /*  fetched data */
     const [data, setData] = useState();
@@ -52,24 +66,30 @@ const GuestPage = () =>{
       setLoading(false)
     }
 
+    const handleSelectedLocation = (e, id) => {
+      console.log("select location GP: ", id)
+      setSelected(id)
+    }
+
     useEffect( () => {
         
       /* this is the pattern utilized for all async calls in functional components */
         if(dataFetchedRef.current) return
 
         const dataFetch = async () => {     
-          fetchProfileData(true, success, failure, finish)
+          onFetch(success, failure, finish)
         };
 
         dataFetchedRef.current = true;
         dataFetch();
+        //onFetch();
 
         //add cleanup code for the handler? (like gmaps does)
     }, );
 
      /*
 
-    keep this here because this is an example of curring; 
+    keep this here because this is an example of currying; 
     a functional programming concept
 
     const handleSelectedLocation = (id) => {
@@ -84,11 +104,6 @@ const GuestPage = () =>{
     cant seem to use it because this handler is invoked in map and it breaks things
     */
 
-    const handleSelectedLocation = (e, id) => {
-      console.log("select location GP: ", id)
-      setSelected(id)
-    }
-
     return (<>
 
     <div className="guestpage_container">
@@ -102,7 +117,12 @@ const GuestPage = () =>{
       </div>
       
       <div className="right_container col">
-        <div className="top_child row"> 
+
+        <div className="top_child_filter row">
+          <LocationFilter/>
+        </div>
+
+        <div className="top_child_list row"> 
           <LocationList
             isLoading={loading}
             data={data} 
@@ -112,12 +132,13 @@ const GuestPage = () =>{
         
         <div className="bottom_child row">
           <p>
-            <b>BOTTOM STUFF</b> (fills remaining space)
+            <b>BOTTOM STUFF GUEST PAGE</b> (fills remaining space)
           </p>
           <p>
             <b>BOTTOM STUFF</b> (fills remaining space)
           </p>
         </div>
+    
       </div>
 
     </div>

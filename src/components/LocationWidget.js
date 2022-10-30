@@ -1,6 +1,6 @@
 
 import { IconContext } from "react-icons";
-import getIcon from "../utils/icons";
+import { getIcon } from "../utils/icons";
 import "./LocationWidget.css"
 
 const LocationWidget = (props) =>{

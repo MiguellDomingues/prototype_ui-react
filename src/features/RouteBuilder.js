@@ -15,24 +15,21 @@ import { useAuth } from './AuthProvider'
 
 import { Navigate } from 'react-router-dom';
 
-import React, { Suspense, Children, cloneElement } from 'react'
-
 //lazy loading: react only loads a page into memory when its required
 //normally, it builds the routes and associates components in memory with that route
 //const UserPage = React.lazy(() => import('../pages/user/UserPage'));
 //const StoreOwnerPage = React.lazy(() => import('../pages/storeowner/StoreOwnerPage'));
 //const AdminPage = React.lazy(() => import('../pages/admin/AdminPage'));
 
-const ContextBuilder = ( ) =>{
+const RouteBuilder = ( ) =>{
 
     return(
         <><Routes>
            
-            <Route index path="/user/" element={  <PrivateRoute> <UserPage/> </PrivateRoute> } />
+<Route index path="/user/" element={  <PrivateRoute> <UserPage/> </PrivateRoute> } />
             <Route index path="/storeowner/" element={ <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>} />
-            <Route index path="/admin/" element={ <PrivateRoute> <AdminPage/> </PrivateRoute>} />
-            
-            <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
+            <Route index path="/admin/" element={ <PrivateRoute> <AdminPage/> </PrivateRoute>} />         
+    <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
 
             <Route path="/" element={<GuestPage/>} />
             <Route path="/register" element={<Register/>} />
@@ -55,32 +52,22 @@ const PrivateRoute = ({ children }) =>{
     return children;
 }
 
-export default ContextBuilder
+export default RouteBuilder
 
-/*<Route index path="/user/" element={  
-                    <PrivateRoute> 
-                        <Suspense fallback={<div>Loading...</div>}> 
-                            <UserPage/> 
-                        </Suspense> 
-                </PrivateRoute>} />
-                
-         /*
-    const buildAuthRoute = (token) => {
-        
-        if(!token){
-            return <Navigate to="/login" replace />;
-        }else if(token.type === 'user'){
-            return <UserPage/> 
-        }else if(token.type === 'storeowner'){
-            return <StoreOwnerPage/>
-        }else if(token.type === 'admin'){
-            return <AdminPage/>
-        }else{
-            return <NotFound/>
-        }
+/*
 
-         <Route index path="/:type/" element={  buildAuthRoute(token)  } />
-    }
-    */       
+            <Route index path="/user/"> 
+                <PrivateRoute><UserPage/> </PrivateRoute>
+                </Route>
+                <Route index path="/storeowner/"> 
+                <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>
+                </Route>
+                <Route index path="/admin/"> 
+                <PrivateRoute><AdminPage/>  </PrivateRoute>
+                </Route>      
+                <Route path="/:type/profile"> 
+                <PrivateRoute> <Profile/> </PrivateRoute>
+                </Route> 
+    */
                 
             

@@ -37,8 +37,8 @@
 }
 
 /* sub-containers have heights that add up to 100%*/
-.top_child_list{
-  flex: 1 1 70%;
+.top_child{
+  flex: 1 1 75%;
   background-color: purple;
   /* overflow-y is what allows the container to be scrollable */
   overflow-y: auto;
@@ -47,15 +47,8 @@
 .bottom_child{
   margin-top: 10px;
   margin-bottom: 10px;
-  flex: 1 1 15%;
+  flex: 1 1 25%;
   background-color: red;
-}
-
-.top_child_filter{
-  margin-top: 5px;
-  margin-bottom: 5px;
-  flex: 1 1 5%;
-  background-color: rgb(0, 255, 106);
 }
 
 
