@@ -23,7 +23,80 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
 }
 
 */
-  
+
+import fakeData from './fakeData'
+
+const SUCCESS_GET_GUEST_POSTS = true
+const SUCCESS_GET_USER_POSTS = true
+
+const GET_GUEST_POSTS_SUCCESS = [
+  {
+      id: 0,
+      address: "abc ave 123456",
+      LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+      info: "some info stuffs 0",
+      icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
+  },
+  {
+      id: 1,
+      address: "abcd ave 123456",
+      LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+      info: "some info stuffs 1",
+      icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
+  },
+  {
+      id: 2,
+      address: "abcdef ave 123456",
+      LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+      info: "some info stuffs 2",
+      icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
+  }
+  ]
+
+  const GET_GUEST_POSTS_FAILURE_MSG = "session expired. please log on again"
+
+  const GET_USER_POSTS_SUCCESS = [
+    {
+        id: 0,
+        address: "abc ave 123456",
+        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+        info: "some info stuffs 0",
+        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"],
+        appointments:[
+          {
+            id: 0,
+            date: "9/9/2022",
+            time_start: "9am",
+            time_end: "10am"
+          },
+          {
+            id: 3,
+            date: "9/10/2022",
+            time_start: "12am",
+            time_end: "10am",
+          }
+        ]
+    },
+    {
+        id: 1,
+        address: "abcd ave 123456",
+        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 1",
+        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"],
+        appointments:[] 
+    },
+    {
+        id: 2,
+        address: "abcdef ave 123456",
+        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 2",
+        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"],
+        appointments:[]  
+    }
+    ]
+
+const GET_USER_POSTS_FAILURE_MSG = "session expired. please log on again"
+
 /*
     mocking an async fetch
     returns a resolved() or rejected() promise with object containing relevant data
@@ -34,36 +107,11 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
         
       setTimeout(() => {
         console.log("fetched posts");
-        if(success){
-            return resolve({
-            success: true,
-            posts: [
-            {
-                id: 0,
-                address: "abc ave 123456",
-                LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
-                info: "some info stuffs 0",
-                icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
-            },
-            {
-                id: 1,
-                address: "abcd ave 123456",
-                LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 1",
-                icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
-            },
-            {
-                id: 2,
-                address: "abcdef ave 123456",
-                LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 2",
-                icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
-            }
-            ]});}
-
+        if(fakeData.SUCCESS_GET_GUEST_POSTS === true){
+            return resolve({success: true, posts: fakeData.GET_GUEST_POSTS_SUCCESS});}
             /* get around the limitation of Suspense not handling failed async calls by returning the object with a boolean flag */
-            return reject({success: false, reason: "session expired. please log on again"})  
-
+            else if(SUCCESS_GET_GUEST_POSTS === false){
+              return reject({success: false, reason: GET_GUEST_POSTS_FAILURE_MSG})}
       }, 2000);
     });
 
@@ -75,35 +123,12 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
         
       setTimeout(() => {
         console.log("fetched posts");
-        if(success){
-            return resolve({
-            success: true,
-            posts: [
-            {
-                id: 0,
-                address: "abc ave 123456",
-                LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
-                info: "some info stuffs 0",
-                icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
-            },
-            {
-                id: 1,
-                address: "abcd ave 123456",
-                LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 1",
-                icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
-            },
-            {
-                id: 2,
-                address: "abcdef ave 123456",
-                LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
-                info: "some info stuffs 2",
-                icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
-            }
-            ]});}
-
-            /* get around the limitation of Suspense not handling failed async calls by returning the object with a boolean flag */
-            return reject({success: false, reason: "session expired. please log on again"})  
+        
+        if(SUCCESS_GET_USER_POSTS === true){
+          return resolve({success: true, posts: GET_USER_POSTS_SUCCESS});}
+          /* get around the limitation of Suspense not handling failed async calls by returning the object with a boolean flag */
+          else if(SUCCESS_GET_USER_POSTS === false){
+            return reject({success: false, reason: GET_USER_POSTS_FAILURE_MSG})}
 
       }, 2000);
     });
@@ -137,6 +162,8 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
     return myPromise;
   }
 
+  //fetch a guest token for user; start a guest session
+  //
   const endSessionMock = (success, request) => {
     const myPromise = new Promise( (resolve, reject) => {
       setTimeout(() => {
@@ -150,9 +177,6 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
     return myPromise;
   }
 
-  
-
-
   export const API = {
     fetchGuestPosts: (key) =>       fetchGuestPostsMock(true, key),
     fetchUserPosts:  (key) =>       fetchUserPostsMock(true, key),
@@ -160,6 +184,8 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
     startSession:    (request) =>   startSessionMock(true, request),
     registerUser:    (request) =>   registerUserMock(true, request)
   }
+
+
 
 
 
