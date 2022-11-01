@@ -6,7 +6,7 @@ import { InfinitySpin } from 'react-loader-spinner'
 
 const LocationList = ( props ) =>{
 
-   // console.log("LL start: props: ", props)
+    //console.log("LL start: props: ", props)
 
     if(props.isLoading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>

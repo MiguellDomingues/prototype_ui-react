@@ -1,7 +1,7 @@
 
 import { Routes, Route} from "react-router-dom";
 
-import GuestPage from '../pages/guest/GuestPage'
+import GuestPageContext from '../pages/guest/GuestPageContext'
 import UserPage from '../pages/user/UserPage'
 import StoreOwnerPage from '../pages/storeowner/StoreOwnerPage'
 import AdminPage from '../pages/admin/AdminPage'
@@ -14,6 +14,8 @@ import Profile from '../pages/profile/Profile'
 import { useAuth } from './AuthProvider'
 
 import { Navigate } from 'react-router-dom';
+
+import { GuestContextProvider } from '../pages/guest/GuestContextProvider'
 
 //lazy loading: react only loads a page into memory when its required
 //normally, it builds the routes and associates components in memory with that route
@@ -30,8 +32,9 @@ const RouteBuilder = ( ) =>{
             <Route index path="/storeowner/" element={ <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>} />
             <Route index path="/admin/" element={ <PrivateRoute> <AdminPage/> </PrivateRoute>} />         
     <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
-
-            <Route path="/" element={<GuestPage/>} />
+       
+            <Route path="/" element={ <GuestPageContext/> } />
+         
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Authenticate/>} />
             <Route path="/about" element={<About/>} />

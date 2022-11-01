@@ -20,6 +20,22 @@
     
   }
 
+  .selected_icon_col {
+    color: blue;
+  }
+
+  .unselected_icon_col {
+    color: black;
+  }
+
+  .selected_icon_bg {
+    background-color: rgb(255, 0, 0);
+  }
+
+  .unselected_icon_bg {
+    background-color: white;
+  }
+
   .row{
     border: 1px dotted grey;
   }

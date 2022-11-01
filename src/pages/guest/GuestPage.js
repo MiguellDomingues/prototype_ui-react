@@ -25,55 +25,27 @@ todo:
 */
 
 
-import {useState, useEffect, useRef} from 'react'
 import LocationList from '../../features/LocationList'
 import LocationFilter from '../../features/LocationFilter'
 import MyMap from '../../components/Map.tsx'
-//import  { fetchUserData } from '../../utils/fakeApi'
-
-import { useAPI } from '../../features/DataProvider'
+import { useGuestContext,GuestContextProvider  } from './GuestContextProvider'
 
 import './guestpage.css'
 
-const GuestPage = () =>{
+  const GuestPage = () =>{
 
-    const { onFetch } = useAPI()
+    const {data,
+      loading,
+      selected,
+      filters,
+      handleSelectedLocation,
+      handleSelectedFilter
+    } = useGuestContext()
 
-    /*  fetched data */
-    const [data, setData] = useState();
-    
-    /* UI state */
-    const [loading, setLoading] = useState(true);
-
-    /* track the id of the selected entity to update map/list*/
-    const [selected, setSelected] = useState();
-
-    /* prevent the double useEffect call/double fetch() on first render */
-    const dataFetchedRef = useRef(false);
-
-    const success = (r) => {
-      console.log("setposts GP: ", r)
-      setData(r);    
-    }
-
-    const failure = (r) => {
-      console.log("error GP", r.reason) 
-      setData(r);  
-    }
-
-    const finish = (r) => {
-      console.log("setloading GP")
-      setLoading(false)
-    }
-
-    const handleSelectedLocation = (e, id) => {
-      console.log("select location GP: ", id)
-      setSelected(id)
-    }
-
+/*
     useEffect( () => {
         
-      /* this is the pattern utilized for all async calls in functional components */
+     
         if(dataFetchedRef.current) return
 
         const dataFetch = async () => {     
@@ -86,23 +58,9 @@ const GuestPage = () =>{
 
         //add cleanup code for the handler? (like gmaps does)
     }, );
-
-     /*
-
-    keep this here because this is an example of currying; 
-    a functional programming concept
-
-    const handleSelectedLocation = (id) => {
-      return (e) => {
-        console.log("select location GP: ", id)
-        setSelected(id)
-    }}
-
-    inside click handlers, instead of having onClick={ (e)=> passed_down_handler(e, id) }
-    i can write onClick={ passed_down_handler(id) }
-
-    cant seem to use it because this handler is invoked in map and it breaks things
     */
+
+    
 
     return (<>
 
@@ -110,7 +68,7 @@ const GuestPage = () =>{
 
       <div className="map_container col">
         <MyMap
-          //isLoading={loading}
+          isLoading={loading}
           data={data} 
           selected={selected} 
           selectedLocationHandler={handleSelectedLocation}/>
@@ -119,7 +77,9 @@ const GuestPage = () =>{
       <div className="right_container col">
 
         <div className="top_child_filter row">
-          <LocationFilter/>
+          <LocationFilter
+            filters= {["FaWrench", "MdOutlineCarRepair"]}
+            selectedFilterHandler={handleSelectedFilter}/>
         </div>
 
         <div className="top_child_list row"> 
@@ -142,10 +102,56 @@ const GuestPage = () =>{
       </div>
 
     </div>
-
-    </> );
+    </>
+      );
   }
   
   export default GuestPage;
+
+  /* const { onFetch } = useAPI()
+
+  
+    const [data, setData] = useState();
+    
+  
+    const [loading, setLoading] = useState(true);
+
+   
+    const [selected, setSelected] = useState();
+
+  
+    const [filters, setFilters] = useState([]);
+
+  
+    const dataFetchedRef = useRef(false);
+
+    const success = (r) => {
+      console.log("setposts GP: ", r)
+      setData(r);    
+    }
+
+    const failure = (r) => {
+      console.log("error GP", r.reason) 
+      setData(r);  
+    }
+
+    const finish = (r) => {
+      console.log("setloading GP")
+      setLoading(false)
+    }
+
+
+
+    const handleSelectedLocation = (e, id) => {
+      console.log("select location GP: ", id)
+      setSelected(id)
+    }
+
+    const handleSelectedFilter = (iconName) => {
+      return (e) => {
+        console.log("select FILTER GP: ", iconName)
+        //setSelected(id)
+    }}
+  */
 
  

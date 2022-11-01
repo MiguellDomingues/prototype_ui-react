@@ -24,15 +24,16 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { createCustomEqual } from "fast-equals";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
+
     const render = (status: Status) => {
         return <h1>{status}</h1>;
       };
       
       const MyMap = (props) => {
 
-        //console.log("Map start: props: ", props)
+        console.log("Map start: props: ", props)
 
-        const clicks = !props.data ? [] : props.data.posts;
+        const clicks = !props.data || !props.data.success ? [] : props.data.posts;
         const {selectedLocationHandler, selected} = props
         /* */
        // const selectedCenter = isNaN(selected) || !props.data.posts ? {lat: 0, lng: 0} : props.data.posts.find( item => item.id === selected).LatLng
