@@ -1,6 +1,6 @@
 
 import { IconContext } from "react-icons";
-import { getIconNames, getIcon } from "../utils/icons";
+import { getIconNames, getIcon,  getIconId } from "../utils/icons";
 
 import './locationfilter.css'
 
@@ -19,7 +19,7 @@ const LocationFilter = (props) => {
             <div className="locationfilter_container">
                 {getIconNames().map( (iconName) => (
                     <div 
-                        //key={getIconId(iconName)}
+                        key={getIconId(iconName)}
                         className={"locationfilter_child_filter row" + getCSSSelectedIconBG(iconName)}
                         //(e)=>{console.log("click: ", iconName)}
                         onClick={ getIconHandler (iconName) }
