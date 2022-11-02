@@ -28,7 +28,7 @@ todo:
 import LocationList from '../../features/LocationList'
 import LocationFilter from '../../features/LocationFilter'
 import MyMap from '../../components/Map.tsx'
-import { useGuestContext,GuestContextProvider  } from './GuestContextProvider'
+import { useGuestContext } from './GuestContextProvider'
 
 import './guestpage.css'
 
@@ -38,29 +38,11 @@ import './guestpage.css'
       loading,
       selected,
       filters,
+      filteredPosts,
       handleSelectedLocation,
-      handleSelectedFilter
+      handleSelectFilter,
+      handleDeselectFilter,
     } = useGuestContext()
-
-/*
-    useEffect( () => {
-        
-     
-        if(dataFetchedRef.current) return
-
-        const dataFetch = async () => {     
-          onFetch(success, failure, finish)
-        };
-
-        dataFetchedRef.current = true;
-        dataFetch();
-        //onFetch();
-
-        //add cleanup code for the handler? (like gmaps does)
-    }, );
-    */
-
-    
 
     return (<>
 
@@ -78,16 +60,14 @@ import './guestpage.css'
 
         <div className="top_child_filter row">
           <LocationFilter
-            filters= {["FaWrench", "MdOutlineCarRepair"]}
-            selectedFilterHandler={handleSelectedFilter}/>
+            filters= {filters}
+            handleSelectFilter ={handleSelectFilter}
+            handleDeselectFilter ={handleDeselectFilter}
+            />
         </div>
 
         <div className="top_child_list row"> 
-          <LocationList
-            isLoading={loading}
-            data={data} 
-            selected={selected} 
-            selectedLocationHandler={handleSelectedLocation} />
+          <LocationList context={useGuestContext()}/>
         </div>
         
         <div className="bottom_child row">

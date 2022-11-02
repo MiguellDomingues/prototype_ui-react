@@ -30,3 +30,7 @@ export function getIconNames(){
     return Object.keys(icons)
 }
 
+export function getIconsById(){
+    return Object.keys(icons)
+}
+

@@ -2,40 +2,13 @@ import {useState, useEffect, useRef} from 'react'
 import { useAPI } from '../../features/DataProvider'
 import React from "react";
 
-/*
-const AuthContext = React.createContext(null);
-
-export const AuthProvider = ({ children }) => {
-
-    const { startSession, registerUser, endSession } = API
-
-     const value = {
-      token,
-      onLogin: handleLogin,
-      onLogout: handleLogout,
-      onRegistration: handleRegistration
-    };
-  
-    console.log("auth provider:", value)
-  
-    return (
-      <AuthContext.Provider value={value}>
-        {children}
-      </AuthContext.Provider>
-    );
-  };
-
-export const useAuth = () => {
-  return React.useContext(AuthContext);
-};
-
-*/
 const GuestPageContext = React.createContext(null);
 
 export const GuestContextProvider = ( { children } ) =>{
 
     const { onFetch } = useAPI()
 
+    /* primarly JSON returned from callout */
     const [data, setData] = useState();
     
     /* UI state */
@@ -44,15 +17,23 @@ export const GuestContextProvider = ( { children } ) =>{
     /* track the id of the selected entity to update map/list*/
     const [selected, setSelected] = useState();
 
-    /* track the icon names of the selected filters */
+    /* arr of filtered posts to be displayed in list */
+    const [filteredPosts, setFilteredPosts] = useState([])
+
+    //console.log("filteredPosts: ", filteredPosts)
+
+    /* arr of selected filters */
     const [filters, setFilters] = useState([]);
 
     /* prevent the double useEffect call/double fetch() on first render */
     const dataFetchedRef = useRef(false);
 
+    /***************************** API CALLBACKS *******************************************/
+
     const success = (r) => {
       console.log("setposts GP: ", r)
-      setData(r);    
+      setData(r); 
+      setFilteredPosts(r.posts)     
     }
 
     const failure = (r) => {
@@ -65,18 +46,45 @@ export const GuestContextProvider = ( { children } ) =>{
       setLoading(false)
     }
 
+    /******************************************************************************************/
 
-
+     /***************************** CLICKING ON MAP MARKERS/LIST ITEMS CALLBACK  *******************************************/
     const handleSelectedLocation = (e, id) => {
       console.log("select location GP: ", id)
       setSelected(id)
     }
+    /******************************************************************************************/
 
-    const handleSelectedFilter = (iconName) => {
+    /***************************** CLICKING ON FILTERS  *******************************************/
+
+    const selectFilter = (iconName) => {
       return (e) => {
-        console.log("select FILTER GP: ", iconName)
-        //setSelected(id)
+        console.log("select FILTER GP: ", iconName, filters)
+        const copyFilters = [...filters].concat( [iconName] )
+       updateFilters (copyFilters)
     }}
+
+    const deSelectFilter = (iconName) => {
+      return (e) => {
+        console.log("deselect FILTER GP: ", iconName, filters)
+        const copyFilters = [...filters.filter( (element) => {return element !== iconName} )]
+        updateFilters (copyFilters)
+    }}
+
+    const updateFilters = (updatedFilters) => {
+
+      // A AND B AND C.. filter for tags/icons
+      /* this peice of code sais:
+          for EACH post p:
+            is every string within updatedFilters included in p.icons string array ? (thats what arr.every(..) does)
+      */
+     //the output is a list of posts with icons that contains all the entries in filters
+      setFilteredPosts(data.posts.filter( (post) => updatedFilters.every( (filterName) => post.icons.includes(filterName) ) ))
+      //batch update both the new filters and the filtered list
+      setFilters(updatedFilters)
+    }
+
+     /******************************************************************************************/
 
     useEffect( () => {
         
@@ -95,9 +103,12 @@ export const GuestContextProvider = ( { children } ) =>{
     }, );
 
     const value = {
-        data, loading, selected, filters,
+        data, loading, selected, filters, filteredPosts,
         handleSelectedLocation: handleSelectedLocation,
-        handleSelectedFilter: handleSelectedFilter,
+       // handleSelectedFilter: handleSelectedFilter,
+        handleSelectFilter : selectFilter ,
+        handleDeselectFilter : deSelectFilter,
+
     };
 
     return (
@@ -110,5 +121,25 @@ export const GuestContextProvider = ( { children } ) =>{
 export const useGuestContext = () => {
     return React.useContext(GuestPageContext);
   };
+
+  /*
+ if(filters.includes(iconName))
+        {
+         
+         // const result = filters.filter( (element) => {return element !== iconName} )
+          
+          setFilters([...filters.filter( (element) => {return element !== iconName} )])
+        }else{
+
+          //const newfilter = [...filters].concat( [iconName] )
+          //console.log("PRE-OP ADDING NEW FILTER: ", filters )
+          //filters.push(iconName)
+
+          //console.log("POST-OP ADDING NEW FILTER: ", filters, newfilter )
+
+          //setFilters([...filters])
+          setFilters([...filters].concat( [iconName] ))
+        }
+  */
 
 

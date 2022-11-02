@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react'
 
 import './LocationList.css'
 import LocationWidget from '../components/LocationWidget'
@@ -8,32 +7,36 @@ const LocationList = ( props ) =>{
 
     //console.log("LL start: props: ", props)
 
-    if(props.isLoading){
+    //rather then pass props down from parent
+    //pass the parent context and deconstruct the props you need
+
+    const {
+        data,
+        loading,
+        selected,
+        filteredPosts,
+        handleSelectedLocation,
+      } = props.context
+
+    if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
 
-    const locations = props.data.posts 
-    const {success, reason } = props.data
-    const {selected} = props
-    const selectedLocationHandler = props.selectedLocationHandler
-
     const render = () =>{
 
-        //console.log("LL data: ", locations, success, reason, selected)
-
-        if(success){
+        if(data.success){
             return <>
-                {locations.map( (location) => (
+                {filteredPosts.map( (location) => (
                 <div className={"list_child col display"}>           
                    <LocationWidget 
                         key={location.id}
                         selected={selected} 
                         location={location} 
-                        selectedHandler={selectedLocationHandler}/>
+                        selectedHandler={handleSelectedLocation}/>
                 </div> )) }
             </>
         }else{
-            return <p>load fail: {reason ? reason : <>unknown reason</>}</p>
+            return <p>load fail: {data.reason ? data.reason : <>unknown reason</>}</p>
         }
     }
 
