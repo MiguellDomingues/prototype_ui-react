@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react'
 import { useAPI } from '../../features/DataProvider'
 import React from "react";
 
-const GuestPageContext = React.createContext(null);
+const GuestContext = React.createContext(null);
 
 export const GuestContextProvider = ( { children } ) =>{
 
@@ -49,7 +49,8 @@ export const GuestContextProvider = ( { children } ) =>{
     /******************************************************************************************/
 
      /***************************** CLICKING ON MAP MARKERS/LIST ITEMS CALLBACK  *******************************************/
-    const handleSelectedLocation = (e, id) => {
+    const selectLocation = (e, id) => {
+      //e.preventDefault();
       console.log("select location GP: ", id)
       setSelected(id)
     }
@@ -59,6 +60,7 @@ export const GuestContextProvider = ( { children } ) =>{
 
     const selectFilter = (iconName) => {
       return (e) => {
+        e.preventDefault();
         console.log("select FILTER GP: ", iconName, filters)
         const copyFilters = [...filters].concat( [iconName] )
        updateFilters (copyFilters)
@@ -66,6 +68,7 @@ export const GuestContextProvider = ( { children } ) =>{
 
     const deSelectFilter = (iconName) => {
       return (e) => {
+        e.preventDefault();
         console.log("deselect FILTER GP: ", iconName, filters)
         const copyFilters = [...filters.filter( (element) => {return element !== iconName} )]
         updateFilters (copyFilters)
@@ -104,42 +107,20 @@ export const GuestContextProvider = ( { children } ) =>{
 
     const value = {
         data, loading, selected, filters, filteredPosts,
-        handleSelectedLocation: handleSelectedLocation,
-       // handleSelectedFilter: handleSelectedFilter,
+        handleSelectedLocation: selectLocation,
         handleSelectFilter : selectFilter ,
         handleDeselectFilter : deSelectFilter,
-
     };
 
     return (
-        <GuestPageContext.Provider value={value}>
+        <GuestContext.Provider value={value}>
           {children}
-        </GuestPageContext.Provider>
+        </GuestContext.Provider>
       );
 }
 
 export const useGuestContext = () => {
-    return React.useContext(GuestPageContext);
+    return React.useContext(GuestContext);
   };
-
-  /*
- if(filters.includes(iconName))
-        {
-         
-         // const result = filters.filter( (element) => {return element !== iconName} )
-          
-          setFilters([...filters.filter( (element) => {return element !== iconName} )])
-        }else{
-
-          //const newfilter = [...filters].concat( [iconName] )
-          //console.log("PRE-OP ADDING NEW FILTER: ", filters )
-          //filters.push(iconName)
-
-          //console.log("POST-OP ADDING NEW FILTER: ", filters, newfilter )
-
-          //setFilters([...filters])
-          setFilters([...filters].concat( [iconName] ))
-        }
-  */
 
 

@@ -29,8 +29,26 @@ export const DataProvider = ({ children }) => {
 
   const handleFetch = async (onSuccess , onFail, onFinish) => {
     console.log("DataProvider/fetchUserPageData: ", token)
-    await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)  
+    //await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)  
+    await API.fetchGuestPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
   }
+
+  const successCB = (onSuccess) => {
+    return (r) =>{ 
+      console.log("example of Data Provider handling fetch results first")
+      console.log("it can reshape data (like removing 'success' prop) to make it easier to consume ")
+      return onSuccess(r)
+    }
+  }
+
+  const failureCB = (onFail) => {
+    return (r) =>{ 
+      console.log("DP failure")
+      return onFail(r)
+    }
+  }
+
+
 
   const value = {
     data,

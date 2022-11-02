@@ -34,6 +34,7 @@ import './guestpage.css'
 
   const GuestPage = () =>{
 
+    /*
     const {data,
       loading,
       selected,
@@ -43,27 +44,19 @@ import './guestpage.css'
       handleSelectFilter,
       handleDeselectFilter,
     } = useGuestContext()
-
+*/
     return (<>
 
     <div className="guestpage_container">
 
       <div className="map_container col">
-        <MyMap
-          isLoading={loading}
-          data={data} 
-          selected={selected} 
-          selectedLocationHandler={handleSelectedLocation}/>
+        <MyMap context={useGuestContext()} />
       </div>
       
       <div className="right_container col">
 
         <div className="top_child_filter row">
-          <LocationFilter
-            filters= {filters}
-            handleSelectFilter ={handleSelectFilter}
-            handleDeselectFilter ={handleDeselectFilter}
-            />
+          <LocationFilter context={useGuestContext()} />
         </div>
 
         <div className="top_child_list row"> 

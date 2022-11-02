@@ -33,8 +33,15 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
         console.log("Map start: props: ", props)
 
-        const clicks = !props.data || !props.data.success ? [] : props.data.posts;
-        const {selectedLocationHandler, selected} = props
+        const { 
+          data, 
+          selected, 
+          handleSelectedLocation } = props.context
+
+        const markers = !data || !data.success ? [] : data.posts
+
+       // const markers = !props.data || !props.data.success ? [] : props.data.posts;
+       // const {selectedLocationHandler, selected} = props
         /* */
        // const selectedCenter = isNaN(selected) || !props.data.posts ? {lat: 0, lng: 0} : props.data.posts.find( item => item.id === selected).LatLng
 
@@ -49,14 +56,15 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
         
         const onMarkerClick = (iw: google.maps.InfoWindow, e: google.maps.MapMouseEvent, id: Number) => {
 
-          //console.log("onmarkerclick: ", iw, e, id)
+          console.log("onmarkerclick: ", iw, e, id)
 
           const {lat, lng} = e.latLng.toJSON()
 
           //console.log("lat: ", lat, " lng: ", lng)
           setCenter({lat: lat, lng: lng})
 
-          selectedLocationHandler(null, id)
+          //selectedLocationHandler(null, id)
+          handleSelectedLocation(null,id)
           
 
           setZoom(4)
@@ -135,7 +143,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
                 zoom={zoom}
                 style={{ flexGrow: "1", height: "100%" }}
               >
-                {clicks.map((data, i) => (
+                {markers.map((data, i) => (
                   <Marker                               /* instantiate a new marker object for each entry in the list */
                     key={data.id}
                     id={data.id}

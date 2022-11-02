@@ -1,4 +1,68 @@
 
+    /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
+
+const SUCCESS_GET_USER_POSTS = true
+
+/* 
+  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
+  instead of returning the rejected resolve object 
+*/
+
+const GET_USER_POSTS_SUCCESS =
+{
+  success: true, 
+  posts: [
+    {
+        id: 0,
+        address: "abc ave 123456",
+        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+        info: "some info stuffs 0",
+        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"],
+        appointments: []
+    },
+    {
+        id: 1,
+        address: "abcd ave 123456",
+        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 1",
+        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
+    },
+    {
+        id: 2,
+        address: "abcdef ave 123456",
+        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 2",
+        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
+    }
+  ]
+}
+
+const GET_USER_POSTS_FAILURE = 
+{
+  success: false, 
+  reason: "session expired GUEST. please refresh your browser"
+}
+
+/*
+    mocking an async fetch
+    returns a resolved() or rejected() promise with object containing relevant data
+*/
+
+const fetchUserPostsMock = (key) => {
+    return new Promise( (resolve, reject) => {     
+      setTimeout(() => {    
+        if(SUCCESS_GET_USER_POSTS === true){
+            return resolve(GET_USER_POSTS_SUCCESS);}
+            else if(SUCCESS_GET_USER_POSTS === false){
+              return reject(GET_USER_POSTS_FAILURE)}
+      }, 2000);
+  });}
+
+  /************************************************************************************************/
+   
+   
+   
+   
    /***************************GUEST USER POSTS ENDPOINT***********************/
 
 const SUCCESS_GET_GUEST_POSTS = true
@@ -39,7 +103,7 @@ const GET_GUEST_POSTS_SUCCESS =
 const GET_GUEST_POSTS_FAILURE = 
 {
   success: false, 
-  reason: "session expired. please log on againjghjhjhjhjhj"
+  reason: "session expired GUEST. please refresh your browser"
 }
 
 /*
