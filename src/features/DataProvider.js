@@ -29,8 +29,15 @@ export const DataProvider = ({ children }) => {
 
   const handleFetch = async (onSuccess , onFail, onFinish) => {
     console.log("DataProvider/fetchUserPageData: ", token)
-    //await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)  
-    await API.fetchGuestPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    //await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)
+    
+    if(!token){
+      await API.fetchGuestPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else if(token && token.type === "user"){
+      await API.fetchUserPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else{
+      console.log("error in dataprovider: no API for user type defined")
+    } 
   }
 
   const successCB = (onSuccess) => {

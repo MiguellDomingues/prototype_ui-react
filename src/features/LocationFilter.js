@@ -8,6 +8,9 @@ const LocationFilter = (props) => {
 
     const { filters, handleSelectFilter, handleDeselectFilter, loading} = props.context
 
+    console.log("location filter start:" ,filters, loading)
+    
+
     const getIconHandler = (iconName) => filters.includes(iconName) ? handleDeselectFilter(iconName) : handleSelectFilter(iconName)
 
     const getCSSSelectedIconColor = (iconName) => { return { className: filters.includes(iconName) ? "selected_icon_col" : "unselected_icon_col"} }

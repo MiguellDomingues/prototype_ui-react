@@ -1,4 +1,52 @@
+const SUCCESS_GET_USER_APPOINTMENTS = true
 
+/* 
+  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
+  instead of returning the rejected resolve object 
+*/
+
+const GET_USER_APPOINTMENTS_SUCCESS  =
+{
+  success: true, 
+  posts: [
+    {
+        id: 0,
+        appointments: [
+          { id: 0, date: "10/10/22", start: "9:00", end: "10:00" },
+          { id: 1, date: "10/11/22", start: "11:00", end: "12:00" }
+        ]
+    },
+    {
+        id: 1,
+        appointments: [
+          { id: 2, date: "10/11/22", start: "8:00", end: "9:00" },
+        ] 
+    },
+    {
+        id: 2,
+        appointments: [] 
+    }
+  ]
+}
+
+const GET_USER_APPOINTMENTS_FAILURE  = 
+{
+  success: false, 
+  reason: "failed to fetch user appointments"
+}
+
+const fetchUserAppointmentsMock = (key, id) => {
+    return new Promise( (resolve, reject) => {     
+      setTimeout(() => {    
+        if(SUCCESS_GET_USER_APPOINTMENTS  === true){
+            return resolve(GET_USER_APPOINTMENTS_SUCCESS);}
+            else if(SUCCESS_GET_USER_APPOINTMENTS  === false){
+              return reject(GET_USER_APPOINTMENTS_FAILURE)}
+      }, 2000);
+  });}
+    
+    
+    
     /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
 const SUCCESS_GET_USER_POSTS = true
@@ -14,25 +62,33 @@ const GET_USER_POSTS_SUCCESS =
   posts: [
     {
         id: 0,
-        address: "abc ave 123456",
+        address: " user abc ave 123456",
         LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
         info: "some info stuffs 0",
         icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"],
-        appointments: []
+        appointments: [
+          { id: 0, date: "10/10/22", start: "9:00", end: "10:00" },
+          { id: 1, date: "10/11/22", start: "11:00", end: "12:00" }
+
+        ]
     },
     {
         id: 1,
-        address: "abcd ave 123456",
+        address: "USER abcd ave 123456",
         LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
         info: "some info stuffs 1",
-        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
+        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"],
+        appointments: [
+          { id: 2, date: "10/11/22", start: "8:00", end: "9:00" },
+        ] 
     },
     {
         id: 2,
-        address: "abcdef ave 123456",
+        address: "USERRR abcdef ave 123456",
         LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
         info: "some info stuffs 2",
-        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
+        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"],
+        appointments: [] 
     }
   ]
 }
@@ -40,7 +96,7 @@ const GET_USER_POSTS_SUCCESS =
 const GET_USER_POSTS_FAILURE = 
 {
   success: false, 
-  reason: "session expired GUEST. please refresh your browser"
+  reason: "session expired USER. please refresh your browser"
 }
 
 /*
@@ -196,11 +252,12 @@ const fetchGuestPostsMock = (key) => {
   }
 
   export const API = {
-    fetchGuestPosts: (key) =>       fetchGuestPostsMock(key),
-    //fetchUserPosts:  (key) =>       fetchUserPostsMock(true, key),
-    endSession:      (request) =>   endSessionMock(request),
-    startSession:    (request) =>   startSessionMock(request),
-    registerUser:    (request) =>   registerUserMock(request)
+    fetchGuestPosts: (key) =>           fetchGuestPostsMock(key),
+    fetchUserPosts:  (key) =>           fetchUserPostsMock(key),
+    fetchUserAppointments: (key, id) => fetchUserAppointmentsMock(key, id),
+    endSession:      (request) =>       endSessionMock(request),
+    startSession:    (request) =>       startSessionMock(request),
+    registerUser:    (request) =>       registerUserMock(request)
   }
 
 

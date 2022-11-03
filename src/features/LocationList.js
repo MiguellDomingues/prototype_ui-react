@@ -6,6 +6,7 @@ import { InfinitySpin } from 'react-loader-spinner'
 const LocationList = ( props ) =>{
 
     //console.log("LL start: props: ", props)
+    console.log("location list start:")
 
     //rather then pass props down from parent
     //pass the parent context and deconstruct the props you need
