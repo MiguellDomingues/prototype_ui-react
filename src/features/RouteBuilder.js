@@ -4,11 +4,9 @@ import { Routes, Route} from "react-router-dom";
 import GuestPageContext from '../pages/guest/GuestPageContext'
 import UserPageContext from '../pages/user/UserPageContext'
 
-import UserPageContextTEST from '../pages/TESTING/UserPageContextTEST'
+import UserPageTEST from '../pages/TESTING2/UserPage'
 
 
-
-//import UserPage from '../pages/user/UserPage'
 import StoreOwnerPage from '../pages/storeowner/StoreOwnerPage'
 import AdminPage from '../pages/admin/AdminPage'
 import Authenticate from '../pages/auth/authenticate'
@@ -21,8 +19,6 @@ import { useAuth } from './AuthProvider'
 
 import { Navigate } from 'react-router-dom';
 
-
-
 //lazy loading: react only loads a page into memory when its required
 //normally, it builds the routes and associates components in memory with that route
 //const UserPage = React.lazy(() => import('../pages/user/UserPage'));
@@ -30,6 +26,8 @@ import { Navigate } from 'react-router-dom';
 //const AdminPage = React.lazy(() => import('../pages/admin/AdminPage'));
 //<UserPageContextTEST/>
 //<UserPageContext/>
+//<UserPage/>
+
 const RouteBuilder = ( ) =>{
 
     return(
