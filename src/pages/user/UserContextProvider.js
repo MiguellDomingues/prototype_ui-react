@@ -42,8 +42,6 @@ export const UserContextProvider = ( { children } ) =>{
     /* id of a selected (highlighted) appointment */
     const [selectedAppointment, setSelectedAppointment] = useState();
 
-
-
     /***************************** API CALLBACKS *******************************************/
 
     const success = (r) => {

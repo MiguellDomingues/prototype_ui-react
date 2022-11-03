@@ -1,0 +1,7 @@
+.selected_appt{
+    background-color: yellow;
+  }
+
+  .deselected_appt{
+    background-color: brown;
+  }

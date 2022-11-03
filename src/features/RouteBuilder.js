@@ -4,6 +4,8 @@ import { Routes, Route} from "react-router-dom";
 import GuestPageContext from '../pages/guest/GuestPageContext'
 import UserPageContext from '../pages/user/UserPageContext'
 
+import UserPageContextTEST from '../pages/TESTING/UserPageContextTEST'
+
 
 
 //import UserPage from '../pages/user/UserPage'
@@ -26,7 +28,8 @@ import { Navigate } from 'react-router-dom';
 //const UserPage = React.lazy(() => import('../pages/user/UserPage'));
 //const StoreOwnerPage = React.lazy(() => import('../pages/storeowner/StoreOwnerPage'));
 //const AdminPage = React.lazy(() => import('../pages/admin/AdminPage'));
-
+//<UserPageContextTEST/>
+//<UserPageContext/>
 const RouteBuilder = ( ) =>{
 
     return(
