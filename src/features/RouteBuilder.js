@@ -4,7 +4,7 @@ import { Routes, Route} from "react-router-dom";
 import GuestPageContext from '../pages/guest/GuestPageContext'
 import UserPageContext from '../pages/user/UserPageContext'
 
-import UserPageTEST from '../pages/TESTING2/UserPage'
+import UserPageTEST from '../pages/USINGHOOKS/UserPage'
 
 
 import StoreOwnerPage from '../pages/storeowner/StoreOwnerPage'
@@ -24,16 +24,33 @@ import { Navigate } from 'react-router-dom';
 //const UserPage = React.lazy(() => import('../pages/user/UserPage'));
 //const StoreOwnerPage = React.lazy(() => import('../pages/storeowner/StoreOwnerPage'));
 //const AdminPage = React.lazy(() => import('../pages/admin/AdminPage'));
-//<UserPageContextTEST/>
+
 //<UserPageContext/>
-//<UserPage/>
+// <UserPage/>
+
+/*
+refactor routes into a routebuilder:
+    - returns a string of the route and a function to return the inner jsx
+
+
+    - real url
+
+
+    create module hashmap:
+    key:         value:
+    /                <GuestPageContext/>
+    /user            <PrivateRoute type ='user'> <UserPageContext/> </PrivateRoute>
+    /register        <Register/>
+    /login           <Logon/>
+    /profile        <PrivateRoute> <Profile userid/> </PrivateRoute>
+*/
 
 const RouteBuilder = ( ) =>{
 
     return(
         <><Routes>
            
-<Route index path="/user/" element={  <PrivateRoute> <UserPageContext/> </PrivateRoute> } />
+<Route index path="/user/" element={  <PrivateRoute> <UserPageTEST/> </PrivateRoute> } />
             <Route index path="/storeowner/" element={ <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>} />
             <Route index path="/admin/" element={ <PrivateRoute> <AdminPage/> </PrivateRoute>} />         
     <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
