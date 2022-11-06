@@ -10,7 +10,7 @@ const AppointmentButton = (props) =>{
     const { toggleButton } = props
 
     return (
-        <div className="card_child">
+        <div className="card_child_button">
             <button 
                 onClick={toggleButton}>
                     Make Appointment
@@ -18,66 +18,51 @@ const AppointmentButton = (props) =>{
         </div>)
 }
 
-const AppointmentForm = () =>{
+const AppointmentForm = (props) =>{
+
+    const { toggleButton } = props
 
     return (
-        <div className="card_child">
-            <form>lalalla</form>
+        <div className="card_child_form">
+
+            <span className="close" onClick={toggleButton}>x</span>
+                <form onSubmit={toggleButton}>
+                     <input type="text" placeholder="Date" value="" name="date"/><br/>
+                     <input type="text" placeholder="Start Time" value="" name="start_time"/><br/>
+                     <input type="text" placeholder="End Time" value="" name="end_time"/><br/>
+                     
+                     <button disabled={false} name="status">Confirm Details</button>
+                </form>
+
         </div>)
 }
 
 const AppointmentList = (props) =>{
 
-
-
-    //{ appointments, setSelectedAppointment, selectedAppointment }
-
     const { selectAppointment, appointments, selectedAppointment,showButton, toggleButton,selected } = props.context
+
     console.log("/////////////////////////appointment list start:////////////////////////")
-    console.log( selectAppointment, appointments, selectedAppointment,showButton, toggleButton)
-    //console.log("appointments: ", appointments)
-    //console.log("appointments: ", appointments, handleSelectAppointment, selectedAppointment)
-
-
-    /*
-const appointmentButton = (props) =>{
-
+    console.log("selectAppointment: ", selectAppointment)
+    console.log("appointments: ", appointments)
+    console.log("selectedAppointment: ", selectedAppointment)
+    console.log("showButton " ,showButton)
+    console.log("toggleButton", toggleButton)
+    console.log("selected: ", selected)
     
-
-    return (
-        <div className="card_child">
-            <button 
-                onClick={toggleButton}>
-                    Make Appointment
-            </button>
-        </div>)
-}
-
-const appointmentForm = () =>{
-
-    return (
-        <div className="card_child">
-            <form>lalalla</form>
-        </div>)
-}
-*/
-
     return <>
         <div className="card_container">
-        {appointments.map( (appointment) => ( 
+            {appointments.map( (appointment) => ( 
             <>
                 <div className="card_child">
                     <AppointmentWidget
                         key={appointment.id} 
                         appointmentDetails={appointment}
                         selectedAppointment={selectedAppointment}
-                        handleSelectAppointment={selectAppointment}
-                    />
+                        handleSelectAppointment={selectAppointment}/>
                 </div>
             </>))}
 
-            {selected ? (showButton ? <AppointmentButton toggleButton={toggleButton}/> : <AppointmentForm/>) : <></> }
-            
+        {selected !== undefined ? (showButton ? <AppointmentButton toggleButton={toggleButton}/> : <AppointmentForm toggleButton={toggleButton}/>) : <></> }
         </div>
     </>
 }
