@@ -3,7 +3,7 @@ import {useState} from 'react'
 import React from "react";
 
 
-export const useLocationList = ( selectLocationAppointments ) =>{
+export const useLocationList = ( selectLocationAppointments,resetAppointmentList ) =>{
 
     console.log("//////////////////////LocationContextProvider///////////////////////////")
 
@@ -21,6 +21,7 @@ export const useLocationList = ( selectLocationAppointments ) =>{
         setSelected(id)
         // when user clicks on a location, set the appointments array
         selectLocationAppointments(id)
+        resetAppointmentList()
         //.. and erase the current selected appointment
         //setSelectedAppointment()
       }

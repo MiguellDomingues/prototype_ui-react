@@ -1,5 +1,5 @@
 
-import {useState} from 'react'
+import {useState, useCallback} from 'react'
 
 export const useAppointmentList = ( data ) =>{
 
@@ -11,6 +11,8 @@ export const useAppointmentList = ( data ) =>{
     /* id of a selected (highlighted) appointment */
     const [selectedAppointment, setSelectedAppointment] = useState();
 
+    const [showButton, setShowButton] = useState(true)
+
     //takes a location id
     const selectLocationAppointments = (id) => {
        // console.log("selected appointment: ", id, " using data ", data)
@@ -20,6 +22,7 @@ export const useAppointmentList = ( data ) =>{
         setAppointments(appts)
       }
 
+      /*
       //takes apt id
       const selectAppointment = (id) => {
         return (e) => {
@@ -27,14 +30,32 @@ export const useAppointmentList = ( data ) =>{
           console.log("select APPOINTMENT: ", id)
           setSelectedAppointment(id)
       }}
+*/
+
+    const selectAppointment = useCallback( (id) => {
+      return (e) => {
+        e.preventDefault();
+        console.log("select APPOINTMENT: ", id)
+        setSelectedAppointment(id)
+    }} , [] );
+
+    const resetAppointmentList = () =>{
+      setShowButton(true)
+      setSelectedAppointment(undefined)
+    }
+
+    //const resetButton = useCallback( () => setShowButton(true), []);
+
+    const toggleButton = useCallback(() => setShowButton(showButton => !showButton), []);
+    //const toggleButton = () => setShowButton(showButton => !showButton);
 
      // console.log("appointments: ", appointments)
       //console.log("selected appointment: ", selectedAppointment)
 
       return [
-        appointments, selectedAppointment,
+        appointments, selectedAppointment, showButton, 
         {
-          selectAppointment, selectLocationAppointments
+          selectAppointment, selectLocationAppointments, toggleButton,resetAppointmentList
         }
       ]
 }
