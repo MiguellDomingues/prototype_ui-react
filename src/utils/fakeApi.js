@@ -1,3 +1,31 @@
+const SUCCESS_POST_USER_APPOINTMENT = true
+
+
+const POST_USER_APPOINTMENT_SUCCESS = {
+  success:true,
+  appointment: { id: 10, date: "10/10/22", start: "9:00", end: "10:00" }
+}
+
+const POST_USER_APPOINTMENT_FAILURE = {
+  success:false,
+  reason: "failed to post user appointment"
+}
+
+const PostUserAppointmentMock = (appointment, key) => {
+
+  console.log("post user appointment mock:")
+  console.log("appointment: ", appointment)
+  console.log("key: ", key)
+
+  return new Promise( (resolve, reject) => {     
+    setTimeout(() => {    
+      if(SUCCESS_POST_USER_APPOINTMENT  === true){
+          return resolve(POST_USER_APPOINTMENT_SUCCESS);}
+          else if(SUCCESS_POST_USER_APPOINTMENT  === false){
+            return reject(POST_USER_APPOINTMENT_FAILURE)}
+    }, 2000);
+});}
+
 const SUCCESS_GET_USER_APPOINTMENTS = true
 
 /* 
@@ -252,12 +280,12 @@ const fetchGuestPostsMock = (key) => {
   }
 
   export const API = {
-    fetchGuestPosts: (key) =>           fetchGuestPostsMock(key),
-    fetchUserPosts:  (key) =>           fetchUserPostsMock(key),
-    fetchUserAppointments: (key, id) => fetchUserAppointmentsMock(key, id),
-    endSession:      (request) =>       endSessionMock(request),
-    startSession:    (request) =>       startSessionMock(request),
-    registerUser:    (request) =>       registerUserMock(request)
+    fetchGuestPosts: (key) =>              fetchGuestPostsMock(key),
+    fetchUserPosts:  (key) =>              fetchUserPostsMock(key),
+    postAppointment: (appointment, key) => PostUserAppointmentMock(appointment,key),
+    endSession:      (request) =>          endSessionMock(request),
+    startSession:    (request) =>          startSessionMock(request),
+    registerUser:    (request) =>          registerUserMock(request)
   }
 
 

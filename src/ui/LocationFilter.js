@@ -1,30 +1,28 @@
 
 import { IconContext } from "react-icons";
-import { getIconNames, getIcon,  getIconId } from "../../../utils/icons";
+import { getIconNames, getIcon,  getIconId } from "../utils/icons";
 
-import {useFilterContext} from '../FilterContext'
 
 import './locationfilter.css'
 
 const LocationFilter = (props) => {
 
-    console.log("location filter:", props)
+    //console.log("location filter:", props)
 
-    //const { useDataContext, useAppointmentContext, useFilterContext, useLocationContext } 
-
-   // const { filters, handleSelectFilter, handleDeselectFilter} = props.useFilterContext
-   // const {loading} = props.useDataContext
-
-   const { filters, handleSelectFilter, handleDeselectFilter } = useFilterContext()
-
+    
+   const { 
+    loading, 
+    filters, 
+    selectFilter,  
+    deSelectFilter } = props.context
    //console.log(" filter state/handlers ", filters, handleSelectFilter, handleDeselectFilter)
 
-   const { loading } = props.dependencies
+   //const filters = []
 
     console.log("location filter start:" ,filters, loading)
     
 
-    const getIconHandler = (iconName) => filters.includes(iconName) ? handleDeselectFilter(iconName) : handleSelectFilter(iconName)
+    const getIconHandler = (iconName) => filters.includes(iconName) ? deSelectFilter(iconName) : selectFilter(iconName)
 
     const getCSSSelectedIconColor = (iconName) => { return { className: filters.includes(iconName) ? "selected_icon_col" : "unselected_icon_col"} }
     const getCSSSelectedIconBG = (iconName) => { return filters.includes(iconName) ? " selected_icon_bg" : " unselected_icon_bg" }

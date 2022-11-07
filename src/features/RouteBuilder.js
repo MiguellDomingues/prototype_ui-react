@@ -2,9 +2,9 @@
 import { Routes, Route} from "react-router-dom";
 
 import GuestPageContext from '../pages/guest/GuestPageContext'
-import UserPageContext from '../pages/user/UserPageContext'
+//import UserPageContext from '../pages/user/UserPageContext'
 
-import UserPageTEST from '../pages/USINGHOOKS/UserPage'
+import UserPageTEST from '../pages/user/UserPage'
 
 
 import StoreOwnerPage from '../pages/storeowner/StoreOwnerPage'

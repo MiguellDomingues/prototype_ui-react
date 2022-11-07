@@ -1,10 +1,7 @@
 import {useState, useEffect, useRef} from 'react'
 import { useAPI } from '../../features/DataProvider'
-import React from "react";
 
-const DataContext = React.createContext(null);
-
-export const DataContextProvider = ( {children} ) =>{
+export const useDataContext= ( initFilter) =>{
 
   console.log("//////////////////////DataContextProvider///////////////////////////")
 
@@ -13,7 +10,7 @@ export const DataContextProvider = ( {children} ) =>{
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
 
-     /* callout status, t for success, f for failure */
+     /* callout status, undefined for init, t for success, f for failure */
     const [status, setStatus] = useState(undefined)
 
     /* copy of data from callout */
@@ -30,6 +27,9 @@ export const DataContextProvider = ( {children} ) =>{
     const success = (r) => {
       console.log("setposts UP: ", r)
       setData(r); 
+      setPosts(r.posts)
+      setStatus(true)
+      initFilter(r.posts, [])
       
       //setFilteredPosts(r.posts)
       //here i could do another callout to fetch appointments for a  location    
@@ -37,7 +37,10 @@ export const DataContextProvider = ( {children} ) =>{
 
     const failure = (r) => {
       console.log("error UP", r.reason) 
-      setData(r);  
+      setData(r); 
+      setPosts([])
+      setStatus(false)
+       
     }
 
     const finish = (r) => {
@@ -62,18 +65,33 @@ export const DataContextProvider = ( {children} ) =>{
           //add cleanup code for the handler? (like gmaps does)
       }, );
 
-    const value ={
-      data, status, posts, loading
-    }
+      const addAppointment = (appointment, loc_id) =>{
+        console.log("add appointment", appointment)
+        console.log("loc_id", loc_id)
 
+        const appended = data.posts.map( 
+          (post )=> {
+            if(post.id === loc_id){post.appointments.push(appointment)}
+            return post
+          } )
 
-    return(
-      <DataContext.Provider value={value}>
-        {children}
-      </DataContext.Provider>
-    );
+          //console.log("new posts: ", appended)
+
+         // console.log("new data: ", {success: true, posts: appended})
+
+          setData({success: true, posts: appended}); 
+         
+      }
+
+      console.log("//////////////data context: /////////////////")
+      console.log("data: ", data)
+      console.log("loading: ", loading)
+      console.log("//////////////////////////////////////////")
+      
+  return [
+    data, 
+    loading,posts,status,
+    {addAppointment},
+  ]; 
+
 }
-
-export const useDataContext = () => {
-    return React.useContext(DataContext);
-};

@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
   // add a check to see if data was fetched already (or some time elapased, to refresh)
   // prevents needing to reload as i navigate
   
-  const [data, setData] = React.useState({});
+  //const [data, setData] = React.useState({});
 
   //return a promise object
     //let postsPromise = await fetchPostsMock(success);
@@ -40,9 +40,25 @@ export const DataProvider = ({ children }) => {
     } 
   }
 
+  const handlePostAppointment = async (payload, onSuccess , onFail, onFinish) => {
+    console.log("DataProvider/POST APT: ", payload)
+    //await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)
+    
+    if(!token){
+      console.log("error:, user has no token set")
+      //await API.fetchGuestPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else if(token && token.type === "user"){
+      await API.postAppointment(payload,token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else{
+      console.log("error in handlePostAppointment: no API for user type defined")
+    } 
+  }
+
+
+
   const successCB = (onSuccess) => {
     return (r) =>{ 
-      console.log("example of Data Provider handling fetch results first")
+      console.log("example of Data Provider handling callout results first")
       console.log("it can reshape data (like removing 'success' prop) to make it easier to consume ")
       return onSuccess(r)
     }
@@ -58,8 +74,9 @@ export const DataProvider = ({ children }) => {
 
 
   const value = {
-    data,
-    onFetch:handleFetch
+    //data,
+    onFetch:handleFetch,
+    onPost:handlePostAppointment
   };
 
   return (
