@@ -24,6 +24,8 @@ todo:
       - users list, profile, config, etc
 */
 
+import  {useState } from 'react'
+
 
 import { useDataContext  } from './useDataContext'
 
@@ -43,87 +45,63 @@ import './userpage.css'
 
   const UserPageTEST = ( props ) =>{
 
+    const [selectedLocation, setSelectedLocation] = useState()
+
+    const selectLocation = (location_id) => {
+      console.log("//////////////////////////////SELECT LOCATION////////////////////////////////////////////", location_id)
+      setSelectedLocation(location_id)
+    }
+
+    const resetLocation = () => {
+      setSelectedLocation()
+    }
+
     //console.log( "asdadaddsdas", useDataContext())
-    const [filteredPosts, filters, {selectFilter, deSelectFilter,initFilter}] = useLocationFilter ()
-    const [data, loading,posts,status,{addAppointment,removeAppointment}] = useDataContext(initFilter)
+    const [data, loading,posts,status,{addAppointment,removeAppointment}] = useDataContext()
+    const [filters, {selectFilter, deSelectFilter,applyFilters}] = useLocationFilter ()
     
-    const [appointments, selectedAppointment, showButton, {selectAppointment, selectLocationAppointments,toggleButton,resetAppointmentList} ] = useAppointmentList (data)
-
-    const [ selected, {handleSelectedLocation} ] = useLocationList(selectLocationAppointments,resetAppointmentList)
-
     console.log("//////////////user page: /////////////////")
     console.log("data: ", data)
     console.log("loading: ", loading)
     console.log("posts: ", posts)
     console.log("status: ", status)
 
-    console.log("filteredPosts: ", filteredPosts)
+    //console.log("filteredPosts: ", filteredPosts)
     console.log("filters: ", filters)
-    console.log("appointments: ", appointments)
-    console.log("selected: ", selected)
-    console.log("showButton: ", showButton)
+    //console.log("appointments: ", appointments)
+    console.log("selectedLocation: ", selectedLocation)
+    console.log("select Location: ", selectLocation)
+    //console.log("showButton: ", showButton)
     console.log("/////////////////////////////////////////")
 
     function getPosts(data){
       return data && data.posts ? data.posts : [];
     }
 
-    function getFilteredPosts(data, filteredPosts){
-      return filteredPosts ? filteredPosts : getPosts(data) ;
-    }
-
-    function getLocationAppointments(posts, location_id){
-      return (posts && location_id) ? posts.find( (post) =>  post.id === location_id ).appointments : [];
-    }
-
-   
-//const appts = posts.find( (post) =>  post.id === id ).appointments
-
     const map_deps ={
       posts: getPosts(data), 
-      selected, 
-      handleSelectedLocation
+      selectedLocation,
+      selectLocation
     }
 
-    //const filteredPosts = !props.context.filteredPosts ? data.posts : props.context.filteredPosts
-
     const locations_deps = { 
-      posts: getFilteredPosts(data, filteredPosts),
+      posts: applyFilters(getPosts(data), filters),
       data,
       loading, 
-      handleSelectedLocation, 
-      selected
+      selectedLocation,
+      selectLocation,
     }
 
     const filters_deps = {
       loading, selectFilter, deSelectFilter , filters
     }
 
-    // { appointments, setSelectedAppointment, selectedAppointment }
-    //{ appointments, setSelectedAppointment, selectedAppointment }
-
     const appt_deps = {
-      selected,
-      appointments, 
-      //appointments: getLocationAppointments(getPosts(data), selected),
-      selectAppointment, 
-      selectedAppointment, 
-      showButton, 
-      toggleButton, 
+      selectedLocation,
+      posts: getPosts(data), 
       addAppointment,
       removeAppointment
     }
-
-    /*
-if(loading){
-        return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
-    }
-    */
-
-   // const getLoadingSpinner = () =>{
-    //  return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
-   // }
-
 
     return (<>
 

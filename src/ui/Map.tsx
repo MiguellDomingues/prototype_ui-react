@@ -33,7 +33,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
        // console.log("Map start:", props)
 
-        const {posts, selected, handleSelectedLocation} = props.context
+        const {posts, selectedLocation, selectLocation} = props.context
 
         const markers = !posts ? [] : posts
 
@@ -54,7 +54,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
           setCenter({lat: lat, lng: lng})
 
           //selectedLocationHandler(null, id)
-          handleSelectedLocation(null,id)
+          selectLocation(id)
           
 
           setZoom(4)
@@ -137,7 +137,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
                   <Marker                               /* instantiate a new marker object for each entry in the list */
                     key={data.id}
                     id={data.id}
-                    selected={data.id === selected} 
+                    selected={data.id === selectedLocation} 
                     position={data.LatLng}
                     title={"marker title"} 
                     label={i.toString()}

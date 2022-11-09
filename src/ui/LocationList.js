@@ -11,7 +11,7 @@ const LocationList = ( props ) =>{
     //rather then pass props down from parent
     //pass the parent context and deconstruct the props you need
     
-    const {posts, data, loading, selected, handleSelectedLocation} = props.context
+    const {posts, data, loading, selectedLocation, selectLocation} = props.context
 
     
 
@@ -20,26 +20,15 @@ const LocationList = ( props ) =>{
     
     console.log("loading: ", loading)
     
-    console.log("selected: ", selected)
+    console.log("selectedLocation: ", selectedLocation)
 
-    /*
-    const applyFilter = (filters, data) => {
-
-        //console.log("apply filter: ",filters,data)
-        if(data){
-          //console.log("apply ", updatedFilters,data)
-          return data.posts.filter( (post) => filters.every( (filterName) => post.icons.includes(filterName) ) )
-        }else{
-          //console.log("data is undefined ", updatedFilters,data)
-          return []
-        }  
-      }
-      */
-      
+    console.log("select Location: ", selectLocation)
 
     if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
+
+    const isSelectedLocation = (selectedLocation, id) => !isNaN(selectedLocation) && selectedLocation === id 
 
     //const filteredPosts = !props.context.filteredPosts ? data.posts : props.context.filteredPosts
 
@@ -53,9 +42,10 @@ const LocationList = ( props ) =>{
                 <div className={"list_child col display"}>           
                    <LocationWidget 
                         key={location.id}
-                        selected={selected} 
+                        isSelected={isSelectedLocation(selectedLocation, location.id)}
+                        //selected={selectedLocation} 
                         location={location} 
-                        selectedHandler={handleSelectedLocation}/>
+                        selectedHandler={selectLocation}/>
                 </div> )) }
             </>
         }else{

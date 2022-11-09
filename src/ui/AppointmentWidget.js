@@ -3,13 +3,9 @@ import './appointmentwidget.css'
 const AppointmentWidget = (props) =>{
 
     const { date, start, end, id } = props.appointmentDetails
-    const {handleSelectAppointment,  handleRemoveAppointment} = props
-    const selected = props.selected
-   // const selectedAppointment = props.selectedAppointment  handleRemoveAppointment
-
+    const {handleSelectAppointment,  handleRemoveAppointment, selectedLocation} = props
+    
     const isSelected = props.isSelected
-
-    //const setBGColour = (selected, id) => { return !isNaN(selected) && selected === id ? " selected_appt" : " deselected_appt" }
 
     const setBGColour = (isSelected) => isSelected ? " selected_appt" : " deselected_appt" 
 
@@ -21,7 +17,7 @@ const AppointmentWidget = (props) =>{
         start: {start} <br/>
         end: {end}  <br/>
     </div>
-    {isSelected ? (<div> <button onClick={ (e)=>handleRemoveAppointment(selected,id)}>Cancel Appointment</button></div>) : <></>}
+    {isSelected ? (<div> <button onClick={ (e)=>handleRemoveAppointment(selectedLocation,id)}>Cancel Appointment</button></div>) : <></>}
     </>
 }
 

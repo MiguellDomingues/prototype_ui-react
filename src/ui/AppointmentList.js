@@ -3,19 +3,29 @@ import AppointmentWidget from './AppointmentWidget'
 import AppointmentForm from './AppointmentForm'
 
 import './appointmentlist.css'
+import { useAppointmentList } from './hooks/useAppointmentList'
+
 
 const AppointmentList = (props) =>{
 
-    const { selectAppointment, appointments, selectedAppointment,showButton, toggleButton,selected ,addAppointment,removeAppointment} = props.context
+    const { selectedLocation,posts, addAppointment, removeAppointment } = props.context
 
-    console.log("/////////////////////////appointment list start:////////////////////////")
-    console.log("selectAppointment: ", selectAppointment)
+    console.log("/////////////////////////appointment list props:////////////////////////")
+    console.log("selectAppointment: ", selectedLocation)
+    console.log("posts: ", posts)
+    
+    //console.log("selected: ", selected)
+    console.log("removeAppointment: ", removeAppointment)
+    console.log("addAppointment: ", addAppointment)
+
+   const [appointments, selectedAppointment, showButton, {selectAppointment,toggleButton} ] = useAppointmentList (posts, selectedLocation)
+
+   console.log("/////////////////////////appointment list :////////////////////////")
     console.log("appointments: ", appointments)
     console.log("selectedAppointment: ", selectedAppointment)
-    console.log("showButton " ,showButton)
-    console.log("toggleButton", toggleButton)
-    console.log("selected: ", selected)
-    console.log("removeAppointment: ", removeAppointment)
+    console.log("showButton: ", showButton)
+    console.log("selectAppointment: ", selectAppointment)
+    console.log("toggleButton: ", toggleButton)
 
     const isSelectedAppointment = (id, selected_id) => { return !isNaN(selected_id) && selected_id === id }
     
@@ -29,18 +39,19 @@ const AppointmentList = (props) =>{
                         isSelected={isSelectedAppointment(appointment.id, selectedAppointment)}
                         appointmentDetails={appointment}
                         handleRemoveAppointment={removeAppointment}
-                        selected={selected}
+                        selectedLocation={selectedLocation}
                         //selectedAppointment={selectedAppointment}
                         handleSelectAppointment={selectAppointment}/>
                 </div>
             </>))}
 
-        {selected !== undefined ? (showButton ? <AppointmentButton 
+        {selectedLocation !== undefined ? (showButton ? <AppointmentButton 
                                                     toggleButton={toggleButton}/> : 
                                                 <AppointmentForm 
                                                     toggleButton={toggleButton}
                                                     addAppointment={addAppointment}
-                                                    selected={selected}/>) : <></> }
+                                                    selectedLocation={selectedLocation}
+                                                    />) : <></> }
         </div>
     </>
 }

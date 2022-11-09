@@ -29,7 +29,7 @@ export const useDataContext= ( initFilter) =>{
       setData(r); 
       setPosts(r.posts)
       setStatus(true)
-      initFilter(r.posts, [])
+      //initFilter(r.posts, [])
       
       //setFilteredPosts(r.posts)
       //here i could do another callout to fetch appointments for a  location    

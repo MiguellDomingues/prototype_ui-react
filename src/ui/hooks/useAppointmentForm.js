@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react'
 
 import { useAPI } from '../../features/DataProvider'
 
-export const useAppointmentForm = ( addAppointment, selected,toggleButton ) =>{
+export const useAppointmentForm = ( addAppointment, selectedLocation,toggleButton ) =>{
 
     const { onPost } = useAPI()
 
@@ -21,7 +21,7 @@ export const useAppointmentForm = ( addAppointment, selected,toggleButton ) =>{
 
     const success = (r) => {
         console.log("POST appointment", r)
-        addAppointment(r.appointment, selected)
+        addAppointment(r.appointment, selectedLocation)
         toggleButton()
       }
   
