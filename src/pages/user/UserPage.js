@@ -45,7 +45,7 @@ import './userpage.css'
 
     //console.log( "asdadaddsdas", useDataContext())
     const [filteredPosts, filters, {selectFilter, deSelectFilter,initFilter}] = useLocationFilter ()
-    const [data, loading,posts,status,{addAppointment}] = useDataContext(initFilter)
+    const [data, loading,posts,status,{addAppointment,removeAppointment}] = useDataContext(initFilter)
     
     const [appointments, selectedAppointment, showButton, {selectAppointment, selectLocationAppointments,toggleButton,resetAppointmentList} ] = useAppointmentList (data)
 
@@ -54,8 +54,8 @@ import './userpage.css'
     console.log("//////////////user page: /////////////////")
     console.log("data: ", data)
     console.log("loading: ", loading)
-    console.log("data: ", posts)
-    console.log("loading: ", status)
+    console.log("posts: ", posts)
+    console.log("status: ", status)
 
     console.log("filteredPosts: ", filteredPosts)
     console.log("filters: ", filters)
@@ -72,6 +72,12 @@ import './userpage.css'
       return filteredPosts ? filteredPosts : getPosts(data) ;
     }
 
+    function getLocationAppointments(posts, location_id){
+      return (posts && location_id) ? posts.find( (post) =>  post.id === location_id ).appointments : [];
+    }
+
+   
+//const appts = posts.find( (post) =>  post.id === id ).appointments
 
     const map_deps ={
       posts: getPosts(data), 
@@ -97,7 +103,15 @@ import './userpage.css'
     //{ appointments, setSelectedAppointment, selectedAppointment }
 
     const appt_deps = {
-      selectAppointment, appointments, selectedAppointment, showButton, toggleButton, selected,addAppointment
+      selected,
+      appointments, 
+      //appointments: getLocationAppointments(getPosts(data), selected),
+      selectAppointment, 
+      selectedAppointment, 
+      showButton, 
+      toggleButton, 
+      addAppointment,
+      removeAppointment
     }
 
     /*

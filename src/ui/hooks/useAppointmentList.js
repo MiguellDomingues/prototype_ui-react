@@ -5,6 +5,8 @@ export const useAppointmentList = ( data ) =>{
 
     const posts = data && data.posts ? data.posts : []
 
+    console.log("useAppointments: ", data)
+
     //console.log("//////////////////////AppointmentContextProvider///////////////////////////")
     const [appointments, setAppointments] = useState([]);
 

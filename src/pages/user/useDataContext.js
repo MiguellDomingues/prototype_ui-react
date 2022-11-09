@@ -80,7 +80,32 @@ export const useDataContext= ( initFilter) =>{
          // console.log("new data: ", {success: true, posts: appended})
 
           setData({success: true, posts: appended}); 
+          setPosts(appended)
          
+      }
+
+      const removeAppointment = (loc_id, apt_id) => {
+
+        console.log("removeApt: ", loc_id, apt_id)
+
+        const removed = data.posts.map(
+          (post) =>{
+            if(post.id === loc_id){post.appointments = post.appointments.filter((appointment)=>appointment.id !== apt_id)}
+            return post
+          }
+        )
+
+        console.log("cancel apot data: ", removed)
+        /*
+        for each location:
+          if location.id = loc_id
+            for each location appointment:
+              if appointment.id != apt_id: 
+                copy appointment    
+        */
+
+          setData({success: true, posts: removed}); 
+          setPosts(removed)
       }
 
       console.log("//////////////data context: /////////////////")
@@ -91,7 +116,7 @@ export const useDataContext= ( initFilter) =>{
   return [
     data, 
     loading,posts,status,
-    {addAppointment},
+    {addAppointment,removeAppointment},
   ]; 
 
 }

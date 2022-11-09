@@ -18,6 +18,7 @@ const AppointmentForm = (props) =>{
         <div className="card_child_form">
 
             <span className="close" onClick={toggleButton}>x</span>
+            
                 <form onSubmit={handleSubmit}>
                      <input type="text" placeholder="Date"       value={formInput.date}          name="date"       onChange={onChange}/><br/>
                      <input type="text" placeholder="Start Time" value={formInput.start_time}    name="start_time" onChange={onChange}/><br/>
