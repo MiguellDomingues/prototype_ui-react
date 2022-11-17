@@ -1,3 +1,0 @@
-make it so i can convert a js file with object data into inputs for api endpoints
-
-do it at the endpoints
