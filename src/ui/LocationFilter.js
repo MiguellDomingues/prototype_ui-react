@@ -19,7 +19,7 @@ const LocationFilter = (props) => {
 
    //const filters = []
 
-    console.log("location filter start:" ,filters, loading)
+   // console.log("location filter start:" ,filters, loading)
     
 
     const getIconHandler = (iconName) => filters.includes(iconName) ? deSelectFilter(iconName) : selectFilter(iconName)

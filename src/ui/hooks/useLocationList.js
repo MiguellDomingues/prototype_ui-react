@@ -5,7 +5,7 @@ import React from "react";
 
 export const useLocationList = ( selectLocationAppointments,resetAppointmentList ) =>{
 
-    console.log("//////////////////////LocationContextProvider///////////////////////////")
+    //console.log("//////////////////////LocationContextProvider///////////////////////////")
 
     // DEPENDENCIES
     //const {selectLocationAppointments, setSelectedAppointment } = useAppointmentContext()

@@ -10,22 +10,22 @@ const AppointmentList = (props) =>{
 
     const { selectedLocation,posts, addAppointment, removeAppointment } = props.context
 
-    console.log("/////////////////////////appointment list props:////////////////////////")
-    console.log("selectAppointment: ", selectedLocation)
-    console.log("posts: ", posts)
+    //console.log("/////////////////////////appointment list props:////////////////////////")
+   // console.log("selectAppointment: ", selectedLocation)
+   // console.log("posts: ", posts)
     
     //console.log("selected: ", selected)
-    console.log("removeAppointment: ", removeAppointment)
-    console.log("addAppointment: ", addAppointment)
+    //console.log("removeAppointment: ", removeAppointment)
+    //console.log("addAppointment: ", addAppointment)
 
    const [appointments, selectedAppointment, showButton, {selectAppointment,toggleButton} ] = useAppointmentList (posts, selectedLocation)
 
-   console.log("/////////////////////////appointment list :////////////////////////")
-    console.log("appointments: ", appointments)
-    console.log("selectedAppointment: ", selectedAppointment)
-    console.log("showButton: ", showButton)
-    console.log("selectAppointment: ", selectAppointment)
-    console.log("toggleButton: ", toggleButton)
+   //console.log("/////////////////////////appointment list :////////////////////////")
+   // console.log("appointments: ", appointments)
+   // console.log("selectedAppointment: ", selectedAppointment)
+   // console.log("showButton: ", showButton)
+   // console.log("selectAppointment: ", selectAppointment)
+   // console.log("toggleButton: ", toggleButton)
 
     const isSelectedAppointment = (id, selected_id) => { return !isNaN(selected_id) && selected_id === id }
     

@@ -1,6 +1,5 @@
 const SUCCESS_POST_USER_APPOINTMENT = true
 
-
 const POST_USER_APPOINTMENT_SUCCESS = {
   success:true,
   appointment: { id: 10, date: "10/10/22", start: "9:00", end: "10:00" }
@@ -26,100 +25,13 @@ const PostUserAppointmentMock = (appointment, key) => {
     }, 2000);
 });}
 
-const SUCCESS_GET_USER_APPOINTMENTS = true
 
-/* 
-  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
-  instead of returning the rejected resolve object 
-*/
-
-const GET_USER_APPOINTMENTS_SUCCESS  =
-{
-  success: true, 
-  posts: [
-    {
-        id: 0,
-        appointments: [
-          { id: 0, date: "10/10/22", start: "9:00", end: "10:00" },
-          { id: 1, date: "10/11/22", start: "11:00", end: "12:00" }
-        ]
-    },
-    {
-        id: 1,
-        appointments: [
-          { id: 2, date: "10/11/22", start: "8:00", end: "9:00" },
-        ] 
-    },
-    {
-        id: 2,
-        appointments: [] 
-    }
-  ]
-}
-
-const GET_USER_APPOINTMENTS_FAILURE  = 
-{
-  success: false, 
-  reason: "failed to fetch user appointments"
-}
-
-const fetchUserAppointmentsMock = (key, id) => {
-    return new Promise( (resolve, reject) => {     
-      setTimeout(() => {    
-        if(SUCCESS_GET_USER_APPOINTMENTS  === true){
-            return resolve(GET_USER_APPOINTMENTS_SUCCESS);}
-            else if(SUCCESS_GET_USER_APPOINTMENTS  === false){
-              return reject(GET_USER_APPOINTMENTS_FAILURE)}
-      }, 2000);
-  });}
     
-    
-    
-    /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
+/***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
 const SUCCESS_GET_USER_POSTS = true
 
-/* 
-  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
-  instead of returning the rejected resolve object 
-*/
-
-const GET_USER_POSTS_SUCCESS =
-{
-  success: true, 
-  posts: [
-    {
-        id: 0,
-        address: " user abc ave 123456",
-        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
-        info: "some info stuffs 0",
-        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"],
-        appointments: [
-          { id: 0, date: "10/10/22", start: "9:00", end: "10:00" },
-          { id: 1, date: "10/11/22", start: "11:00", end: "12:00" }
-
-        ]
-    },
-    {
-        id: 1,
-        address: "USER abcd ave 123456",
-        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
-        info: "some info stuffs 1",
-        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"],
-        appointments: [
-          { id: 2, date: "10/11/22", start: "8:00", end: "9:00" },
-        ] 
-    },
-    {
-        id: 2,
-        address: "USERRR abcdef ave 123456",
-        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
-        info: "some info stuffs 2",
-        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"],
-        appointments: [] 
-    }
-  ]
-}
+const ENDPOINT_URL_USER = '/api/posts/user'
 
 const GET_USER_POSTS_FAILURE = 
 {
@@ -133,14 +45,33 @@ const GET_USER_POSTS_FAILURE =
 */
 
 const fetchUserPostsMock = (key) => {
-    return new Promise( (resolve, reject) => {     
-      setTimeout(() => {    
-        if(SUCCESS_GET_USER_POSTS === true){
-            return resolve(GET_USER_POSTS_SUCCESS);}
-            else if(SUCCESS_GET_USER_POSTS === false){
-              return reject(GET_USER_POSTS_FAILURE)}
-      }, 2000);
-  });}
+
+  return new Promise( (resolve, reject) => {
+
+    fetch(ENDPOINT_URL_USER)
+    .then((res) => res.json())
+    .then((data) => {
+      data.success = true
+      console.log("fetch miragejs user posts: ", data)
+      return resolve(data);
+    })
+    .catch((error) => {
+      console.log('Error fetching user posts', error)
+      return reject(GET_USER_POSTS_FAILURE);
+      //
+    });
+
+    /*
+    setTimeout(() => {    
+      if(SUCCESS_GET_USER_POSTS === true){
+        return resolve(GET_USER_POSTS_SUCCESS);}
+          else if(SUCCESS_GET_USER_POSTS === false){
+        return reject(GET_USER_POSTS_FAILURE)}
+    }, 2000);
+    */
+
+  });
+}
 
   /************************************************************************************************/
    
@@ -151,38 +82,7 @@ const fetchUserPostsMock = (key) => {
 
 const SUCCESS_GET_GUEST_POSTS = true
 
-/* 
-  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
-  instead of returning the rejected resolve object 
-*/
-
-const GET_GUEST_POSTS_SUCCESS =
-{
-  success: true, 
-  posts: [
-    {
-        id: 0,
-        address: "abc ave 123456",
-        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
-        info: "some info stuffs 0",
-        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
-    },
-    {
-        id: 1,
-        address: "abcd ave 123456",
-        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
-        info: "some info stuffs 1",
-        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
-    },
-    {
-        id: 2,
-        address: "abcdef ave 123456",
-        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
-        info: "some info stuffs 2",
-        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
-    }
-  ]
-}
+const ENDPOINT_URL_GUEST = '/api/posts/guest'
 
 const GET_GUEST_POSTS_FAILURE = 
 {
@@ -196,14 +96,32 @@ const GET_GUEST_POSTS_FAILURE =
 */
 
 const fetchGuestPostsMock = (key) => {
-    return new Promise( (resolve, reject) => {     
-      setTimeout(() => {    
-        if(SUCCESS_GET_GUEST_POSTS === true){
-            return resolve(GET_GUEST_POSTS_SUCCESS);}
-            else if(SUCCESS_GET_GUEST_POSTS === false){
-              return reject(GET_GUEST_POSTS_FAILURE)}
+
+  return new Promise( (resolve, reject) => {    
+
+    fetch(ENDPOINT_URL_GUEST)
+    .then((res) => res.json())
+    .then((data) => {
+      data.success = true
+      console.log("fetch miragejs guest posts: ", data)
+      return resolve(data);
+    })
+    .catch((error) => {
+      console.log('Error fetching guest posts', error)
+      return reject(GET_GUEST_POSTS_FAILURE);
+      //
+    });
+/*
+    setTimeout(() => {    
+      if(SUCCESS_GET_GUEST_POSTS === true){
+        return resolve(GET_GUEST_POSTS_SUCCESS);}
+          else if(SUCCESS_GET_GUEST_POSTS === false){
+        return reject(GET_GUEST_POSTS_FAILURE)}
       }, 2000);
-  });}
+*/
+  });
+
+}
 
   /************************************************************************************************/
    /***************************USER LOGGING ON ENDPOINT***********************/
@@ -315,5 +233,133 @@ export async function fetchUserData(succeed, onSuccess , onFail, onFinish) {
 }
 
 */
+
+/* 
+  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
+  instead of returning the rejected resolve object 
+
+
+const GET_GUEST_POSTS_SUCCESS =
+{
+  posts: [
+    {
+        id: 0,
+        address: "abc ave 123456",
+        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+        info: "some info stuffs 0",
+        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"]
+    },
+    {
+        id: 1,
+        address: "abcd ave 123456",
+        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 1",
+        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"] 
+    },
+    {
+        id: 2,
+        address: "abcdef ave 123456",
+        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 2",
+        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"] 
+    }
+  ],
+  success: true, 
+}
+
+*/
+
+/* 
+  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
+  instead of returning the rejected resolve object 
+
+
+const GET_USER_POSTS_SUCCESS =
+{
+  success: true, 
+  posts: [
+    {
+        id: 0,
+        address: " user abc ave 123456",
+        LatLng: { lat: 43.919617760254686, lng: -0.8844604492},
+        info: "some info stuffs 0",
+        icons: ["FaWrench", "FaOilCan", "FaCarBattery", "GiMechanicGarage"],
+        appointments: [
+          { id: "0", loc_id: "0", date: "10/10/22", start: "9:00", end: "10:00" },
+          { id: "1", loc_id: "0", date: "10/11/22", start: "11:00", end: "12:00" }
+
+        ]
+    },
+    {
+        id: 1,
+        address: "USER abcd ave 123456",
+        LatLng: { lat: 47.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 1",
+        icons: ["MdLocalCarWash", "MdOutlineCarRepair", "GiMechanicGarage", "FaCarBattery"],
+        appointments: [
+          { id: "2", loc_id: "1", date: "10/11/22", start: "8:00", end: "9:00" },
+        ] 
+    },
+    {
+        id: 2,
+        address: "USERRR abcdef ave 123456",
+        LatLng: { lat: 50.919617760254686, lng: -0.7844604492},
+        info: "some info stuffs 2",
+        icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"],
+        appointments: [] 
+    }
+  ]
+}
+
+*/
+
+/* 
+const SUCCESS_GET_USER_APPOINTMENTS = true
+
+  get around the limitation of Suspense not handling exception-based failed async calls by returning the resolve object with a boolean flag :false
+  instead of returning the rejected resolve object 
+
+
+const GET_USER_APPOINTMENTS_SUCCESS  =
+{
+  success: true, 
+  posts: [
+    {
+        id: 0,
+        appointments: [
+          { id: 0, date: "10/10/22", start: "9:00", end: "10:00" },
+          { id: 1, date: "10/11/22", start: "11:00", end: "12:00" }
+        ]
+    },
+    {
+        id: 1,
+        appointments: [
+          { id: 2, date: "10/11/22", start: "8:00", end: "9:00" },
+        ] 
+    },
+    {
+        id: 2,
+        appointments: [] 
+    }
+  ]
+}
+
+const GET_USER_APPOINTMENTS_FAILURE  = 
+{
+  success: false, 
+  reason: "failed to fetch user appointments"
+}
+
+const fetchUserAppointmentsMock = (key, id) => {
+    return new Promise( (resolve, reject) => {     
+      setTimeout(() => {    
+        if(SUCCESS_GET_USER_APPOINTMENTS  === true){
+            return resolve(GET_USER_APPOINTMENTS_SUCCESS);}
+            else if(SUCCESS_GET_USER_APPOINTMENTS  === false){
+              return reject(GET_USER_APPOINTMENTS_FAILURE)}
+      }, 2000);
+  });}
+    
+    */
 
 

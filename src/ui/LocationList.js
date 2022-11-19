@@ -15,14 +15,14 @@ const LocationList = ( props ) =>{
 
     
 
-    console.log("location list: ")
-    console.log("data: ", data)
+    //console.log("location list: ")
+   // console.log("data: ", data)
     
-    console.log("loading: ", loading)
+    //console.log("loading: ", loading)
     
-    console.log("selectedLocation: ", selectedLocation)
+   // console.log("selectedLocation: ", selectedLocation)
 
-    console.log("select Location: ", selectLocation)
+   // console.log("select Location: ", selectLocation)
 
     if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>

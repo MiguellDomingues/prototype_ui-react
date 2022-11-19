@@ -67,9 +67,9 @@ const selectFilter = (iconName) => {
     //  console.log("loc filter useffect: ", filters)
  // },[filters] );
 
-  console.log("//////////////////////Filter///////////////////////////")
+ // console.log("//////////////////////Filter///////////////////////////")
  // console.log("filteredPosts: ", filteredPosts)
-  console.log("filters: ", filters)
+ // console.log("filters: ", filters)
  // console.log("posts: ", posts)
 
  

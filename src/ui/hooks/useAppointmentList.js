@@ -5,7 +5,7 @@ export const useAppointmentList = ( posts = [], selectedLocation = undefined ) =
 
     const appointments = selectedLocation !== undefined ? posts.find( (post) =>  post.id === selectedLocation ).appointments : []
 
-   console.log("APTS SHOULD BE: ", appointments )
+   //console.log("APTS SHOULD BE: ", appointments )
 
   
     /* id of a selected (highlighted) appointment */
@@ -22,8 +22,8 @@ export const useAppointmentList = ( posts = [], selectedLocation = undefined ) =
 
     const toggleButton = useCallback(() => setShowButton(showButton => !showButton), []);
   
-      console.log("appointments: ", appointments)
-      console.log("selected appointment: ", selectedAppointment)
+     // console.log("appointments: ", appointments)
+      //console.log("selected appointment: ", selectedAppointment)
 
       return [
         appointments, selectedAppointment, showButton, 
