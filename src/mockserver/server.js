@@ -170,30 +170,53 @@ export function makeServer({ environment = 'test' } = {} ) {
 
         return response
       });
-  
-      /*
-      this.get('/:id', (schema, request) => {
-        let id = request.params.id;
-        return schema.notes.find(id);
-      });
-  
-      this.post('/', (schema, request) => {
+
+      //definition for createUser endpoint
+      this.post('createUser', (schema, request) => {
+
         let attrs = JSON.parse(request.requestBody);
-        return schema.notes.create(attrs);
+
+        const user_name = attrs.user_name                      // add username into seperate const
+       
+        console.log("----------SERVER: CREATE USER-------------")
+        console.log("attrs: ", attrs)
+
+        let duplicate_username = false;
+
+        // using .every() instead of .forEach() allows us to break out of the loop early by returning false
+        schema.users.all().models.every( (user)=>{ 
+          if (user_name === user.attrs.user_name){                        //..check for duplicate user_name in the users Model
+            duplicate_username = true
+            return false                                                  //.. and break out of the loop (every)
+          }
+          return true 
+        });
+
+        const response = {}
+
+        if(!duplicate_username){                                // ...if the user name is not a duplicate
+          console.log("creating new user: ", user_name)
+
+          const new_user ={                                      //.. create a new entry to be inserted to users Model
+            user_name: user_name,
+            password: attrs.password,
+            type: attrs.type
+          }
+
+          schema.users.create(new_user);                        
+
+          response.success = true;                             // ...and create the response object which routes user to the correct page (w/ api key)
+          response.type = 'user'
+          response.key = '2342fddddd2f1d131rf12'
+          response.path = '/user/'
+
+        }else{
+          response.success = false                             // ..if the name is a dupe, create a failure response object
+          response.reason = 'duplicate user name'
+        }
+
+        return response;
       });
-  
-      this.patch('/:id', (schema, request) => {
-        let newAttrs = JSON.parse(request.requestBody);
-        let id = request.params.id;
-        let note = schema.notes.find(id);
-        return note.update(newAttrs);
-      });
-  
-      this.delete('/:id', (schema, request) => {
-        let id = request.params.id;
-        return schema.notes.find(id).destroy();
-      });
-      */
   
       // ... end of routes()
     },

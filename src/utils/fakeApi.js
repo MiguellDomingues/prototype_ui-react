@@ -124,7 +124,7 @@ const fetchGuestPostsMock = (key) => {
 }
 
   /************************************************************************************************/
-   /***************************USER LOGGING ON ENDPOINT***********************/
+  /***************************USER LOGGING ON ENDPOINT***********************/
 
   const SUCCESS_START_SESSION = true
 
@@ -182,24 +182,45 @@ const fetchGuestPostsMock = (key) => {
 
   const SUCCESS_REGISTER_USER = true
 
-  const USER_TYPES = {
-    USER: "user",
-    STOREOWNER: "storeowner",
-    ADMIN: "admin"
-  }
+  const ENDPOINT_URL_CREATEUSER = '/api/createUser'
 
-  const REGISTER_USER_SUCCESS = {
-    type: USER_TYPES.STOREOWNER, 
-    key: '2342f2f1d131rf12' , 
-    path: '/' + USER_TYPES.STOREOWNER + '/'
-  }
- 
   const REGISTER_USER_FAILURE = {
     reason: "username taken"
   }
 
   const registerUserMock = (request) => {
+
+    console.log("---creating new user---", request)
+
     return new Promise( (resolve, reject) => {
+
+      const request_body = {
+        type: request.type,
+        user_name: request.username,
+        password: request.password
+      }
+
+      fetch(ENDPOINT_URL_CREATEUSER, {
+        method: 'POST',
+        body: JSON.stringify(request_body),
+      })
+      .then(((res) => res.json()))
+      .then((data) => {
+
+        console.log("RESPONSE FROM SERVER IN createuser: ", data);
+
+       if(data.success){
+        return resolve(data)
+       }
+
+        return reject({reason: data.reason})
+      })
+      .catch((error) => {
+        console.log('Error creating user.', error);
+        return reject(REGISTER_USER_FAILURE)
+      });
+
+      /*
       setTimeout(() => {
         if(SUCCESS_REGISTER_USER === true){ 
           return resolve(REGISTER_USER_SUCCESS) 
@@ -207,6 +228,8 @@ const fetchGuestPostsMock = (key) => {
           return reject(REGISTER_USER_FAILURE)   
         }
       }, 1000);
+      */
+
   });}
 
 /************************************************************************************************/
@@ -395,5 +418,20 @@ const fetchUserAppointmentsMock = (key, id) => {
   }
     
     */
+
+   /*
+  const USER_TYPES = {
+    USER: "user",
+    STOREOWNER: "storeowner",
+    ADMIN: "admin"
+  }
+
+  
+  const REGISTER_USER_SUCCESS = {
+    type: USER_TYPES.USER, 
+    key: '2342f2f1d131rf12' , 
+    path: '/' + USER_TYPES.USER + '/'
+  }
+  */
 
 
