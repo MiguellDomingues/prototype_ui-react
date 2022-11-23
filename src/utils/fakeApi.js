@@ -128,19 +128,43 @@ const fetchGuestPostsMock = (key) => {
 
   const SUCCESS_START_SESSION = true
 
-  const START_SESSION_SUCCESS = 
-  {
-    type: 'user', 
-    key: '2342fddddd2f1d131rf12', 
-    path: '/user/'
-  }
+  const ENDPOINT_URL_AUTHENTICATE = '/api/authenticate'
 
   const START_SESSION_FAILURE = {
     reason: "bad crddddeds"
   }
 
   const startSessionMock = (request) => {
+    console.log("---logging on---", request)
+
     return new Promise( (resolve, reject) => {
+
+      const request_body = {
+        user_name: request.username,
+        password: request.password
+      }
+
+      fetch(ENDPOINT_URL_AUTHENTICATE, {
+        method: 'POST',
+        body: JSON.stringify(request_body),
+      })
+      .then(((res) => res.json()))
+      .then((data) => {
+
+        console.log("RESPONSE FROM SERVER IN AUTHENTICATE: ", data);
+
+        if(data.success){
+          return resolve(data)
+        }
+
+        return reject(START_SESSION_FAILURE)
+      })
+      .catch((error) => {
+        console.log('Error logging on.', error);
+        return reject(START_SESSION_FAILURE)
+      });
+
+      /*
       setTimeout(() => {
         if(SUCCESS_START_SESSION === true){ 
           return resolve(START_SESSION_SUCCESS) 
@@ -148,7 +172,10 @@ const fetchGuestPostsMock = (key) => {
           return reject(START_SESSION_FAILURE)   
         }
       }, 1000);
-  });}
+      */
+
+    })
+  ;}
 
   /************************************************************************************************/
   /***************************REGISTER NEW USER ACCOUNT ENDPOINT***********************/
@@ -359,6 +386,13 @@ const fetchUserAppointmentsMock = (key, id) => {
               return reject(GET_USER_APPOINTMENTS_FAILURE)}
       }, 2000);
   });}
+
+   const START_SESSION_SUCCESS = 
+  {
+    type: 'user', 
+    key: '2342fddddd2f1d131rf12', 
+    path: '/user/'
+  }
     
     */
 

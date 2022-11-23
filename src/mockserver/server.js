@@ -6,6 +6,8 @@ export function makeServer({ environment = 'test' } = {} ) {
   // instanitate 3 'note' objects, shaped like { title: '...' , body: '...'}
   const seeds = (server) => {
 
+    ////////////////////////////////////APPOINTMENTS key/values//////////////////////////////////////
+
     server.create('appointment', {
       id: 0, loc_id: "0", date: "10/10/22", start: "9:00", end: "10:00"
     });
@@ -17,6 +19,8 @@ export function makeServer({ environment = 'test' } = {} ) {
     server.create('appointment', {
       id: 2, loc_id: "1", date: "10/11/22", start: "8:00", end: "9:00"
     });
+
+    ////////////////////////////////////POST (LOCATIONS) key/values/////////////////////////////
   
     // .create( name of object 'name', obj shape)
     server.create('post', {
@@ -43,41 +47,32 @@ export function makeServer({ environment = 'test' } = {} ) {
       icons: ["MdOutlineCarRepair", "GiMechanicGarage", "FaWrench"], 
     });
 
-    //... end of seeds()
-  };
+    ///////////////////////////////////USER key/values///////////////////////////////////
 
-  /*
-   const seeds = (server) => {
-  
-    // .create( name of object 'name', obj shape)
-    server.create('note', {
-      title: 'Nulla sit amet',
-      body:
-        'Praesent congue erat  lacus sit amet orci.',
+    server.create('user', {
+      id: 1,
+      type: "user",
+      user_name: "a",
+      password: "a"
     });
 
-    server.create('note', {
-      title: 'Curabitur suscipit suscipit',
-      body:
-        'Fusce risus nisl, vblandit viverra.',
-    });
-
-    server.create('note', {
-      title: 'Donec id justo',
-      body:
-        'Nulla neque dolosque posuere.',
+    server.create('user', {
+      id: 2,
+      type: "user",
+      user_name: "b",
+      password: "b"
     });
 
     //... end of seeds()
   };
-  */
 
   // models: { .... } is how we define the schema of our mock key-value database used by mirage
   // here we are defining a collection called 'posts'
   // each collection is a seperate database (or table?)
   const models = {
     posts: Model,
-    appointments: Model
+    appointments: Model,
+    users: Model
   }
 
   /*
@@ -98,17 +93,17 @@ export function makeServer({ environment = 'test' } = {} ) {
     routes(){
 
       //define the domain url
-      this.namespace = 'api/posts';
+      this.namespace = 'api';
 
       console.log("inside routes():", this)
   
       //definition for /guest endpoint
-      this.get('/guest', (schema, request) => {
+      this.get('posts/guest', (schema, request) => {
         return schema.posts.all();
       });
 
       //definition for /user endpoint
-      this.get('/user', (schema, request) => {
+      this.get('posts/user', (schema, request) => {
         console.log("miragejs: user EP")
 
         let response = {                                              // ..init a response object
@@ -140,6 +135,40 @@ export function makeServer({ environment = 'test' } = {} ) {
 
         console.log("response: ", response)
         return response;                                              // ... return the arr of posts with each post containing an arr of related appointments
+      });
+
+      //definition for authentication endpoint
+      this.post('authenticate', (schema, request) => {
+
+        let attrs = JSON.parse(request.requestBody);                   // parse the user name/pw from request into an object
+
+        const request_user_name = attrs.user_name                      // add user name/pw into seperate consts
+        const request_password = attrs.password
+
+        let response = {                                              // ..init a response object that defaults to failure
+          success: false,
+          type: '',
+          key: '',
+          path: '',
+        }
+
+        // only a single match should be found so we should early-return from this function when a match is found
+        // however we cant because forEach(..) takes an anonymous function, so every entry ends up getting checked
+        // the users Model should have a unique string for the user name, anyways
+
+        schema.users.all().models.forEach((user)=>{                  //iterate each entry in the 'users' model
+
+          if( (user.attrs.user_name === request_user_name) && 
+              (user.attrs.password === request_password) ){          //if there is a matching user name/pw...
+                response.success = true;                             // ..update the response object with relevant info based on user type
+                response.type = 'user'
+                response.key = '2342fddddd2f1d131rf12'
+                response.path = '/user/'
+          }
+         
+        });
+
+        return response
       });
   
       /*
