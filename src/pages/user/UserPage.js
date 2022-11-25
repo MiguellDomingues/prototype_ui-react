@@ -48,7 +48,7 @@ import './userpage.css'
     const [selectedLocation, setSelectedLocation] = useState()
 
     const selectLocation = (location_id) => {
-      console.log("//////////////////////////////SELECT LOCATION////////////////////////////////////////////", location_id)
+      //console.log("//////////////////////////////SELECT LOCATION////////////////////////////////////////////", location_id)
       setSelectedLocation(location_id)
     }
 
@@ -60,19 +60,19 @@ import './userpage.css'
     const [data, loading,posts,status,{addAppointment,removeAppointment}] = useDataContext()
     const [filters, {selectFilter, deSelectFilter,applyFilters}] = useLocationFilter ()
     
-    console.log("//////////////user page: /////////////////")
-    console.log("data: ", data)
-    console.log("loading: ", loading)
-    console.log("posts: ", posts)
-    console.log("status: ", status)
+   // console.log("//////////////user page: /////////////////")
+   // console.log("data: ", data)
+   // console.log("loading: ", loading)
+   // console.log("posts: ", posts)
+   // console.log("status: ", status)
 
     //console.log("filteredPosts: ", filteredPosts)
-    console.log("filters: ", filters)
+   // console.log("filters: ", filters)
     //console.log("appointments: ", appointments)
-    console.log("selectedLocation: ", selectedLocation)
-    console.log("select Location: ", selectLocation)
+   // console.log("selectedLocation: ", selectedLocation)
+  //  console.log("select Location: ", selectLocation)
     //console.log("showButton: ", showButton)
-    console.log("/////////////////////////////////////////")
+  //  console.log("/////////////////////////////////////////")
 
     function getPosts(data){
       return data && data.posts ? data.posts : [];

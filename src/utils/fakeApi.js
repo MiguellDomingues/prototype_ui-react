@@ -1,9 +1,8 @@
+/***************************CREATE APPOINTMENT ENDPOINT***********************/
+
 const SUCCESS_POST_USER_APPOINTMENT = true
 
-const POST_USER_APPOINTMENT_SUCCESS = {
-  success:true,
-  appointment: { id: 10, date: "10/10/22", start: "9:00", end: "10:00" }
-}
+const ENDPOINT_URL_APPOINTMENT = '/api/appointment'
 
 const POST_USER_APPOINTMENT_FAILURE = {
   success:false,
@@ -16,17 +15,48 @@ const PostUserAppointmentMock = (appointment, key) => {
   console.log("appointment: ", appointment)
   console.log("key: ", key)
 
-  return new Promise( (resolve, reject) => {     
+  return new Promise( (resolve, reject) => { 
+
+    const request_body = {
+      loc_id:     appointment.loc_id,
+      date:       appointment.date,
+      start_time: appointment.start_time,
+      end_time:   appointment.end_time
+    }
+
+    fetch(ENDPOINT_URL_APPOINTMENT, {
+      method: 'POST',
+      body: JSON.stringify(request_body),
+    })
+    .then(((res) => res.json()))
+    .then((data) => {
+      
+      console.log("post user appointment SERVER RESPONSE:", data)
+      
+      if(data.success){
+        return resolve(data)
+      }
+
+      return reject(POST_USER_APPOINTMENT_FAILURE)
+    })
+    .catch((error) => {
+      console.log('Error Posting User Appointment.', error);
+      return reject(POST_USER_APPOINTMENT_FAILURE)
+    });
+
+    /*
     setTimeout(() => {    
       if(SUCCESS_POST_USER_APPOINTMENT  === true){
           return resolve(POST_USER_APPOINTMENT_SUCCESS);}
           else if(SUCCESS_POST_USER_APPOINTMENT  === false){
             return reject(POST_USER_APPOINTMENT_FAILURE)}
     }, 2000);
+    */
+
 });}
 
+/************************************************************************************************/
 
-    
 /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
 const SUCCESS_GET_USER_POSTS = true
@@ -416,6 +446,11 @@ const fetchUserAppointmentsMock = (key, id) => {
     key: '2342fddddd2f1d131rf12', 
     path: '/user/'
   }
+
+  const POST_USER_APPOINTMENT_SUCCESS = {
+  success:true,
+  appointment: { id: 10, date: "10/10/22", start: "9:00", end: "10:00" }
+}
     
     */
 

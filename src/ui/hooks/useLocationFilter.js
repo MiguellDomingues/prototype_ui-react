@@ -7,7 +7,7 @@ export const useLocationFilter = ( initialFilters = [] ) =>{
 
   
 
-  console.log("//////////////////////FilterContextProvider///////////////////////////")
+ // console.log("//////////////////////FilterContextProvider///////////////////////////")
  // console.log("input data: ", initialData)
  // console.log("posts: ", posts)
 

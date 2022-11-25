@@ -1,5 +1,11 @@
 import { createServer, Model } from 'miragejs';
 
+const USER_TYPES = {
+  USER: "user",
+  STOREOWNER: "storeowner",
+  ADMIN: "admin"
+}
+
 export function makeServer({ environment = 'test' } = {} ) {
 
   //seeds(server) { ... } is an function that we implement in-line and pass to createServer
@@ -9,6 +15,19 @@ export function makeServer({ environment = 'test' } = {} ) {
     ////////////////////////////////////APPOINTMENTS key/values//////////////////////////////////////
 
     server.create('appointment', {
+      loc_id: "0", date: "10/10/22", start: "9:00", end: "10:00"
+    });
+
+    server.create('appointment', {
+      loc_id: "0", date: "10/11/22", start: "11:00", end: "12:00"
+    });
+
+    server.create('appointment', {
+      loc_id: "1", date: "10/11/22", start: "8:00", end: "9:00"
+    });
+
+    /*
+     server.create('appointment', {
       id: 0, loc_id: "0", date: "10/10/22", start: "9:00", end: "10:00"
     });
 
@@ -19,6 +38,7 @@ export function makeServer({ environment = 'test' } = {} ) {
     server.create('appointment', {
       id: 2, loc_id: "1", date: "10/11/22", start: "8:00", end: "9:00"
     });
+    */
 
     ////////////////////////////////////POST (LOCATIONS) key/values/////////////////////////////
   
@@ -104,7 +124,7 @@ export function makeServer({ environment = 'test' } = {} ) {
 
       //definition for /user endpoint
       this.get('posts/user', (schema, request) => {
-        console.log("miragejs: user EP")
+        console.log("miragejs: user EP ", schema)
 
         let response = {                                              // ..init a response object
           posts: [],
@@ -140,7 +160,11 @@ export function makeServer({ environment = 'test' } = {} ) {
       //definition for authentication endpoint
       this.post('authenticate', (schema, request) => {
 
+        
+
         let attrs = JSON.parse(request.requestBody);                   // parse the user name/pw from request into an object
+
+        console.log("server AUTHENTICATE: ", attrs)
 
         const request_user_name = attrs.user_name                      // add user name/pw into seperate consts
         const request_password = attrs.password
@@ -216,6 +240,38 @@ export function makeServer({ environment = 'test' } = {} ) {
         }
 
         return response;
+      });
+
+      this.post('/appointment', (schema, request) => {
+
+        let attrs = JSON.parse(request.requestBody);
+
+        console.log("SERVER POST APPOINTMENT: ", attrs)
+
+        const new_appointment = {                                      //.. create a new entry to be inserted to appointments Model
+          loc_id: attrs.loc_id,                                        //.. showing how we change the name of some attributes to conform to Model names
+          date:   attrs.date,
+          start:  attrs.start_time,
+          end:    attrs.end_time,
+        }
+
+        const response = {
+          success: true,
+          appointment:  schema.appointments.create(new_appointment).attrs
+        }
+
+        delete response.appointment.loc_id
+
+        return response
+      });
+
+      this.delete('/appointment/:id', (schema, request) => {
+
+        let id = request.params.id;
+
+        console.log("SERVER DELETE APPOINTMENT: ", id)
+
+        return id
       });
   
       // ... end of routes()

@@ -108,10 +108,10 @@ export const useDataContext= ( initFilter) =>{
           setPosts(removed)
       }
 
-      console.log("//////////////data context: /////////////////")
-      console.log("data: ", data)
-      console.log("loading: ", loading)
-      console.log("//////////////////////////////////////////")
+      //console.log("//////////////data context: /////////////////")
+     // console.log("data: ", data)
+     // console.log("loading: ", loading)
+     // console.log("//////////////////////////////////////////")
       
   return [
     data, 

@@ -48,10 +48,14 @@ export const useAppointmentForm = ( addAppointment, selectedLocation,toggleButto
         e.preventDefault()
         console.log("FORM SUBMIT")
         if (formInput.date.trim() && formInput.start_time.trim() && formInput.end_time.trim()){ //check blanks
-           //setFormInput( {...formInput, password: ""} )
+           
+           const location_obj = {                                                               
+            loc_id: selectedLocation,
+            ...formInput
+           }
+
            setSubmit(true)
-           onPost(formInput, success,failure, finish)
-           //onRegistration({...formInput}, handleResult)  
+           onPost(location_obj, success, failure, finish)
         } else {
           // setStatus({status: false, status_msg: "no empty fields"})    
         }

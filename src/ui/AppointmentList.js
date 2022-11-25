@@ -60,7 +60,7 @@ export default AppointmentList
 
 const AppointmentButton = (props) =>{
 
-    console.log("togbut: ", props)
+    //console.log("togbut: ", props)
 
     const { toggleButton } = props
 
