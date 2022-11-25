@@ -48,7 +48,6 @@ import './userpage.css'
     const [selectedLocation, setSelectedLocation] = useState()
 
     const selectLocation = (location_id) => {
-      //console.log("//////////////////////////////SELECT LOCATION////////////////////////////////////////////", location_id)
       setSelectedLocation(location_id)
     }
 

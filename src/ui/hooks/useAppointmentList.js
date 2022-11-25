@@ -5,9 +5,6 @@ export const useAppointmentList = ( posts = [], selectedLocation = undefined ) =
 
     const appointments = selectedLocation !== undefined ? posts.find( (post) =>  post.id === selectedLocation ).appointments : []
 
-   //console.log("APTS SHOULD BE: ", appointments )
-
-  
     /* id of a selected (highlighted) appointment */
     const [selectedAppointment, setSelectedAppointment] = useState();
 

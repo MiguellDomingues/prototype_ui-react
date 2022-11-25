@@ -5,7 +5,7 @@ export const useDataContext= ( initFilter) =>{
 
   console.log("//////////////////////DataContextProvider///////////////////////////")
 
-    const { onFetch } = useAPI()
+    const { onFetchLocations } = useAPI()
 
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
@@ -55,7 +55,7 @@ export const useDataContext= ( initFilter) =>{
           if(dataFetchedRef.current) return
   
           const dataFetch = async () => {     
-            onFetch(success, failure, finish)
+            onFetchLocations(success, failure, finish)
           };
   
           dataFetchedRef.current = true;

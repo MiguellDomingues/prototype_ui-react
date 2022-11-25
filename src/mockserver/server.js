@@ -269,9 +269,15 @@ export function makeServer({ environment = 'test' } = {} ) {
 
         let id = request.params.id;
 
-        console.log("SERVER DELETE APPOINTMENT: ", id)
+        const result = schema.appointments.find(id) 
 
-        return id
+        if(result){
+          result.destroy()
+          return {success: true}      
+        }else{
+          return {success: false, reason: id + ' not found in db'}
+        }
+        
       });
   
       // ... end of routes()

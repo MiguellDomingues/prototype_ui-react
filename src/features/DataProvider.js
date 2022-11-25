@@ -27,7 +27,7 @@ export const DataProvider = ({ children }) => {
      // posts: postsPromise.posts,
     //};
 
-  const handleFetch = async (onSuccess , onFail, onFinish) => {
+  const handleFetchLocations = async (onSuccess , onFail, onFinish) => {
     console.log("DataProvider/fetchUserPageData: ", token)
     
     // if there is no token, then we invoke fetching authenticated user posts
@@ -42,7 +42,7 @@ export const DataProvider = ({ children }) => {
   }
 
   const handlePostAppointment = async (payload, onSuccess , onFail, onFinish) => {
-    console.log("DataProvider/POST APT: ", payload)
+    console.log("DataProvider/handlePostAppointment APT: ", payload)
     //await API.fetchGuestPosts(token).then(onSuccess, onFail).finally(onFinish)
     
     if(!token){
@@ -53,6 +53,20 @@ export const DataProvider = ({ children }) => {
     }else{
       console.log("error in handlePostAppointment: no API for user type defined")
     } 
+  }
+
+  const handleDeleteAppointment = async (payload, onSuccess , onFail, onFinish) => {
+    console.log("handleDeleteAppointment APT: ", payload)
+
+    if(!token){
+      console.log("error:, user has no token set")
+      //await API.fetchGuestPosts(token).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else if(token && token.type === "user"){
+      await API.deleteAppointment(payload, token.key).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else{
+      console.log("error in handleDeleteAppointment: no API for user type defined")
+    }
+    
   }
 
 
@@ -76,8 +90,9 @@ export const DataProvider = ({ children }) => {
 
   const value = {
     //data,
-    onFetch:handleFetch,
-    onPost:handlePostAppointment
+    onFetchLocations:   handleFetchLocations,
+    onPostAppointment:  handlePostAppointment,
+    onDeleteAppointment:handleDeleteAppointment
   };
 
   return (

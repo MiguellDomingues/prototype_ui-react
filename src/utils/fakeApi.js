@@ -1,15 +1,65 @@
+
+const ENDPOINT_URL_APPOINTMENT = '/api/appointment/'
+
+const DELETE_USER_APPOINTMENT_FAILURE = {
+  success:false,
+  reason: "failed to deletet user appointment"
+}
+
+const deleteUserAppointmentMock = (appointment_id, key) => {
+
+  console.log("delete user appointment mock:")
+  console.log("appointment id: ", appointment_id)
+  console.log("key: ", key)
+
+  return new Promise( (resolve, reject) => { 
+    
+    //const endpoint_url = ENDPOINT_URL_APPOINTMENT + appointment_id
+
+    console.log("deleteUserApt: ", ENDPOINT_URL_APPOINTMENT + appointment_id)
+
+    fetch(ENDPOINT_URL_APPOINTMENT + appointment_id, {
+      method: 'DELETE',
+    })
+    .then(((res) => res.json()))
+    .then((data) => {
+      
+      console.log("delete user appointment SERVER RESPONSE:", data)
+      
+      if(data.success){
+        return resolve(data)
+      }
+
+      return reject(DELETE_USER_APPOINTMENT_FAILURE)
+    })
+    .catch((error) => {
+      console.log('Error Posting User Appointment.', error);
+      return reject(DELETE_USER_APPOINTMENT_FAILURE)
+    });
+
+    /*
+    setTimeout(() => {    
+      if(SUCCESS_POST_USER_APPOINTMENT  === true){
+          return resolve(POST_USER_APPOINTMENT_SUCCESS);}
+          else if(SUCCESS_POST_USER_APPOINTMENT  === false){
+            return reject(POST_USER_APPOINTMENT_FAILURE)}
+    }, 2000);
+    */
+
+});}
+
+
+
 /***************************CREATE APPOINTMENT ENDPOINT***********************/
 
 const SUCCESS_POST_USER_APPOINTMENT = true
-
-const ENDPOINT_URL_APPOINTMENT = '/api/appointment'
 
 const POST_USER_APPOINTMENT_FAILURE = {
   success:false,
   reason: "failed to post user appointment"
 }
 
-const PostUserAppointmentMock = (appointment, key) => {
+const postUserAppointmentMock = (appointment, key) => {
 
   console.log("post user appointment mock:")
   console.log("appointment: ", appointment)
@@ -30,7 +80,7 @@ const PostUserAppointmentMock = (appointment, key) => {
     })
     .then(((res) => res.json()))
     .then((data) => {
-      
+
       console.log("post user appointment SERVER RESPONSE:", data)
       
       if(data.success){
@@ -278,15 +328,16 @@ const fetchGuestPostsMock = (key) => {
   }
 
   export const API = {
-    fetchGuestPosts: (key) =>              fetchGuestPostsMock(key),
-    fetchUserPosts:  (key) =>              fetchUserPostsMock(key),
-    postAppointment: (appointment, key) => PostUserAppointmentMock(appointment,key),
-    endSession:      (request) =>          endSessionMock(request),
-    startSession:    (request) =>          startSessionMock(request),
-    registerUser:    (request) =>          registerUserMock(request)
+    fetchGuestPosts: (key) =>                 fetchGuestPostsMock(key),
+    fetchUserPosts:  (key) =>                 fetchUserPostsMock(key),
+    postAppointment: (appointment, key) =>    postUserAppointmentMock(appointment,key),
+    deleteAppointment: (appointment, key) =>  deleteUserAppointmentMock(appointment,key),
+    endSession:      (request) =>             endSessionMock(request),
+    startSession:    (request) =>             startSessionMock(request),
+    registerUser:    (request) =>             registerUserMock(request)
   }
 
-
+//deleteUserAppointmentMock
 
   /*
 order of operations is:
