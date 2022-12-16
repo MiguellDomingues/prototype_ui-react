@@ -258,7 +258,7 @@ const fetchGuestPostsMock = (key) => {
 
   const SUCCESS_REGISTER_USER = true
 
-  const ENDPOINT_URL_CREATEUSER = '/api/createUser'
+  const ENDPOINT_URL_CREATEUSER = 'http://localhost:8080/register'
 
   const REGISTER_USER_FAILURE = {
     reason: "username taken"
@@ -279,17 +279,21 @@ const fetchGuestPostsMock = (key) => {
       fetch(ENDPOINT_URL_CREATEUSER, {
         method: 'POST',
         body: JSON.stringify(request_body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
       .then(((res) => res.json()))
       .then((data) => {
 
         console.log("RESPONSE FROM SERVER IN createuser: ", data);
 
-       if(data.success){
-        return resolve(data)
-       }
+        if(data.key && data.type && data.path){
+          data.success = true
+          return resolve(data)
+        }
 
-        return reject({reason: data.reason})
+        return reject( REGISTER_USER_FAILURE )
       })
       .catch((error) => {
         console.log('Error creating user.', error);
