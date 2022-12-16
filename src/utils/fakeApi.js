@@ -150,7 +150,6 @@ const fetchUserPostsMock = (key) => {
 const SUCCESS_GET_GUEST_POSTS = true
 
 //const ENDPOINT_URL_GUEST = '/api/posts/guest'
-
 const ENDPOINT_URL_GUEST = 'http://localhost:8080/posts/guest'
 
 const GET_GUEST_POSTS_FAILURE = 
@@ -199,7 +198,8 @@ const fetchGuestPostsMock = (key) => {
 
   const SUCCESS_START_SESSION = true
 
-  const ENDPOINT_URL_AUTHENTICATE = '/api/authenticate'
+  //const ENDPOINT_URL_AUTHENTICATE = '/api/authenticate'
+  const ENDPOINT_URL_AUTHENTICATE = 'http://localhost:8080/auth'
 
   const START_SESSION_FAILURE = {
     reason: "bad crddddeds"
@@ -218,13 +218,18 @@ const fetchGuestPostsMock = (key) => {
       fetch(ENDPOINT_URL_AUTHENTICATE, {
         method: 'POST',
         body: JSON.stringify(request_body),
+        // need to set header to 'application/json' to send POST methods
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
       .then(((res) => res.json()))
       .then((data) => {
 
         console.log("RESPONSE FROM SERVER IN AUTHENTICATE: ", data);
 
-        if(data.success){
+        if(data.key && data.type && data.path){
+          data.success = true
           return resolve(data)
         }
 
