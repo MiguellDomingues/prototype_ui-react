@@ -9,7 +9,7 @@ import './App.css';
 
 //this code executes at very start of app running
 if (process.env.NODE_ENV === 'development') {
-  makeServer({ environment: 'development' });
+ // makeServer({ environment: 'development' });
 } 
 
 function App() {

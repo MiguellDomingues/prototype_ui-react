@@ -1,3 +1,4 @@
+/***************************DELETE APPOINTMENT ENDPOINT***********************/
 
 const ENDPOINT_URL_APPOINTMENT = '/api/appointment/'
 
@@ -14,8 +15,6 @@ const deleteUserAppointmentMock = (appointment_id, key) => {
 
   return new Promise( (resolve, reject) => { 
     
-    //const endpoint_url = ENDPOINT_URL_APPOINTMENT + appointment_id
-
     console.log("deleteUserApt: ", ENDPOINT_URL_APPOINTMENT + appointment_id)
 
     fetch(ENDPOINT_URL_APPOINTMENT + appointment_id, {
@@ -37,18 +36,9 @@ const deleteUserAppointmentMock = (appointment_id, key) => {
       return reject(DELETE_USER_APPOINTMENT_FAILURE)
     });
 
-    /*
-    setTimeout(() => {    
-      if(SUCCESS_POST_USER_APPOINTMENT  === true){
-          return resolve(POST_USER_APPOINTMENT_SUCCESS);}
-          else if(SUCCESS_POST_USER_APPOINTMENT  === false){
-            return reject(POST_USER_APPOINTMENT_FAILURE)}
-    }, 2000);
-    */
-
 });}
 
-
+/************************************************************************************************/
 
 /***************************CREATE APPOINTMENT ENDPOINT***********************/
 
@@ -154,15 +144,14 @@ const fetchUserPostsMock = (key) => {
 }
 
   /************************************************************************************************/
-   
-   
-   
-   
+
    /***************************GUEST USER POSTS ENDPOINT***********************/
 
 const SUCCESS_GET_GUEST_POSTS = true
 
-const ENDPOINT_URL_GUEST = '/api/posts/guest'
+//const ENDPOINT_URL_GUEST = '/api/posts/guest'
+
+const ENDPOINT_URL_GUEST = 'http://localhost:8080/posts/guest'
 
 const GET_GUEST_POSTS_FAILURE = 
 {
@@ -179,8 +168,10 @@ const fetchGuestPostsMock = (key) => {
 
   return new Promise( (resolve, reject) => {    
 
-    fetch(ENDPOINT_URL_GUEST)
-    .then((res) => res.json())
+    fetch(ENDPOINT_URL_GUEST )
+    .then((res) => { 
+      console.log("175: res from guest GET: ", res)
+      return res.json()})
     .then((data) => {
       data.success = true
       console.log("fetch miragejs guest posts: ", data)
