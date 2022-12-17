@@ -101,7 +101,7 @@ const postUserAppointmentMock = (appointment, key) => {
 
 const SUCCESS_GET_USER_POSTS = true
 
-const ENDPOINT_URL_USER = '/api/posts/user'
+const ENDPOINT_URL_USER = 'http://localhost:8080/posts/user'
 
 const GET_USER_POSTS_FAILURE = 
 {
@@ -118,7 +118,7 @@ const fetchUserPostsMock = (key) => {
 
   return new Promise( (resolve, reject) => {
 
-    fetch(ENDPOINT_URL_USER)
+    fetch(ENDPOINT_URL_USER + '?key=' + key)
     .then((res) => res.json())
     .then((data) => {
       data.success = true
