@@ -1,6 +1,6 @@
 /***************************DELETE APPOINTMENT ENDPOINT***********************/
 
-const ENDPOINT_URL_APPOINTMENT = '/api/appointment/'
+const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
 
 const DELETE_USER_APPOINTMENT_FAILURE = {
   success:false,
@@ -59,6 +59,7 @@ const postUserAppointmentMock = (appointment, key) => {
 
     const request_body = {
       loc_id:     appointment.loc_id,
+      user_id:    key,
       date:       appointment.date,
       start_time: appointment.start_time,
       end_time:   appointment.end_time
@@ -67,13 +68,17 @@ const postUserAppointmentMock = (appointment, key) => {
     fetch(ENDPOINT_URL_APPOINTMENT, {
       method: 'POST',
       body: JSON.stringify(request_body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then(((res) => res.json()))
     .then((data) => {
 
       console.log("post user appointment SERVER RESPONSE:", data)
       
-      if(data.success){
+      if(data){
+        data.success = true
         return resolve(data)
       }
 
