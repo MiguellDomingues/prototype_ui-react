@@ -6,7 +6,7 @@ const AppointmentWidget = (props) =>{
     const handleSelectAppointment = props.handleSelectAppointment
     const selectedAppointment = props.selectedAppointment
 
-    const setBGColour = (selected, id) => { return !isNaN(selected) && selected === id ? " selected_appt" : " deselected_appt" }
+    const setBGColour = (selected, id) => selected === id ? " selected_appt" : " deselected_appt" 
 
     return <>
     <div 

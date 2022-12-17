@@ -12,7 +12,7 @@ const LocationWidget = (props) =>{
     /* sort icons lexiographically before display on UI*/
     const lexCompare = (lhs, rhs) => { return lhs > rhs ? -1 : rhs > lhs ? 1 : 0 }
 
-    const setBGColour = (selected, id) => { return !isNaN(selected) && selected === id ? " selected-bg-col" : " bg-col" }
+    const setBGColour = (selected, id) => selected === id ? " selected-bg-col" : " bg-col" 
     const setIcons = (icons) => { return icons.sort(lexCompare).map( (icon)=>(  getIcon(icon)  ) )}
 
     return (<>

@@ -27,7 +27,7 @@ const AppointmentList = (props) =>{
    // console.log("selectAppointment: ", selectAppointment)
    // console.log("toggleButton: ", toggleButton)
 
-    const isSelectedAppointment = (id, selected_id) => { return !isNaN(selected_id) && selected_id === id }
+    const isSelectedAppointment = (id, selected_id) => selected_id === id 
     
     return <>
         <div className="card_container">

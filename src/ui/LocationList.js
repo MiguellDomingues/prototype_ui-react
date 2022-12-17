@@ -28,7 +28,7 @@ const LocationList = ( props ) =>{
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
 
-    const isSelectedLocation = (selectedLocation, id) => !isNaN(selectedLocation) && selectedLocation === id 
+    const isSelectedLocation = (selectedLocation, id) => selectedLocation === id 
 
     //const filteredPosts = !props.context.filteredPosts ? data.posts : props.context.filteredPosts
 
