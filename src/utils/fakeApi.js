@@ -14,18 +14,29 @@ const deleteUserAppointmentMock = (appointment_id, key) => {
   console.log("key: ", key)
 
   return new Promise( (resolve, reject) => { 
-    
-    console.log("deleteUserApt: ", ENDPOINT_URL_APPOINTMENT + appointment_id)
 
-    fetch(ENDPOINT_URL_APPOINTMENT + appointment_id, {
+    const request_body = {
+      apt_id:     appointment_id,
+      user_id:    key,
+    }
+    
+    console.log("deleteUserApt: ", request_body)
+
+    //fetch(ENDPOINT_URL_APPOINTMENT + appointment_id, {
+      fetch(ENDPOINT_URL_APPOINTMENT, {
       method: 'DELETE',
+      body: JSON.stringify(request_body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then(((res) => res.json()))
     .then((data) => {
       
       console.log("delete user appointment SERVER RESPONSE:", data)
       
-      if(data.success){
+      if(data){
+        data.success = true
         return resolve(data)
       }
 
