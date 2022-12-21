@@ -28,22 +28,16 @@ import  {useState } from 'react'
 
 
 import { useDataContext  } from './useDataContext'
+import {  useLocationFilter  } from './ui/locationFilter/useLocationFilter'
 
-import { useAppointmentList  } from '../../ui/hooks/useAppointmentList'
-import {  useLocationFilter  } from '../../ui/hooks/useLocationFilter'
-import { useLocationList  } from '../../ui/hooks/useLocationList'
-
-
-import LocationList from '../../ui/LocationList'
-import LocationFilter from '../../ui/LocationFilter'
-import MyMap from '../../ui/Map.tsx'
-import AppointmentList from '../../ui/AppointmentList'
-
-import { InfinitySpin } from 'react-loader-spinner'
+import LocationList from './ui/locationList/LocationList'
+import LocationFilter from './ui/locationFilter/LocationFilter'
+import MyMap from './ui/map/Map.tsx'
+import AppointmentList from './ui/appointmentList/AppointmentList'
 
 import './userpage.css'
 
-  const UserPageTEST = ( props ) =>{
+  const UserPage = ( props ) =>{
 
     const [selectedLocation, setSelectedLocation] = useState()
 
@@ -131,6 +125,6 @@ import './userpage.css'
       );
   }
   
-  export default UserPageTEST;
+  export default UserPage;
 
   

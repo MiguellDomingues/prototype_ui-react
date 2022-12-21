@@ -1,39 +1,51 @@
 
 import './LocationList.css'
-import LocationWidget from '../components/LocationWidget'
+import LocationWidget from '../locationWidget/LocationWidget'
 import { InfinitySpin } from 'react-loader-spinner'
 
 const LocationList = ( props ) =>{
 
     //console.log("LL start: props: ", props)
-    console.log("location list start:")
+    
 
     //rather then pass props down from parent
     //pass the parent context and deconstruct the props you need
+    
+    const {posts, data, loading, selectedLocation, selectLocation} = props.context
 
-    const {
-        data,
-        loading,
-        selected,
-        filteredPosts,
-        handleSelectedLocation,
-      } = props.context
+    
+
+    //console.log("location list: ")
+   // console.log("data: ", data)
+    
+    //console.log("loading: ", loading)
+    
+   // console.log("selectedLocation: ", selectedLocation)
+
+   // console.log("select Location: ", selectLocation)
 
     if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
 
+    const isSelectedLocation = (selectedLocation, id) => selectedLocation === id 
+
+    //const filteredPosts = !props.context.filteredPosts ? data.posts : props.context.filteredPosts
+
+    //console.log("filtered posts: ", filteredPosts)
+
     const render = () =>{
 
         if(data.success){
             return <>
-                {filteredPosts.map( (location) => (
+                {posts.map( (location) => (
                 <div className={"list_child col display"}>           
                    <LocationWidget 
                         key={location.id}
-                        selected={selected} 
+                        isSelected={isSelectedLocation(selectedLocation, location.id)}
+                        //selected={selectedLocation} 
                         location={location} 
-                        selectedHandler={handleSelectedLocation}/>
+                        selectedHandler={selectLocation}/>
                 </div> )) }
             </>
         }else{

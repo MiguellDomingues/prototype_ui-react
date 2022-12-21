@@ -1,6 +1,6 @@
 
 import { IconContext } from "react-icons";
-import { getIconNames, getIcon,  getIconId } from "../utils/icons";
+import { getIconNames, getIcon,  getIconId } from "../../../../utils/icons";
 
 import './locationfilter.css'
 

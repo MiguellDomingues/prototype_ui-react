@@ -2,10 +2,7 @@
 import { Routes, Route} from "react-router-dom";
 
 import GuestPageContext from '../pages/guest/GuestPageContext'
-//import UserPageContext from '../pages/user/UserPageContext'
-
-import UserPageTEST from '../pages/user/UserPage'
-
+import UserPage from '../pages/user/UserPage'
 
 import StoreOwnerPage from '../pages/storeowner/StoreOwnerPage'
 import AdminPage from '../pages/admin/AdminPage'
@@ -19,41 +16,15 @@ import { useAuth } from './AuthProvider'
 
 import { Navigate } from 'react-router-dom';
 
-//lazy loading: react only loads a page into memory when its required
-//normally, it builds the routes and associates components in memory with that route
-//const UserPage = React.lazy(() => import('../pages/user/UserPage'));
-//const StoreOwnerPage = React.lazy(() => import('../pages/storeowner/StoreOwnerPage'));
-//const AdminPage = React.lazy(() => import('../pages/admin/AdminPage'));
-
-//<UserPageContext/>
-// <UserPage/>
-
-/*
-refactor routes into a routebuilder:
-    - returns a string of the route and a function to return the inner jsx
-
-
-    - real url
-
-
-    create module hashmap:
-    key:         value:
-    /                <GuestPageContext/>
-    /user            <PrivateRoute type ='user'> <UserPageContext/> </PrivateRoute>
-    /register        <Register/>
-    /login           <Logon/>
-    /profile        <PrivateRoute> <Profile userid/> </PrivateRoute>
-*/
-
 const RouteBuilder = ( ) =>{
 
     return(
         <><Routes>
            
-<Route index path="/user/" element={  <PrivateRoute> <UserPageTEST/> </PrivateRoute> } />
+            <Route index path="/user/" element={  <PrivateRoute> <UserPage/> </PrivateRoute> } />
             <Route index path="/storeowner/" element={ <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>} />
             <Route index path="/admin/" element={ <PrivateRoute> <AdminPage/> </PrivateRoute>} />         
-    <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
+            <Route path="/:type/profile" element={<PrivateRoute> <Profile/> </PrivateRoute>} />
        
             <Route path="/" element={ <GuestPageContext/> } />
          
@@ -77,22 +48,5 @@ const PrivateRoute = ({ children }) =>{
     return children;
 }
 
-export default RouteBuilder
-
-/*
-
-            <Route index path="/user/"> 
-                <PrivateRoute><UserPage/> </PrivateRoute>
-                </Route>
-                <Route index path="/storeowner/"> 
-                <PrivateRoute> <StoreOwnerPage/> </PrivateRoute>
-                </Route>
-                <Route index path="/admin/"> 
-                <PrivateRoute><AdminPage/>  </PrivateRoute>
-                </Route>      
-                <Route path="/:type/profile"> 
-                <PrivateRoute> <Profile/> </PrivateRoute>
-                </Route> 
-    */
-                
+export default RouteBuilder   
             

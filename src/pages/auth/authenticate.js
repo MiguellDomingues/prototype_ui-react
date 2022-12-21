@@ -34,18 +34,7 @@ function Authenticate() {
         } else {
            setStatus({status: false, status_msg: "no empty fields"})
         }
-
      }
-
-     /*
-     useEffect(() => { 
-        if(token){
-            navigate(token.path);
-            console.log("authentication useEffect")
-            //setStatus({status: true , status_msg: ""})
-        } 
-    },[navigate, token]);
-    */
 
     const buildAuthPage = (token) =>{
 

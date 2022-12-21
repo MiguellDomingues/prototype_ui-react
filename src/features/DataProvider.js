@@ -36,6 +36,9 @@ export const DataProvider = ({ children }) => {
       //...otherwise we fetch USER posts  
     }else if(token && token.type === "user"){
       await API.fetchUserPosts(token.key).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)  
+    }else if(token && token.type === "storeowner"){   
+      //await API.fetchUserPosts(token.key).then(successCB(onSuccess), failureCB(onFail) ).finally(onFinish)
+        
     }else{
       console.log("error in dataprovider: no API for user type defined")
     } 

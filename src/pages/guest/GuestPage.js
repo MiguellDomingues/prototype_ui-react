@@ -1,12 +1,4 @@
 /*
-todo:
-- add data for an auth user now
-- displays in bottom right window
-- same as guest user, except users get access to :
-    setting/updating appointments at stores
-    viewing all appointments?
-    - make room in bottom left to see upcoming appointments?
-    - or use another page?
 
 - clean up header bar; add links to authed pages, like a profile
 - change data fetching for diff users (user/storeowner/admin) into a GetContext hook
@@ -25,26 +17,15 @@ todo:
 */
 
 
-import LocationList from '../../features/LocationList'
-import LocationFilter from '../../features/LocationFilter'
-import MyMap from '../../components/Map.tsx'
+import LocationList from './ui/locationList/LocationList'
+import LocationFilter from './ui/locationFilter/LocationFilter'
+import MyMap from './ui/map/Map.tsx'
 import { useGuestContext } from './GuestContextProvider'
 
 import './guestpage.css'
 
   const GuestPage = () =>{
 
-    /*
-    const {data,
-      loading,
-      selected,
-      filters,
-      filteredPosts,
-      handleSelectedLocation,
-      handleSelectFilter,
-      handleDeselectFilter,
-    } = useGuestContext()
-*/
     return (<>
 
     <div className="guestpage_container">

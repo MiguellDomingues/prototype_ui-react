@@ -1,6 +1,6 @@
 
 import './appointmentform.css'
-import { useAppointmentForm } from './hooks/useAppointmentForm'
+import { useAppointmentForm } from './useAppointmentForm'
 import { InfinitySpin } from 'react-loader-spinner'
 
 const AppointmentForm = (props) =>{

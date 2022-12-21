@@ -1,6 +1,6 @@
 
 import './LocationList.css'
-import LocationWidget from './LocationWidget'
+import LocationWidget from '../locationWidget/LocationWidget'
 import { InfinitySpin } from 'react-loader-spinner'
 
 const LocationList = ( props ) =>{

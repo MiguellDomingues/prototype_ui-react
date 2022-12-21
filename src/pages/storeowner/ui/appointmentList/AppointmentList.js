@@ -1,9 +1,9 @@
 
-import AppointmentWidget from './AppointmentWidget'
-import AppointmentForm from './AppointmentForm'
+import AppointmentWidget from '../appointmentWidget/AppointmentWidget'
+import AppointmentForm from '../appointmentForm/AppointmentForm'
 
 import './appointmentlist.css'
-import { useAppointmentList } from './hooks/useAppointmentList'
+import { useAppointmentList } from './useAppointmentList'
 
 
 const AppointmentList = (props) =>{

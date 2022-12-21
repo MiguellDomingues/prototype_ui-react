@@ -1,16 +1,8 @@
-import Header from './components/header'
-import Footer from './components/footer'
+import Header from './components/header/header'
+import Footer from './components/footer/footer'
 import RouteBuilder from './features/RouteBuilder'
 
-//importing the mock miragejs server creation func
-import { makeServer } from './mockserver/server';
-
 import './App.css';
-
-//this code executes at very start of app running
-if (process.env.NODE_ENV === 'development') {
- // makeServer({ environment: 'development' });
-} 
 
 function App() {
 

@@ -1,5 +1,5 @@
 import './appointmentwidget.css'
-import { useAppointmentWidget } from './hooks/useAppointmentWidget'
+import { useAppointmentWidget } from './useAppointmentWidget'
 
 const AppointmentWidget = (props) =>{
 

@@ -20,8 +20,6 @@ export const GuestContextProvider = ( { children } ) =>{
     /* arr of filtered posts to be displayed in list */
     const [filteredPosts, setFilteredPosts] = useState([])
 
-    //console.log("filteredPosts: ", filteredPosts)
-
     /* arr of selected filters */
     const [filters, setFilters] = useState([]);
 

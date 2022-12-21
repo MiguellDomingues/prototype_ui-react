@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 //import { useContext } from 'react'
-import { useAuth } from '../features/AuthProvider'
+import { useAuth } from '../../features/AuthProvider'
 
 import './header.css'
 
