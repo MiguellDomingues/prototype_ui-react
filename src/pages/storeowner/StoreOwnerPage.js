@@ -35,6 +35,9 @@ function StoreOwnerPage() {
       loading, 
       selectedLocation,
       selectLocation,
+      //update location details (info/tags)
+      //delete location
+      //add location
     }
 
     const appt_deps = {
@@ -42,6 +45,7 @@ function StoreOwnerPage() {
       posts: getPosts(data), 
       addAppointment,
       removeAppointment
+      //update appointment status
     }
 
    return (<>
@@ -56,7 +60,7 @@ function StoreOwnerPage() {
                <div className="top_child_list row"> 
                   <LocationList context={ locations_deps }/>
                </div>
-               
+    
                <div className="bottom_child row">
                   <AppointmentList context = {appt_deps}/>
                </div>

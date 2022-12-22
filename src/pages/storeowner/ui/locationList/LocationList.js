@@ -1,38 +1,21 @@
 
 import './LocationList.css'
-import LocationWidget from '../locationWidget/LocationWidget'
+import { useLocationList } from './useLocationList'
 import { InfinitySpin } from 'react-loader-spinner'
+import LocationWidget from '../locationWidget/LocationWidget'
+import LocationForm from '../locationForm/LocationForm'
 
 const LocationList = ( props ) =>{
 
-    //console.log("LL start: props: ", props)
-    
+    const {posts, data, loading, selectedLocation, selectLocation } = props.context
 
-    //rather then pass props down from parent
-    //pass the parent context and deconstruct the props you need
-    
-    const {posts, data, loading, selectedLocation, selectLocation} = props.context
-
-    
-
-    //console.log("location list: ")
-   // console.log("data: ", data)
-    
-    //console.log("loading: ", loading)
-    
-   // console.log("selectedLocation: ", selectedLocation)
-
-   // console.log("select Location: ", selectLocation)
+    const [showButton, {toggleButton} ] = useLocationList(posts, selectedLocation)
 
     if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
     }
 
     const isSelectedLocation = (selectedLocation, id) => selectedLocation === id 
-
-    //const filteredPosts = !props.context.filteredPosts ? data.posts : props.context.filteredPosts
-
-    //console.log("filtered posts: ", filteredPosts)
 
     const render = () =>{
 
@@ -53,9 +36,34 @@ const LocationList = ( props ) =>{
         }
     }
 
-    return (<>{render()}</>
+    return (<>
+        {render()}
+        { (showButton ? <LocationButton toggleButton={toggleButton}/> : 
+                        <LocationForm
+                            toggleButton={toggleButton}
+                            addLocation={null}
+                            selectedLocation={selectedLocation}                  
+                        />)}
+
+    </>
     );  
 }
 
 export default LocationList
+
+const LocationButton = (props) =>{
+
+    const { toggleButton } = props
+
+    return (
+        <div className="card_child_button">
+            <button 
+                onClick={toggleButton}>
+                    Create New Location
+            </button>
+        </div>)
+}
+
+
+
 

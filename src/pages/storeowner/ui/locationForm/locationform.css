@@ -1,0 +1,41 @@
+
+.card_child_form{
+    flex: 1 1 auto;
+    /* min/max height is what locks the child container size*/
+    /* allows scrolling when too many 75x containers fill viewport*/
+    min-height: 40px;
+    max-height: fit-content;
+    margin: 10px;
+    padding: 10px;
+    
+  }
+
+  .close:hover {
+    float:right;
+    display:inline-block;
+    padding:2px 2px;
+    background:#ccc;
+    color:#fff;
+}
+
+.close {
+  float:right;
+  display:inline-block;
+  padding:2px 2px;
+  background:#ccc;
+}
+
+.spinner_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .display{
+    text-align: left; 
+  }
+
+  .col{
+    border: 1px dotted grey;
+  }

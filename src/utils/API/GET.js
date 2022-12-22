@@ -61,6 +61,35 @@ const fetchGuestLocations = (key) => {
 
 }
 
-  /************************************************************************************************/
+/************************************************************************************************/
+/***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
-  export const GET = { fetchGuestLocations,fetchUserLocations,}
+const ENDPOINT_URL_STOREOWNER = 'http://localhost:8080/posts/storeowner'
+
+const GET_STOREOWNER_POSTS_FAILURE = 
+{
+  success: false, 
+  reason: "session expired USER. please refresh your browser"
+}
+
+const fetchLocationsStoreOwner = (key) => {
+
+  return new Promise( (resolve, reject) => {
+
+    fetch(ENDPOINT_URL_STOREOWNER + '?key=' + key)
+    .then((res) => res.json())
+    .then((data) => {
+      data.success = true
+      console.log("fetch storeowner posts: ", data)
+      return resolve(data);
+    })
+    .catch((error) => {
+      console.log('Error fetching storeowner posts', error)
+      return reject(GET_STOREOWNER_POSTS_FAILURE);
+    });
+  });
+}
+
+/************************************************************************************************/
+
+export const GET = { fetchGuestLocations,fetchUserLocations, fetchLocationsStoreOwner}

@@ -20,6 +20,10 @@ export const DataProvider = ({ children }) => {
 
     fetchLocationsUser: async function(onSuccess , onFail, onFinish){
       await GET.fetchUserLocations(token.key).then(onSuccess, onFail).finally(onFinish)  
+    },
+    
+    fetchLocationsStoreOwner: async function(onSuccess , onFail, onFinish){
+      await GET.fetchLocationsStoreOwner(token.key).then(onSuccess, onFail).finally(onFinish)  
     }, 
 
     createAppointment:  async function(payload, onSuccess , onFail, onFinish){

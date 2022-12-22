@@ -1,11 +1,11 @@
 import {useState, useEffect, useRef} from 'react'
 import { useAPI } from '../../features/DataProvider'
 
-export const useDataContext= ( initFilter) =>{
+export const useDataContext= () =>{
 
   console.log("//////////////////////DataContextProvider///////////////////////////")
 
-    const { onFetchLocations } = useAPI()
+    const { fetchLocationsStoreOwner } = useAPI()
 
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
@@ -55,7 +55,7 @@ export const useDataContext= ( initFilter) =>{
           if(dataFetchedRef.current) return
   
           const dataFetch = async () => {     
-            onFetchLocations(success, failure, finish)
+            fetchLocationsStoreOwner(success, failure, finish)
           };
   
           dataFetchedRef.current = true;

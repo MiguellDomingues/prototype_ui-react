@@ -33,3 +33,16 @@
   .col{
     border: 1px dotted grey;
   }
+
+  .card_child_button{
+
+    flex: 1 1 auto;
+    /* min/max height is what locks the child container size*/
+    /* allows scrolling when too many 75x containers fill viewport*/
+    min-height: 40px;
+    max-height: fit-content;
+    min-width: 40px;
+    max-width: fit-content;
+    margin: 10px;
+    padding: 10px; 
+  }
