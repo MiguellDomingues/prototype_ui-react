@@ -1,13 +1,14 @@
 
-.card_child_form{
+.location_form{
     flex: 1 1 auto;
+    background-color: yellow;
     /* min/max height is what locks the child container size*/
     /* allows scrolling when too many 75x containers fill viewport*/
     min-height: 40px;
     max-height: fit-content;
+    max-width: fit-content;
     margin: 10px;
     padding: 10px;
-    
   }
 
   .close:hover {

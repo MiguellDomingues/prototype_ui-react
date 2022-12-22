@@ -10,11 +10,7 @@ const AppointmentList = (props) =>{
 
     const { selectedLocation,posts, addAppointment, removeAppointment } = props.context
 
-    
-
    const [appointments, selectedAppointment, showButton, {selectAppointment,toggleButton} ] = useAppointmentList (posts, selectedLocation)
-
-   
 
     const isSelectedAppointment = (id, selected_id) => selected_id === id 
     
@@ -29,7 +25,6 @@ const AppointmentList = (props) =>{
                         appointmentDetails={appointment}
                         handleRemoveAppointment={removeAppointment}
                         selectedLocation={selectedLocation}
-                        //selectedAppointment={selectedAppointment}
                         handleSelectAppointment={selectAppointment}/>
                 </div>
             </>))}

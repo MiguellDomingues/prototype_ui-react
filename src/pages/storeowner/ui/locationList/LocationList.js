@@ -9,7 +9,7 @@ const LocationList = ( props ) =>{
 
     const {posts, data, loading, selectedLocation, selectLocation } = props.context
 
-    const [showButton, {toggleButton} ] = useLocationList(posts, selectedLocation)
+    const [showButton, {toggleButton} ] = useLocationList()
 
     if(loading){
         return <div className="spinner_container"><InfinitySpin width='200'color="#4fa94d"/></div>
@@ -26,7 +26,6 @@ const LocationList = ( props ) =>{
                    <LocationWidget 
                         key={location.id}
                         isSelected={isSelectedLocation(selectedLocation, location.id)}
-                        //selected={selectedLocation} 
                         location={location} 
                         selectedHandler={selectLocation}/>
                 </div> )) }
@@ -41,8 +40,7 @@ const LocationList = ( props ) =>{
         { (showButton ? <LocationButton toggleButton={toggleButton}/> : 
                         <LocationForm
                             toggleButton={toggleButton}
-                            addLocation={null}
-                            selectedLocation={selectedLocation}                  
+                            addLocation={null}                 
                         />)}
 
     </>

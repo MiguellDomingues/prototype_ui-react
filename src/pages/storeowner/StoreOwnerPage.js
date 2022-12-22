@@ -14,6 +14,7 @@ function StoreOwnerPage() {
     const [selectedLocation, setSelectedLocation] = useState()
 
     const selectLocation = (location_id) => {
+      console.log("selecting location: ", location_id)
       setSelectedLocation(location_id)
     }
 
@@ -67,7 +68,6 @@ function StoreOwnerPage() {
          </div>
       
         </div>
-  
      
       </>);
   }
