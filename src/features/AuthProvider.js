@@ -1,6 +1,7 @@
 
 import React from "react";
-import { API } from '../utils/fakeApi'
+
+import { POST } from '../utils/API/POST'
 
 const AuthContext = React.createContext(null);
 
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     const [token, setToken] = React.useState(null);
 
-    const { startSession, registerUser, endSession } = API
+    const { startSession, registerUser, endSession } = POST
   
     /* PUBLIC FUNCTIONS */
     const handleLogin = async (request, callback) => { 
@@ -24,8 +25,6 @@ export const AuthProvider = ({ children }) => {
   
     const handleRegistration  = async (request, callback) => {
       console.log("handle regis: ", request)
-      //const token = await fakeAuth();
-      //setToken(token);
       await registerUser(request).then(setToken, callback)
     };
   

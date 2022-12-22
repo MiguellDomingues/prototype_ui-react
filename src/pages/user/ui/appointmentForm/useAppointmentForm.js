@@ -4,7 +4,7 @@ import { useAPI } from '../../../../features/DataProvider'
 
 export const useAppointmentForm = ( addAppointment, selectedLocation,toggleButton ) =>{
 
-    const { onPostAppointment } = useAPI()
+    const { createAppointment } = useAPI()
 
     //use 1 state object for form inputs
    const [formInput, setFormInput] = useState({date: "", start_time: "", end_time: ""})
@@ -55,7 +55,7 @@ export const useAppointmentForm = ( addAppointment, selectedLocation,toggleButto
            }
 
            setSubmit(true)
-           onPostAppointment(location_obj, success, failure, finish)
+           createAppointment(location_obj, success, failure, finish)
         } else {
           // setStatus({status: false, status_msg: "no empty fields"})    
         }

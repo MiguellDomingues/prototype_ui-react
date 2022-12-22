@@ -6,7 +6,7 @@ const GuestContext = React.createContext(null);
 
 export const GuestContextProvider = ( { children } ) =>{
 
-    const { onFetchLocations } = useAPI()
+    const { fetchLocationsGuest } = useAPI()
 
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
@@ -93,7 +93,7 @@ export const GuestContextProvider = ( { children } ) =>{
         if(dataFetchedRef.current) return
 
         const dataFetch = async () => {     
-          onFetchLocations(success, failure, finish)
+          fetchLocationsGuest(success, failure, finish)
         };
 
         dataFetchedRef.current = true;

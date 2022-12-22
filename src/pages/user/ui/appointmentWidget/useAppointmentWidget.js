@@ -4,7 +4,7 @@ import { useAPI } from '../../../../features/DataProvider'
 
 export const useAppointmentWidget = ( handleRemoveAppointment, appointment_id, location_id ) =>{
 
-    const { onDeleteAppointment } = useAPI()
+    const { deleteAppointment  } = useAPI()
 
     const [submitting, setSubmit] = useState(false)
 
@@ -17,7 +17,7 @@ export const useAppointmentWidget = ( handleRemoveAppointment, appointment_id, l
         console.log("cancelAppointment: ")
         //handleRemoveAppointment(location_id,appointment_id)
         setSubmit(true)
-        onDeleteAppointment(appointment_id, success,failure,finish)
+        deleteAppointment (appointment_id, success,failure,finish)
     }
 
     const success = (r) => {
