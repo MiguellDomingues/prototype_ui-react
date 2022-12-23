@@ -8,10 +8,7 @@ export const useAppointmentWidget = ( handleRemoveAppointment, appointment_id, l
 
     const [submitting, setSubmit] = useState(false)
 
-    //console.log("--------------useAppointmentWidget---------------------")
-   // console.log("handleRemoveAppointment: ", handleRemoveAppointment)
-    console.log("appointment_id: ", appointment_id)
-    console.log("location_id: ", location_id)
+   
 
     const cancelAppointment = () =>  {
         console.log("cancelAppointment: ")

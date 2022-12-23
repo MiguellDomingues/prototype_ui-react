@@ -23,7 +23,7 @@ const LocationForm = (props) =>{
                 <form onSubmit={handleSubmit}>
                      <input type="text" placeholder="Address"   value={formInput.address}   name="address"   onChange={onChange}/>
                      <input type="text" placeholder="Info"      value={formInput.info}      name="info"      onChange={onChange}/>
-                     <IconPicker handleChangeIcons={onIconsChange}/> 
+                     <IconPicker handleChangeIcons={onIconsChange} inputIcons={[]}/> 
                      <button disabled={submitting} name="status">Confirm Location Details</button>
                 </form>
 

@@ -10,7 +10,9 @@ const IconPicker = (props) => {
 
     const handleChangeIcons  = props.handleChangeIcons
 
-    const [ selectedIcons,{toggleIcon} ] = useIconPicker(handleChangeIcons)
+    //console.log("ICON PICKER STARTING ICONS: ", props.inputIcons)
+    
+    const [ selectedIcons,{toggleIcon} ] = useIconPicker(handleChangeIcons, props.inputIcons)
     
     const getSelectedIconColor = (iconName) => { return { className: selectedIcons.includes(iconName) ? "location_icon_picker_selected_col" : "location_icon_picker_icon_col"} }
     const getSelectedIconBG = (iconName) => { return selectedIcons.includes(iconName) ? " location_icon_picker_selected_bg" : " location_icon_picker_unselected_bg" }
