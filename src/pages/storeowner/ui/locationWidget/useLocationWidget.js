@@ -1,35 +1,77 @@
 import {useState, useCallback} from 'react'
 
-export const useLocationWidget = (_icons) =>{
+import { useAPI } from '../../../../features/DataProvider'
+
+export const useLocationWidget = (_icons, address, info) =>{
+
+   // const { editAppointment, deleteAppointment } = useAPI()
 
     const icons = _icons.sort( (lhs, rhs) => { return lhs > rhs ? -1 : rhs > lhs ? 1 : 0 } )
+    const _address = address
+    const _info = info
 
     const [isEdit, setEdit] = useState(false)
+    const [submitting, setSubmit] =  useState(false)
+
+    const [formInput, setFormInput] = useState({address: address, info: info})
+    const [selectedIcons, setSelectedIcons] = useState([])
 
     console.log("isEdit state: ", isEdit)
 
-    const [selectedIcons, setSelectedIcons] = useState([])
-
     const onIconsChange = (icons) =>{ setSelectedIcons([...icons]) }
 
-    const toggleEdit = useCallback(() => setEdit(isEdit => !isEdit), []);
+    const toggleEdit = () => {
+        setFormInput({address: _address, info: _info})
+        //setEdit(isEdit => !isEdit)
+        setEdit(!isEdit)
+    };
 
-   // const toggleEdit = () => setEdit(isEdit => !isEdit);
+    const success = (r) => {
+        console.log("POST appointment", r)
+       // addAppointment(r.appointment, selectedLocation)
+       // toggleButton()
+      }
+  
+      const failure = (r) => {
+        console.log("error POST appointment", r.reason)  
+      }
+  
+      const finish = (r) => {
+        console.log("POST appointment finish")
+       // setSubmit(false)
+       // setLoading(false)
+      }
 
-    //const toggleButton = useCallback(() => setShowButton(showButton => !showButton), []);
+      const onFormChange = e => {
+        console.log("FORM ONCHANGE")
+        setFormInput({
+          ...formInput,
+          [e.target.name]: e.target.value})
+     }
 
-    //const [showButton, setShowButton] = useState(true)
+     const handleSubmit = e => {
+        e.preventDefault()
 
-    //console.log("sorted icons: ", icons)
-    
-    //const setIcons = (icons) => { return icons.sort(lexCompare).map( (icon)=>(  getIcon(icon) ) )}
+        if (formInput.address.trim() && formInput.info.trim()){ //check blanks
+           
+           const location_obj = {                                                               
+            ...formInput,
+            selectedIcons: selectedIcons
+           }
+
+           console.log("loc obj: ", location_obj)
+
+           //setSubmit(true)
+           //createAppointment(location_obj, success, failure, finish)
+        } else {
+          // setStatus({status: false, status_msg: "no empty fields"})    
+        }
+     }
 
     return [
-        icons, isEdit,
-        //showButton, 
+        icons, isEdit, submitting, formInput,
       {
-        toggleEdit, onIconsChange
-       // toggleButton
+        toggleEdit, onIconsChange, onFormChange, handleSubmit,
       }
     ]
 }

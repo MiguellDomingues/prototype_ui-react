@@ -7,18 +7,24 @@ import { useLocationWidget } from './useLocationWidget'
 
 const LocationWidget = (props) =>{
 
-    //console.log("CONSTRUCTING LOCATIONWIDGET: ")
-
     const isSelected = props.isSelected
     const {id, address, info, icons} = props.location
 
-    const [_icons, isEdit, {toggleEdit, onIconsChange}] = useLocationWidget(icons)
+    console.log("CONSTRUCTING LOCATIONWIDGET id/selected?: ", id, isSelected)
+
+    const [ _icons, isEdit, submitting, formInput,{
+            toggleEdit, onIconsChange,onFormChange, handleSubmit
+        }] = useLocationWidget(icons, address, info)
 
     console.log("CONSTRUCTING LOCATION WIDGET: ", isEdit)
     
-    //console.log("sorted icons: ", _icons)
-
-    const setBGColour = (isSelected) => isSelected ? " selected-bg-col" : " bg-col" 
+    const setBGColour = (isSelected) => isSelected ? " selected-bg-col" : " bg-col"
+    
+    // if the user clicks on another widget while the form is open, close and reset that form
+    if(!isSelected && isEdit){
+        toggleEdit()
+        return(<></>)
+    }
     
     return (<>
         <div className={setBGColour(isSelected)} onClick={ (e) => {props.selectedHandler(id)} }>
@@ -27,13 +33,13 @@ const LocationWidget = (props) =>{
                 <>  
                     {isEdit ? <>
 
-                        <form onSubmit={null}>
+                        <form onSubmit={handleSubmit}>
                             <span className="close" onClick={toggleEdit}>x</span>
 
-                            <input type="text" placeholder="Address"   value={address}   name="address"  />
-                            <input type="text" placeholder="Info"      value={info}      name="info"     /> <br/>
+                            <input type="text" placeholder="Address"   value={formInput.address}   name="address"  onChange={onFormChange}/>
+                            <input type="text" placeholder="Info"      value={formInput.info}      name="info"     onChange={onFormChange}/> <br/>
                             <IconPicker handleChangeIcons={onIconsChange} inputIcons={[..._icons]}/> 
-                            <button disabled={null} name="status">Confirm Location Details</button> 
+                            <button disabled={submitting} name="status">Confirm Location Details</button> 
                         </form>
   
                     </> : <>
@@ -55,41 +61,8 @@ const LocationWidget = (props) =>{
                     {_icons.map( (icon) => (getIcon(icon)) )}
 
                 </>}
-
-           
-
         </div>
-        </>
-    );
+    </>);
 }
 
 export default LocationWidget
-
-/*
-
-
- <IconPicker handleChangeIcons={onIconsChange}/> 
-<button disabled={submitting} name="status">Confirm Location Details</button>
-
-
-
-
-
-<input type="text" placeholder="Address"   value={address}   name="address"  />
-                <input type="text" placeholder="Info"      value={info}      name="info"     />
-                {_icons.map( (icon) => (getIcon(icon)) )}
-
-
-<div className="location_form col display">
-
-            <span className="close" onClick={toggleButton}>x</span>
-            
-                <form onSubmit={handleSubmit}>
-                     <input type="text" placeholder="Address"   value={formInput.address}   name="address"   onChange={onChange}/>
-                     <input type="text" placeholder="Info"      value={formInput.info}      name="info"      onChange={onChange}/>
-                     <IconPicker handleChangeIcons={onIconsChange}/> 
-                     <button disabled={submitting} name="status">Confirm Location Details</button>
-                </form>
-
-        </div>)
-*/
