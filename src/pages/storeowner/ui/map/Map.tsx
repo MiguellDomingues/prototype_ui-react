@@ -31,7 +31,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
       
       const MyMap = (props) => {
 
-       // console.log("Map start:", props)
+        console.log("Map start:", props)
 
         const {posts, selectedLocation, selectLocation} = props.context
 
@@ -134,6 +134,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
                 style={{ flexGrow: "1", height: "100%" }}
               >
                 {markers.map((data, i) => (
+                  
                   <Marker                               /* instantiate a new marker object for each entry in the list */
                     key={data.id}
                     id={data.id}
@@ -240,6 +241,8 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
   */    
       const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
 
+        
+
       const [marker, setMarker] = React.useState<google.maps.Marker>();
 
       const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindow>();
@@ -248,6 +251,10 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
       const { map, content, id, selected, toggleInfoWindow } = options;
 
+      console.log("MAP OPTIONS", content)
+
+       /// ON LOCATION EDIT, UPDATE THE CONTENT FOR THE MARKER WINDOW INSIDE THIS CODE AROUND HERE
+
       //console.log("marker selected: ", selected)
 
         React.useEffect(() => {
@@ -255,6 +262,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
           //console.log("marker useeffect: ", id)
 
           if (!marker) {
+            console.log("instantiate marker")
             const myMarker = new google.maps.Marker({title: options.title});
             const infowindow = new google.maps.InfoWindow({content: content}); 
             
@@ -265,7 +273,10 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
               toggleInfoWindow(infoWindow, marker)
             }
             
-          }
+          }else{}
+         
+
+          ///////
       
           // remove marker from map on unmount
           return () => {

@@ -65,8 +65,63 @@ export const useDataContext= () =>{
           //add cleanup code for the handler? (like gmaps does)
       }, );
 
-      const editLocation = (location) => {
-        console.log("edit location: ", location)
+      const editLocation = (_location) => {
+        console.log("edit location: ", _location)
+
+        var ___location = _location
+
+        //const found = array1.find(element => element > 10);
+       // const location = data.posts.indexOf(data.posts.find( (location) =>  location.id === id))
+
+       //console.log("location in DATA: ", location, data.posts[location])
+
+       // data.posts[location] = {
+       //  ..._location,
+         // appointments: [...data.posts[location].appointments]
+       // }
+
+
+        const _data = {
+          success: data.success,
+          posts: data.posts.map( (location) => {
+
+            const _location = { 
+              id: location.id,
+              appointments: [...location.appointments] 
+            }
+
+            if(location.id === ___location.id){
+              _location.address =  ___location.address
+              _location.info =  ___location.info
+              //_location.LatLng =  {...___location.LatLng}
+
+              /*
+              lat: 43.91961776025469
+              lng: -0.8844604492
+              */
+
+              _location.LatLng =  {lat: 63.919617734343 , lng: -0.9623423422 }
+
+              _location.icons =  [...___location.selectedIcons]        
+            }else{
+              _location.address =  location.address
+              _location.info    =  location.info
+              _location.LatLng  =  {...location.LatLng}
+              _location.icons   =  [...location.icons] 
+            }
+
+            return _location
+          })
+
+        }
+
+        console.log("ORIGINAL DATA: ", data)
+
+        console.log("NEW COPIED DATA: ", _data)
+
+        setData(_data)
+
+
       }
 
       const addLocation = (location) => {

@@ -12,7 +12,7 @@ const LocationWidget = (props) =>{
 
     console.log("CONSTRUCTING LOCATIONWIDGET id/selected?: ", id, isSelected)
 
-    const [ isEdit, submitting, formInput,{
+    const [ _icons, isEdit, submitting, formInput,{
             toggleEdit, onIconsChange,onFormChange, handleSubmit, onLocationDelete
         }] = useLocationWidget(icons, address, info, id, props.handlers)
 
@@ -35,7 +35,7 @@ const LocationWidget = (props) =>{
                             <span className="close" onClick={toggleEdit}>x</span>
                             <input type="text" placeholder="Address"   value={formInput.address}   name="address"  onChange={onFormChange}/>
                             <input type="text" placeholder="Info"      value={formInput.info}      name="info"     onChange={onFormChange}/> <br/>
-                            <IconPicker handleChangeIcons={onIconsChange} inputIcons={[...icons ]}/> 
+                            <IconPicker handleChangeIcons={onIconsChange} inputIcons={[..._icons ]}/> 
                             <button disabled={submitting} name="status">Confirm Location Details</button> 
                         </form>
                     </> : <>
@@ -43,12 +43,12 @@ const LocationWidget = (props) =>{
                         <button className="storeowner_location_widget_selected" onClick={onLocationDelete}> Delete Location </button> 
                         address: {address} {"     "} 
                         info: {info} <br/>
-                        {icons.map( (icon) => (getIcon(icon)) )}                 
+                        {_icons.map( (icon) => (getIcon(icon)) )}                 
                     </>} 
                 </> : <>
                     address: {address} {"     "} 
                     info: {info} <br/>
-                    {icons.map( (icon) => (getIcon(icon)) )}
+                    {_icons.map( (icon) => (getIcon(icon)) )}
                 </>}
         </div>
     </>);

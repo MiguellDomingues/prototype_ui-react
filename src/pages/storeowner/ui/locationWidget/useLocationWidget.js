@@ -58,19 +58,25 @@ export const useLocationWidget = (_icons, address, info, id, handlers) =>{
      const handleSubmit = e => {
         e.preventDefault()
 
-        if( (formInput.address.trim() && formInput.info.trim()) &&          
+        /*
+         &&          
             (formInput.address !== address || 
              formInput.info !== info || 
-             !selectedIcons.every((val, i) => val === icons[i]))){           
+             !selectedIcons.every((val, i) => val === icons[i]))
+        */
+
+        if( (formInput.address.trim() && formInput.info.trim())){           
               
            const location_obj = {                                                               
             ...formInput,
+            id: id,
             selectedIcons: selectedIcons
            }
 
            console.log("loc obj: ", location_obj)
 
-           handlers.editLocation(location_obj) 
+           handlers.editLocation(location_obj)
+           toggleEdit() 
 
            //setSubmit(true)
            //createAppointment(location_obj, success, failure, finish)
@@ -86,7 +92,7 @@ export const useLocationWidget = (_icons, address, info, id, handlers) =>{
 
     return [
        // icons, isEdit, submitting, formInput,
-        isEdit, submitting, formInput,
+        icons,isEdit, submitting, formInput,
       {
         toggleEdit, onIconsChange, onFormChange, handleSubmit, onLocationDelete
       }
