@@ -65,6 +65,18 @@ export const useDataContext= () =>{
           //add cleanup code for the handler? (like gmaps does)
       }, );
 
+      const editLocation = (location) => {
+        console.log("edit location: ", location)
+      }
+
+      const addLocation = (location) => {
+        console.log("add location: ", location)
+      }
+
+      const removeLocation = (location_id) => {
+        console.log("delete location: ", location_id)
+      }
+
       const addAppointment = (appointment, loc_id) =>{
         console.log("add appointment", appointment)
         console.log("loc_id", loc_id)
@@ -95,27 +107,20 @@ export const useDataContext= () =>{
         )
 
         console.log("cancel apot data: ", removed)
-        /*
-        for each location:
-          if location.id = loc_id
-            for each location appointment:
-              if appointment.id != apt_id: 
-                copy appointment    
-        */
-
+      
           setData({success: true, posts: removed}); 
           setPosts(removed)
       }
 
-      //console.log("//////////////data context: /////////////////")
-     // console.log("data: ", data)
-     // console.log("loading: ", loading)
-     // console.log("//////////////////////////////////////////")
       
+    
+
   return [
     data, 
     loading,posts,status,
-    {addAppointment,removeAppointment},
+    {addAppointment, removeAppointment,editLocation, addLocation, removeLocation},
   ]; 
 
 }
+
+

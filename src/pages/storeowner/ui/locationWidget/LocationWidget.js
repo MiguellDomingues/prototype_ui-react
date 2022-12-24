@@ -12,9 +12,9 @@ const LocationWidget = (props) =>{
 
     console.log("CONSTRUCTING LOCATIONWIDGET id/selected?: ", id, isSelected)
 
-    const [ _icons, isEdit, submitting, formInput,{
-            toggleEdit, onIconsChange,onFormChange, handleSubmit
-        }] = useLocationWidget(icons, address, info)
+    const [ isEdit, submitting, formInput,{
+            toggleEdit, onIconsChange,onFormChange, handleSubmit, onLocationDelete
+        }] = useLocationWidget(icons, address, info, id, props.handlers)
 
     console.log("CONSTRUCTING LOCATION WIDGET: ", isEdit)
     
@@ -28,38 +28,27 @@ const LocationWidget = (props) =>{
     
     return (<>
         <div className={setBGColour(isSelected)} onClick={ (e) => {props.selectedHandler(id)} }>
-
             {isSelected ? 
                 <>  
                     {isEdit ? <>
-
                         <form onSubmit={handleSubmit}>
                             <span className="close" onClick={toggleEdit}>x</span>
-
                             <input type="text" placeholder="Address"   value={formInput.address}   name="address"  onChange={onFormChange}/>
                             <input type="text" placeholder="Info"      value={formInput.info}      name="info"     onChange={onFormChange}/> <br/>
-                            <IconPicker handleChangeIcons={onIconsChange} inputIcons={[..._icons]}/> 
+                            <IconPicker handleChangeIcons={onIconsChange} inputIcons={[...icons ]}/> 
                             <button disabled={submitting} name="status">Confirm Location Details</button> 
                         </form>
-  
                     </> : <>
-
                         <button className="storeowner_location_widget_selected" onClick={toggleEdit}> Edit Location </button> 
-                        <button className="storeowner_location_widget_selected" onClick={null}> Delete Location </button> 
-
+                        <button className="storeowner_location_widget_selected" onClick={onLocationDelete}> Delete Location </button> 
                         address: {address} {"     "} 
                         info: {info} <br/>
-                        {_icons.map( (icon) => (getIcon(icon)) )}
-                    
+                        {icons.map( (icon) => (getIcon(icon)) )}                 
                     </>} 
-                    
-
                 </> : <>
-
                     address: {address} {"     "} 
                     info: {info} <br/>
-                    {_icons.map( (icon) => (getIcon(icon)) )}
-
+                    {icons.map( (icon) => (getIcon(icon)) )}
                 </>}
         </div>
     </>);

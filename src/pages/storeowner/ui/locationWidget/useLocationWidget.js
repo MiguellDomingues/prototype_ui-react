@@ -2,23 +2,29 @@ import {useState, useCallback} from 'react'
 
 import { useAPI } from '../../../../features/DataProvider'
 
-export const useLocationWidget = (_icons, address, info) =>{
+export const useLocationWidget = (_icons, address, info, id, handlers) =>{
 
    // const { editAppointment, deleteAppointment } = useAPI()
 
-    const icons = _icons.sort( (lhs, rhs) => { return lhs > rhs ? -1 : rhs > lhs ? 1 : 0 } )
+    const lexOrder = (lhs, rhs) => { return lhs > rhs ? -1 : rhs > lhs ? 1 : 0 }
+
+    //keep a lexiographicly ordered copy of the icons upon component instantiation
+    const icons = _icons.sort(lexOrder)
+
     const _address = address
     const _info = info
 
     const [isEdit, setEdit] = useState(false)
+
     const [submitting, setSubmit] =  useState(false)
 
     const [formInput, setFormInput] = useState({address: address, info: info})
-    const [selectedIcons, setSelectedIcons] = useState([])
+    const [selectedIcons, setSelectedIcons] = useState([...icons])
 
     console.log("isEdit state: ", isEdit)
 
-    const onIconsChange = (icons) =>{ setSelectedIcons([...icons]) }
+    //sort the icons when they are changed in the edit
+    const onIconsChange = (icons) =>{ setSelectedIcons([...icons].sort(lexOrder)) }
 
     const toggleEdit = () => {
         setFormInput({address: _address, info: _info})
@@ -52,8 +58,11 @@ export const useLocationWidget = (_icons, address, info) =>{
      const handleSubmit = e => {
         e.preventDefault()
 
-        if (formInput.address.trim() && formInput.info.trim()){ //check blanks
-           
+        if( (formInput.address.trim() && formInput.info.trim()) &&          
+            (formInput.address !== address || 
+             formInput.info !== info || 
+             !selectedIcons.every((val, i) => val === icons[i]))){           
+              
            const location_obj = {                                                               
             ...formInput,
             selectedIcons: selectedIcons
@@ -61,17 +70,25 @@ export const useLocationWidget = (_icons, address, info) =>{
 
            console.log("loc obj: ", location_obj)
 
+           handlers.editLocation(location_obj) 
+
            //setSubmit(true)
            //createAppointment(location_obj, success, failure, finish)
         } else {
+            console.log("submit failed; data is same as original")
           // setStatus({status: false, status_msg: "no empty fields"})    
         }
      }
 
+     const onLocationDelete = () =>{
+        handlers.removeLocation(id)
+     }
+
     return [
-        icons, isEdit, submitting, formInput,
+       // icons, isEdit, submitting, formInput,
+        isEdit, submitting, formInput,
       {
-        toggleEdit, onIconsChange, onFormChange, handleSubmit,
+        toggleEdit, onIconsChange, onFormChange, handleSubmit, onLocationDelete
       }
     ]
 }

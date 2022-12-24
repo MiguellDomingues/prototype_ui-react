@@ -1,8 +1,20 @@
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
 
 export const useIconPicker = (onIconsChange, inputIcons) =>{
 
     const [selectedIcons, setIcons] = useState(inputIcons && inputIcons.length > 0 ? [...inputIcons] : []);
+
+/*
+   const onInitRef = useRef(false);
+
+    //upon component instantiation, 
+    useEffect( () => {       
+        if(onInitRef.current) return
+
+        onInitRef.current = true
+        onIconsChange(selectedIcons)
+    }, );
+*/
     
     const selectIcon = (iconName) => {
         return (e) => {

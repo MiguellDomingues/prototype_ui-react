@@ -60,6 +60,8 @@ export const useLocationForm = ( addLocation, toggleButton ) =>{
 
            console.log("loc obj: ", location_obj)
 
+           addLocation(location_obj)
+
            //setSubmit(true)
            //createAppointment(location_obj, success, failure, finish)
         } else {

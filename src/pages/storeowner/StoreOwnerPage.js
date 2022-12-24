@@ -18,7 +18,10 @@ function StoreOwnerPage() {
       setSelectedLocation(location_id)
     }
 
-    const [data, loading,posts,status,{addAppointment,removeAppointment}] = useDataContext()
+    const [
+      data, loading,posts,status,
+      {addAppointment,removeAppointment,editLocation, addLocation, removeLocation}
+   ] = useDataContext()
 
     function getPosts(data){
       return data && data.posts ? data.posts : [];
@@ -36,9 +39,7 @@ function StoreOwnerPage() {
       loading, 
       selectedLocation,
       selectLocation,
-      //update location details (info/tags)
-      //delete location
-      //add location
+      handlers: { editLocation, addLocation, removeLocation }   
     }
 
     const appt_deps = {

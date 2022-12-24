@@ -7,7 +7,9 @@ import LocationForm from '../locationForm/LocationForm'
 
 const LocationList = ( props ) =>{
 
-    const {posts, data, loading, selectedLocation, selectLocation } = props.context
+    const {
+        posts, data, loading, selectedLocation, 
+        selectLocation, handlers } = props.context
 
     const [showButton, {toggleButton} ] = useLocationList()
 
@@ -23,10 +25,14 @@ const LocationList = ( props ) =>{
             return <>
                 {posts.map( (location) => (
                 <div className={"list_child col display"}>           
-                   <LocationWidget 
+                   <LocationWidget
+
+                        handlers={handlers}
+
                         key={location.id}
                         isSelected={isSelectedLocation(selectedLocation, location.id)}
                         location={location} 
+                        
                         selectedHandler={selectLocation}/>
                 </div> )) }
             </>
@@ -40,7 +46,7 @@ const LocationList = ( props ) =>{
         { (showButton ? <LocationButton toggleButton={toggleButton}/> : 
                         <LocationForm
                             toggleButton={toggleButton}
-                            addLocation={null}                 
+                            addLocation={handlers.addLocation}                 
                         />)}
 
     </>
