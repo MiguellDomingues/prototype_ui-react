@@ -65,15 +65,13 @@ export const useLocationWidget = (_icons, address, info, id, handlers) =>{
              !selectedIcons.every((val, i) => val === icons[i]))
         */
 
-        if( (formInput.address.trim() && formInput.info.trim())){           
-              
+        if( (formInput.address.trim() && formInput.info.trim())){ 
+                 
            const location_obj = {                                                               
             ...formInput,
             id: id,
-            selectedIcons: selectedIcons
+            icons: selectedIcons
            }
-
-           console.log("loc obj: ", location_obj)
 
            handlers.editLocation(location_obj)
            toggleEdit() 
