@@ -83,6 +83,16 @@ export const useDataContext= () =>{
 
       const addLocation = (location) => {
         console.log("add location: ", location)
+
+        
+        //const append_location = {
+          //...location,
+        //}
+        
+
+        data.posts.push(location)
+
+        setData({...data, posts: data.posts})
       }
 
       const removeLocation = (location_id) => {

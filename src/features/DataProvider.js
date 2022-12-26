@@ -30,6 +30,10 @@ export const DataProvider = ({ children }) => {
       await POST.postUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
+    createLocation:  async function(payload, onSuccess , onFail, onFinish){
+      await POST.putStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+    },
+
     deleteAppointment: async function(payload, onSuccess , onFail, onFinish){
       await DELETE.deleteUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },

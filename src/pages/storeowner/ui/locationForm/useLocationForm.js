@@ -4,7 +4,7 @@ import { useAPI } from '../../../../features/DataProvider'
 
 export const useLocationForm = ( addLocation, toggleButton ) =>{
 
-    const { createAppointment } = useAPI()
+    const { createLocation } = useAPI()
 
     //use 1 state object for form inputs
    const [formInput, setFormInput] = useState({address: "", info: ""})
@@ -22,17 +22,18 @@ export const useLocationForm = ( addLocation, toggleButton ) =>{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     const success = (r) => {
-        console.log("POST appointment", r)
+        console.log("POST LOCATION SUCCESS", r)
+        addLocation(r.location)
        // addAppointment(r.appointment, selectedLocation)
         toggleButton()
       }
   
       const failure = (r) => {
-        console.log("error POST appointment", r.reason)  
+        console.log("POST LOCATION FAILURE", r.reason)  
       }
   
       const finish = (r) => {
-        console.log("POST appointment finish")
+        console.log("POST LOCATION FINISH")
         setSubmit(false)
        // setLoading(false)
       }
@@ -53,16 +54,17 @@ export const useLocationForm = ( addLocation, toggleButton ) =>{
 
         if (formInput.address.trim() && formInput.info.trim()){ //check blanks
            
-           const location_obj = {                                                               
+           const location_obj = {                                                              
             ...formInput,
-            selectedIcons: selectedIcons
+            icons: selectedIcons
            }
 
            console.log("loc obj: ", location_obj)
 
-           addLocation(location_obj)
+           setSubmit(true)
+           createLocation(location_obj, success, failure, finish)
 
-           //setSubmit(true)
+           //
            //createAppointment(location_obj, success, failure, finish)
         } else {
           // setStatus({status: false, status_msg: "no empty fields"})    
