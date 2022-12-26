@@ -31,7 +31,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
       
       const MyMap = (props) => {
 
-        console.log("Map start:", props)
+        console.log("---------------------Map start:------------------------------------", props)
 
         const {posts, selectedLocation, selectLocation} = props.context
 
@@ -251,7 +251,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
       const { map, content, id, selected, toggleInfoWindow } = options;
 
-      console.log("MAP OPTIONS", content)
+      //console.log("MAP OPTIONS", content)
 
        /// ON LOCATION EDIT, UPDATE THE CONTENT FOR THE MARKER WINDOW INSIDE THIS CODE AROUND HERE
 
@@ -262,7 +262,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
           //console.log("marker useeffect: ", id)
 
           if (!marker) {
-            console.log("instantiate marker")
+            //console.log("instantiate marker")
             const myMarker = new google.maps.Marker({title: options.title});
             const infowindow = new google.maps.InfoWindow({content: content}); 
             

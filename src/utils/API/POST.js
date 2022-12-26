@@ -51,7 +51,7 @@ const putStoreOwnerLocation = (location, key) => {
     })
     .catch((error) => {
       console.log('Error posting storeowner location.', error);
-      return reject(POST_USER_APPOINTMENT_FAILURE)
+      return reject(POST_STOREOWNER_LOCATION_FAILURE)
     });
 
 });}
