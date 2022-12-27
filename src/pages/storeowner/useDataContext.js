@@ -3,7 +3,7 @@ import { useAPI } from '../../features/DataProvider'
 
 export const useDataContext= () =>{
 
-  console.log("//////////////////////DataContextProvider///////////////////////////")
+  //console.log("//////////////////////DataContextProvider///////////////////////////")
 
     const { fetchLocationsStoreOwner } = useAPI()
 
@@ -66,6 +66,8 @@ export const useDataContext= () =>{
       }, );
 
       const editLocation = (location) => {
+        
+        console.log("edit location in data context: ", location)
 
         //get index of editted location using id
         const edit_index = data.posts.indexOf(data.posts.find( (loc) =>  location.id === loc.id))
@@ -73,22 +75,16 @@ export const useDataContext= () =>{
         //edit the location object
         data.posts[edit_index] = {
           ...location,
-          LatLng: {lat: 63 , lng: -1 }, // just add a diff constant lat/lng; later randomize the lat/lng by +1/-1 each entry
+          //LatLng: {lat: 63 , lng: -1 }, // just add a diff constant lat/lng; later randomize the lat/lng by +1/-1 each entry
           appointments: [...data.posts[edit_index].appointments]
         }
 
-        //copy the props to new object, triggering rerender
+        //declare a new object with old object references, triggering rerender
         setData({...data, posts: data.posts})
       }
 
       const addLocation = (location) => {
-        console.log("add location: ", location)
-
-        
-        //const append_location = {
-          //...location,
-        //}
-        
+        console.log("add location to root data: ", location)
 
         data.posts.push(location)
 

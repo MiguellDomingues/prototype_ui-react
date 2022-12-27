@@ -20,15 +20,22 @@ const editStoreOwnerLocation = (location, key) => {
       return Math.random() * (max - min) + min;
     }
 
+    const lat = location.LatLng.lat + getRandom(-2.5, 2.5)
+    const lng = location.LatLng.lng + getRandom(-0.5, 0.5)
+
+
     const request_body = {
       storeowner_id:    key, 
-      LatLng: {
-        lat: 47.91961776025469 + getRandom(-2.5, 2.5), 
-        lng: -0.7844604492 + getRandom(-0.5, 0.5)
-      },
-      appointments: [],
-      ...location
+      location:{
+        ...location,
+        LatLng: {
+          lat: lat, //because i have no way yet of turning an address into a lat/lng, add a small randomized offset to the input lat/lng
+          lng: lng
+        },
+      }
     }
+
+    console.log("edit storeowner location SERVER REQUEST BODY:", request_body)
 
     fetch(ENDPOINT_URL_LOCATION, {
       method: 'PATCH',
@@ -44,7 +51,7 @@ const editStoreOwnerLocation = (location, key) => {
       
       if(data){
         data.success = true
-        return resolve(data)
+        return resolve(data.location)
       }
 
       return reject(PATCH_STOREOWNER_LOCATION_FAILURE)
@@ -56,4 +63,4 @@ const editStoreOwnerLocation = (location, key) => {
 
 });}
 
-export const POST = { editStoreOwnerLocation }
+export const PATCH = { editStoreOwnerLocation }

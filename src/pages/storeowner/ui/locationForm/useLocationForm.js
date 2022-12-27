@@ -58,9 +58,7 @@ export const useLocationForm = ( addLocation, toggleButton ) =>{
             ...formInput,
             icons: selectedIcons
            }
-
-           console.log("loc obj: ", location_obj)
-
+           
            setSubmit(true)
            createLocation(location_obj, success, failure, finish)
 

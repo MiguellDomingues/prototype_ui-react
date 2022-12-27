@@ -1,3 +1,4 @@
+
 /***************************CREATE LOCATION ENDPOINT***********************/
 
 const ENDPOINT_URL_LOCATION = 'http://localhost:8080/location/'
@@ -217,4 +218,4 @@ const endSession = (success, request) => {
 
 /************************************************************************************************/
 
-export const POST = { postUserAppointment, endSession, startSession, registerUser, putStoreOwnerLocation}
+export const POST = { postUserAppointment, endSession, startSession, registerUser, putStoreOwnerLocation }

@@ -5,6 +5,7 @@ import  { useAuth } from './AuthProvider'
 import { POST }   from '../utils/API/POST'
 import { GET }    from '../utils/API/GET'
 import { DELETE } from '../utils/API/DELETE'
+import { PATCH } from '../utils/API/PATCH'
 
 const DataContext = React.createContext(null);
 
@@ -38,7 +39,13 @@ export const DataProvider = ({ children }) => {
       await DELETE.deleteUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
+    editStoreOwnerLocation: async function(payload, onSuccess , onFail, onFinish){
+      await PATCH.editStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+    },
+
   };
+
+  //editStoreOwnerLocation
 
   return (
     <DataContext.Provider value={value}>

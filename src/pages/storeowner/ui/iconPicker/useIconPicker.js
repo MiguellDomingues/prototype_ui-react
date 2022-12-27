@@ -4,24 +4,12 @@ export const useIconPicker = (onIconsChange, inputIcons) =>{
 
     const [selectedIcons, setIcons] = useState(inputIcons && inputIcons.length > 0 ? [...inputIcons] : []);
 
-/*
-   const onInitRef = useRef(false);
 
-    //upon component instantiation, 
-    useEffect( () => {       
-        if(onInitRef.current) return
-
-        onInitRef.current = true
-        onIconsChange(selectedIcons)
-    }, );
-*/
     
     const selectIcon = (iconName) => {
         return (e) => {
           e.preventDefault();
-          console.log("select ICON GP: ", iconName)
           const copyIcons = [...selectedIcons].concat( [iconName] )
-          console.log("selected: ", copyIcons)
           setIcons(copyIcons)
           onIconsChange(copyIcons)
       }}
@@ -29,9 +17,8 @@ export const useIconPicker = (onIconsChange, inputIcons) =>{
       const deSelectIcon = (iconName) => {
         return (e) => {
           e.preventDefault();
-          console.log("deselect ICON GP: ", iconName)
+         
           const copyIcons = [...selectedIcons.filter( (element) => {return element !== iconName} )]
-          console.log("selected: ", copyIcons)
           setIcons(copyIcons)
           onIconsChange(copyIcons)
       }}

@@ -31,7 +31,7 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
       
       const MyMap = (props) => {
 
-        console.log("---------------------Map start:------------------------------------", props)
+        //console.log("---------------------Map start:------------------------------------", props)
 
         const {posts, selectedLocation, selectLocation} = props.context
 
