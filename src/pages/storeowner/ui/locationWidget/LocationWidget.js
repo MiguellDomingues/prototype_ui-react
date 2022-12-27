@@ -7,22 +7,16 @@ import { useLocationWidget } from './useLocationWidget'
 
 const LocationWidget = (props) =>{
 
-    //console.log("CONSTRUCTING LOCATION WIDGET: ", props.location)
-
     const isSelected = props.isSelected
     const {id, address, info, icons, LatLng} = props.location
-
-    //console.log("CONSTRUCTING LOCATIONWIDGET id/selected?: ", id, isSelected)
 
     const [ _icons, isEdit, submitting, formInput,{
             toggleEdit, onIconsChange,onFormChange, handleSubmit, onLocationDelete
         }] = useLocationWidget(icons, address, info, id, LatLng, props.handlers)
 
-    //console.log("CONSTRUCTING LOCATION WIDGET: ", isEdit)
-    
     const setBGColour = (isSelected) => isSelected ? " selected-bg-col" : " bg-col"
     
-    // if the user clicks on another location widget while the edit form is open, reset and close the edit form 
+    // if the user clicks on another location widget while the edit form is open, reset and close the edit form
     if(!isSelected && isEdit){
         toggleEdit()
         return(<></>)

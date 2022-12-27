@@ -1,11 +1,9 @@
-import {useState, useEffect, useRef} from 'react'
+import  {useState } from 'react'
 
 export const useIconPicker = (onIconsChange, inputIcons) =>{
 
     const [selectedIcons, setIcons] = useState(inputIcons && inputIcons.length > 0 ? [...inputIcons] : []);
 
-
-    
     const selectIcon = (iconName) => {
         return (e) => {
           e.preventDefault();

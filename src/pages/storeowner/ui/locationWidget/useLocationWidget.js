@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react'
+import { useState } from 'react'
 
 import { useAPI } from '../../../../features/DataProvider'
 
@@ -28,15 +28,12 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
 
     const toggleEdit = () => {
         setFormInput({address: _address, info: _info})
-        //setEdit(isEdit => !isEdit)
         setEdit(!isEdit)
     };
 
     const success = (r) => {
         console.log("PATCH LOCATION SUCCESS", r)
         handlers.editLocation(r)
-       // addAppointment(r.appointment, selectedLocation)
-       // toggleButton()
       }
   
       const failure = (r) => {
@@ -45,12 +42,9 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
   
       const finish = (r) => {
         console.log("PATCH LOCATION FINISH")
-       // setSubmit(false)
-       // setLoading(false)
       }
 
       const onFormChange = e => {
-        //console.log("FORM ONCHANGE")
         setFormInput({
           ...formInput,
           [e.target.name]: e.target.value})
@@ -75,18 +69,11 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
             icons: selectedIcons
            }
 
-           //handlers.editLocation(location_obj)
-           
-
-           //setSubmit(true)
-
            editStoreOwnerLocation(location_obj, success, failure, finish)
            toggleEdit() 
 
-           //createAppointment(location_obj, success, failure, finish)
         } else {
-            console.log("submit failed; data is same as original")
-          // setStatus({status: false, status_msg: "no empty fields"})    
+            console.log("submit failed; data is same as original")  
         }
      }
 
@@ -95,7 +82,6 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
      }
 
     return [
-       // icons, isEdit, submitting, formInput,
         icons,isEdit, submitting, formInput,
       {
         toggleEdit, onIconsChange, onFormChange, handleSubmit, onLocationDelete

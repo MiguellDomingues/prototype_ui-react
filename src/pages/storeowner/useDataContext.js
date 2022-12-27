@@ -3,8 +3,6 @@ import { useAPI } from '../../features/DataProvider'
 
 export const useDataContext= () =>{
 
-  //console.log("//////////////////////DataContextProvider///////////////////////////")
-
     const { fetchLocationsStoreOwner } = useAPI()
 
     /* primarly JSON returned from callout */
@@ -29,10 +27,6 @@ export const useDataContext= () =>{
       setData(r); 
       setPosts(r.posts)
       setStatus(true)
-      //initFilter(r.posts, [])
-      
-      //setFilteredPosts(r.posts)
-      //here i could do another callout to fetch appointments for a  location    
     }
 
     const failure = (r) => {
@@ -67,15 +61,12 @@ export const useDataContext= () =>{
 
       const editLocation = (location) => {
         
-        console.log("edit location in data context: ", location)
-
         //get index of editted location using id
         const edit_index = data.posts.indexOf(data.posts.find( (loc) =>  location.id === loc.id))
 
         //edit the location object
         data.posts[edit_index] = {
           ...location,
-          //LatLng: {lat: 63 , lng: -1 }, // just add a diff constant lat/lng; later randomize the lat/lng by +1/-1 each entry
           appointments: [...data.posts[edit_index].appointments]
         }
 
@@ -96,6 +87,8 @@ export const useDataContext= () =>{
       }
 
       const addAppointment = (appointment, loc_id) =>{
+
+        /*
         console.log("add appointment", appointment)
         console.log("loc_id", loc_id)
 
@@ -110,11 +103,13 @@ export const useDataContext= () =>{
          // console.log("new data: ", {success: true, posts: appended})
 
           setData({success: true, posts: appended}); 
-          setPosts(appended)       
+          setPosts(appended)     
+          */  
       }
 
       const removeAppointment = (loc_id, apt_id) => {
 
+        /*
         console.log("removeApt: ", loc_id, apt_id)
 
         const removed = data.posts.map(
@@ -128,10 +123,8 @@ export const useDataContext= () =>{
       
           setData({success: true, posts: removed}); 
           setPosts(removed)
+          */
       }
-
-      
-    
 
   return [
     data, 
