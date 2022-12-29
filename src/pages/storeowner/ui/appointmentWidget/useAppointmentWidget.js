@@ -17,16 +17,16 @@ export const useAppointmentWidget = ( handleRemoveAppointment, appointment_id, l
     const success = (r) => {
         console.log("delete appointment useAppointmentWidget: ", r)
         handleRemoveAppointment(location_id,appointment_id)
-      }
+    }
   
-      const failure = (r) => {
-        console.log("error useAppointmentWidget", r.reason) 
-      }
+    const failure = (r) => {
+      console.log("error useAppointmentWidget", r.reason) 
+    }
   
-      const finish = (r) => {
-        console.log("setloading useAppointmentWidget")
-        setSubmit(false)
-      }
+    const finish = (r) => {
+      console.log("setloading useAppointmentWidget")
+      setSubmit(false)
+    }
 
       return [
         submitting,

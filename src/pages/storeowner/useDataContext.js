@@ -8,12 +8,7 @@ export const useDataContext= (selectLocation) =>{
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
 
-     /* callout status, undefined for init, t for success, f for failure */
-    //const [status, setStatus] = useState(undefined)
-
-    /* copy of data from callout */
-    //const [posts, setPosts] = useState(undefined);
-    
+     
     /* UI state */
     const [loading, setLoading] = useState(true);
 
@@ -21,20 +16,14 @@ export const useDataContext= (selectLocation) =>{
     /* prevent the double useEffect call/double fetch() on first render */
     const dataFetchedRef = useRef(false);
 
-   
     const success = (r) => {
       console.log("setposts UP: ", r)
       setData(r); 
-      //setPosts(r.posts)
-      //setStatus(true)
     }
 
     const failure = (r) => {
       console.log("error UP", r.reason) 
-      setData(r); 
-      //setPosts([])
-      //setStatus(false)
-       
+      setData(r);    
     }
 
     const finish = (r) => {
