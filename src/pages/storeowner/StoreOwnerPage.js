@@ -21,7 +21,7 @@ function StoreOwnerPage() {
     const [
       data, loading,posts,status,
       {addAppointment,removeAppointment,editLocation, addLocation, removeLocation}
-   ] = useDataContext()
+   ] = useDataContext(selectLocation)
 
     function getPosts(data){
       return data && data.posts ? data.posts : [];

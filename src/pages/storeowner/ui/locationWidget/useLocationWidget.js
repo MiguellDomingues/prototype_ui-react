@@ -4,7 +4,7 @@ import { useAPI } from '../../../../features/DataProvider'
 
 export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =>{
 
-    const { editStoreOwnerLocation } = useAPI()
+    const { editStoreOwnerLocation, deleteLocation } = useAPI()
 
     const lexOrder = (lhs, rhs) => { return lhs > rhs ? -1 : rhs > lhs ? 1 : 0 }
 
@@ -31,6 +31,26 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
         setEdit(!isEdit)
     };
 
+    //////////////////////////EDIT CALLBACKS////////////////////////
+
+    const success_del = (r) => {
+      console.log("DELETE LOCATION SUCCESS", r)
+      handlers.removeLocation(r.id)
+    }
+
+    const failure_del = (r) => {
+      console.log("DELETE LOCATION FAILURE", r.reason)  
+    }
+
+    const finish_del = (r) => {
+      console.log("DELETE LOCATION FINISH")
+      setSubmit(false)
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////EDIT CALLBACKS////////////////////////
+
     const success = (r) => {
         console.log("PATCH LOCATION SUCCESS", r)
         handlers.editLocation(r)
@@ -42,7 +62,10 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
   
       const finish = (r) => {
         console.log("PATCH LOCATION FINISH")
+        setSubmit(false)
       }
+
+      ///////////////////////////////////////////////////////////////////////////
 
       const onFormChange = e => {
         setFormInput({
@@ -70,6 +93,7 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
            }
 
            editStoreOwnerLocation(location_obj, success, failure, finish)
+           setSubmit(true)
            toggleEdit() 
 
         } else {
@@ -78,7 +102,8 @@ export const useLocationWidget = (_icons, address, info, id, LatLng, handlers) =
      }
 
      const onLocationDelete = () =>{
-        handlers.removeLocation(id)
+        setSubmit(true)
+        deleteLocation(id, success_del, failure_del, finish_del)
      }
 
     return [

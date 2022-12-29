@@ -38,14 +38,15 @@ export const DataProvider = ({ children }) => {
     deleteAppointment: async function(payload, onSuccess , onFail, onFinish){
       await DELETE.deleteUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
+    deleteLocation: async function(payload, onSuccess , onFail, onFinish){
+      await DELETE.deleteLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+    },
 
     editStoreOwnerLocation: async function(payload, onSuccess , onFail, onFinish){
       await PATCH.editStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
   };
-
-  //editStoreOwnerLocation
 
   return (
     <DataContext.Provider value={value}>

@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react'
 import { useAPI } from '../../features/DataProvider'
 
-export const useDataContext= () =>{
+export const useDataContext= (selectLocation) =>{
 
     const { fetchLocationsStoreOwner } = useAPI()
 
@@ -82,8 +82,18 @@ export const useDataContext= () =>{
         setData({...data, posts: data.posts})
       }
 
+
       const removeLocation = (location_id) => {
-        console.log("delete location: ", location_id)
+
+        let copy = []
+
+        // deep copy the locations into new array 'copy', except for the deleted one
+        // location_id !== loc.id && .... is shorthand for if(...){ ... }
+        data.posts.forEach( (loc) => location_id !== loc.id && copy.push( {...loc, appointments: [...loc.appointments]} ) )
+
+        // deselect the currently selected location, since it's been removed from the list
+        selectLocation(undefined)
+        setData({...data, posts: copy}); 
       }
 
       const addAppointment = (appointment, loc_id) =>{
