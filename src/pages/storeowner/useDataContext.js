@@ -9,10 +9,10 @@ export const useDataContext= (selectLocation) =>{
     const [data, setData] = useState();
 
      /* callout status, undefined for init, t for success, f for failure */
-    const [status, setStatus] = useState(undefined)
+    //const [status, setStatus] = useState(undefined)
 
     /* copy of data from callout */
-    const [posts, setPosts] = useState(undefined);
+    //const [posts, setPosts] = useState(undefined);
     
     /* UI state */
     const [loading, setLoading] = useState(true);
@@ -25,15 +25,15 @@ export const useDataContext= (selectLocation) =>{
     const success = (r) => {
       console.log("setposts UP: ", r)
       setData(r); 
-      setPosts(r.posts)
-      setStatus(true)
+      //setPosts(r.posts)
+      //setStatus(true)
     }
 
     const failure = (r) => {
       console.log("error UP", r.reason) 
       setData(r); 
-      setPosts([])
-      setStatus(false)
+      //setPosts([])
+      //setStatus(false)
        
     }
 
@@ -65,10 +65,7 @@ export const useDataContext= (selectLocation) =>{
         const edit_index = data.posts.indexOf(data.posts.find( (loc) =>  location.id === loc.id))
 
         //edit the location object
-        data.posts[edit_index] = {
-          ...location,
-          appointments: [...data.posts[edit_index].appointments]
-        }
+        data.posts[edit_index] = {...location, appointments: [...data.posts[edit_index].appointments] }
 
         //declare a new object with old object references, triggering rerender
         setData({...data, posts: data.posts})
@@ -96,50 +93,9 @@ export const useDataContext= (selectLocation) =>{
         setData({...data, posts: copy}); 
       }
 
-      const addAppointment = (appointment, loc_id) =>{
-
-        /*
-        console.log("add appointment", appointment)
-        console.log("loc_id", loc_id)
-
-        const appended = data.posts.map( 
-          (post )=> {
-            if(post.id === loc_id){post.appointments.push(appointment)}
-            return post
-          })
-
-          //console.log("new posts: ", appended)
-
-         // console.log("new data: ", {success: true, posts: appended})
-
-          setData({success: true, posts: appended}); 
-          setPosts(appended)     
-          */  
-      }
-
-      const removeAppointment = (loc_id, apt_id) => {
-
-        /*
-        console.log("removeApt: ", loc_id, apt_id)
-
-        const removed = data.posts.map(
-          (post) =>{
-            if(post.id === loc_id){post.appointments = post.appointments.filter((appointment)=>appointment.id !== apt_id)}
-            return post
-          }
-        )
-
-        console.log("cancel apot data: ", removed)
-      
-          setData({success: true, posts: removed}); 
-          setPosts(removed)
-          */
-      }
-
   return [
-    data, 
-    loading,posts,status,
-    {addAppointment, removeAppointment,editLocation, addLocation, removeLocation},
+    data, loading,
+    {editLocation, addLocation, removeLocation},
   ]; 
 
 }

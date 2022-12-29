@@ -8,11 +8,8 @@ export const useAppointmentWidget = ( handleRemoveAppointment, appointment_id, l
 
     const [submitting, setSubmit] = useState(false)
 
-   
-
     const cancelAppointment = () =>  {
         console.log("cancelAppointment: ")
-        //handleRemoveAppointment(location_id,appointment_id)
         setSubmit(true)
         deleteAppointment(appointment_id, success,failure,finish)
     }

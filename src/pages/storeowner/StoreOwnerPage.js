@@ -14,13 +14,12 @@ function StoreOwnerPage() {
     const [selectedLocation, setSelectedLocation] = useState()
 
     const selectLocation = (location_id) => {
-      //console.log("selecting location: ", location_id)
       setSelectedLocation(location_id)
     }
 
     const [
-      data, loading,posts,status,
-      {addAppointment,removeAppointment,editLocation, addLocation, removeLocation}
+      data, loading,
+      {editLocation, addLocation, removeLocation}
    ] = useDataContext(selectLocation)
 
     function getPosts(data){
@@ -45,9 +44,6 @@ function StoreOwnerPage() {
     const appt_deps = {
       selectedLocation,
       posts: getPosts(data), 
-      addAppointment,
-      removeAppointment
-      //update appointment status
     }
 
    return (<>

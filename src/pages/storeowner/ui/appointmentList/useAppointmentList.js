@@ -8,8 +8,6 @@ export const useAppointmentList = ( posts = [], selectedLocation = undefined ) =
     /* id of a selected (highlighted) appointment */
     const [selectedAppointment, setSelectedAppointment] = useState();
 
-    const [showButton, setShowButton] = useState(true)
-
     const selectAppointment = useCallback( (id) => {
       return (e) => {
         e.preventDefault();
@@ -17,15 +15,12 @@ export const useAppointmentList = ( posts = [], selectedLocation = undefined ) =
         setSelectedAppointment(id)
     }} , [] );
 
-    const toggleButton = useCallback(() => setShowButton(showButton => !showButton), []);
+    
   
-     // console.log("appointments: ", appointments)
-      //console.log("selected appointment: ", selectedAppointment)
-
-      return [
-        appointments, selectedAppointment, showButton, 
-        {
-          selectAppointment, toggleButton
-        }
-      ]
+    return [
+      appointments, selectedAppointment, 
+      {
+        selectAppointment, 
+      }
+    ]
 }
