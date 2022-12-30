@@ -3,7 +3,7 @@ import { useAppointmentWidget } from './useAppointmentWidget'
 
 const AppointmentWidget = (props) =>{
 
-    const { date, start, end, id } = props.appointmentDetails
+    const { date, start, end, id, status } = props.appointmentDetails
     const {handleSelectAppointment,  handleRemoveAppointment, selectedLocation} = props
 
     const [ submitting,{ cancelAppointment } ] = useAppointmentWidget(handleRemoveAppointment, id, selectedLocation)
@@ -19,6 +19,7 @@ const AppointmentWidget = (props) =>{
         Date: {date} <br/>
         start: {start} <br/>
         end: {end}  <br/>
+        status: {status}  <br/>
     </div>
     
     { isSelected ? (<div> 

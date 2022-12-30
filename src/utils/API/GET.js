@@ -16,7 +16,7 @@ const fetchUserLocations = (key) => {
     .then((res) => res.json())
     .then((data) => {
       data.success = true
-      console.log("fetch miragejs user posts: ", data)
+      console.log("fetch user posts: ", data)
       return resolve(data);
     })
     .catch((error) => {
@@ -48,7 +48,7 @@ const fetchGuestLocations = (key) => {
       return res.json()})
     .then((data) => {
       data.success = true
-      console.log("fetch miragejs guest posts: ", data)
+      console.log("fetch guest posts: ", data)
       return resolve(data);
     })
     .catch((error) => {
