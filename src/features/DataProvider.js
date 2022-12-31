@@ -46,6 +46,10 @@ export const DataProvider = ({ children }) => {
       await PATCH.editStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
+    updateAppointmentStatus: async function(payload, onSuccess , onFail, onFinish){
+      await PATCH.updateAppointmentStatus(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+    },
+
   };
 
   return (

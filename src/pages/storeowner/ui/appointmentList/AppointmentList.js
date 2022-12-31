@@ -22,7 +22,7 @@ const isSelectedAppointment = (id, selected_id) => selected_id === id
                         key={appointment.id} 
                         isSelected={isSelectedAppointment(appointment.id, selectedAppointment)}
                         appointmentDetails={appointment}
-                        handleRemoveAppointment={removeAppointment}
+                        editAppointmentStatus={null}
                         selectedLocation={selectedLocation}
                         handleSelectAppointment={selectAppointment}/>
                 </div>

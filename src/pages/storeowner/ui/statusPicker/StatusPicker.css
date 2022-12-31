@@ -1,0 +1,15 @@
+
+  .close:hover {
+    float:right;
+    display:inline-block;
+    padding:2px 2px;
+    background:#ccc;
+    color:#fff;
+}
+
+.close {
+  float:right;
+  display:inline-block;
+  padding:2px 2px;
+  background:#ccc;
+}
