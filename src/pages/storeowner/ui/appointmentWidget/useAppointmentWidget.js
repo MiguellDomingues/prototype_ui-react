@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 import { useAPI } from '../../../../features/DataProvider'
 
-export const useAppointmentWidget = ( editAppointmentStatus, appointment_id) =>{
+export const useAppointmentWidget = (editAppointmentStatus, appointment_id, location_id) =>{
 
     const { updateAppointmentStatus } = useAPI()
 
@@ -16,9 +16,9 @@ export const useAppointmentWidget = ( editAppointmentStatus, appointment_id) =>{
         updateAppointmentStatus({apt_id: appointment_id, new_status: status}, success,failure,finish)
     }
 
-    const success = (r) => {
-        console.log("updateStatus useAppointmentWidget: ", r)
-        //editAppointmentStatus(r)
+    const success = (location) => {
+        console.log("updateStatus useAppointmentWidget: ", location)
+        editAppointmentStatus(location_id, location.id, location.status)
         setSubmitting(false)     
     }
   

@@ -10,7 +10,7 @@ const AppointmentWidget = (props) =>{
 
     const isSelected = props.isSelected
 
-    const [ editStatus,submitting,{ updateStatus, toggleEditStatus } ] = useAppointmentWidget(editAppointmentStatus, id)
+    const [ editStatus,submitting,{ updateStatus, toggleEditStatus } ] = useAppointmentWidget(editAppointmentStatus, id, selectedLocation)
 
     const setBGColour = (isSelected) => isSelected ? " selected_appt" : " deselected_appt" 
 

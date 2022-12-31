@@ -100,7 +100,7 @@ const updateAppointmentStatus = (payload, key) => {
       
       if(data){
         data.success = true
-        return resolve(data)
+        return resolve(data.appointment)
       }
 
       return reject(PATCH_STOREOWNER_APPOINTMENT_FAILURE)

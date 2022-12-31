@@ -23,7 +23,7 @@ const LocationWidget = (props) =>{
     }
     
     return (<>
-        <div className={setBGColour(isSelected)} onClick={ (e) => {props.selectedHandler(id)} }>
+        <div className={setBGColour(isSelected)} onClick={ (e) => {props.handlers.selectLocation(id)} }>
             {isSelected ? 
                 <>  
                     {isEdit ? <>

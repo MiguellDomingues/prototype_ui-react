@@ -1,13 +1,13 @@
 import {useState} from 'react'
 
-const useStatusPicker = (updateStatus) =>{
+const useStatusPicker = (initialStatus, updateStatus) =>{
 
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState(initialStatus)
 
     const handleStatusChange = (e) =>  setStatus(e.target.value) 
-    const handleSubmit = () =>  {updateStatus(status)}
+    const handleSubmit = () =>  { console.log("submit"); updateStatus(status)}
 
-    return [ status,{handleStatusChange, handleSubmit}]
+    return [ {handleStatusChange, handleSubmit} ]
 
 }
 

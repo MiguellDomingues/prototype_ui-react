@@ -7,7 +7,7 @@ import { useAppointmentList } from './useAppointmentList'
 
 const AppointmentList = (props) =>{
 
-   const { selectedLocation,posts, removeAppointment } = props.context
+   const { selectedLocation,posts, handlers } = props.context
 
    const [appointments, selectedAppointment, {selectAppointment} ] = useAppointmentList (posts, selectedLocation)
 
@@ -22,7 +22,7 @@ const isSelectedAppointment = (id, selected_id) => selected_id === id
                         key={appointment.id} 
                         isSelected={isSelectedAppointment(appointment.id, selectedAppointment)}
                         appointmentDetails={appointment}
-                        editAppointmentStatus={null}
+                        editAppointmentStatus={handlers.editAppointmentStatus}
                         selectedLocation={selectedLocation}
                         handleSelectAppointment={selectAppointment}/>
                 </div>

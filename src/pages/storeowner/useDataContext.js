@@ -43,48 +43,43 @@ export const useDataContext= (selectLocation) =>{
   
           dataFetchedRef.current = true;
           dataFetch();
-          //onFetch();
-  
-          //add cleanup code for the handler? (like gmaps does)
       }, );
 
       const editLocation = (location) => {
         
-        //get index of editted location using id
-        const edit_index = data.posts.indexOf(data.posts.find( (loc) =>  location.id === loc.id))
-
-        //edit the location object
-        data.posts[edit_index] = {...location, appointments: [...data.posts[edit_index].appointments] }
-
-        //declare a new object with old object references, triggering rerender
-        setData({...data, posts: data.posts})
+        const edit_index = data.posts.indexOf(data.posts.find( (loc) =>  location.id === loc.id))         //get index of editted location using id
+        data.posts[edit_index] = {...location, appointments: [...data.posts[edit_index].appointments] }   //edit the location object and copy the appointments
+        setData({...data, posts: data.posts})                                                             //declare a new object with old object references, triggering rerender
       }
 
       const addLocation = (location) => {
-        console.log("add location to root data: ", location)
-
         data.posts.push(location)
-
         setData({...data, posts: data.posts})
       }
-
 
       const removeLocation = (location_id) => {
 
         let copy = []
-
-        // deep copy the locations into new array 'copy', except for the deleted one
         // location_id !== loc.id && .... is shorthand for if(...){ ... }
-        data.posts.forEach( (loc) => location_id !== loc.id && copy.push( {...loc, appointments: [...loc.appointments]} ) )
+        data.posts.forEach( (loc) => location_id !== loc.id &&                                             //for each location except for the deleted one..
+          copy.push( {...loc, appointments: [...loc.appointments]} ) )                                     //deep copy the location and location appointments into a new array
 
-        // deselect the currently selected location, since it's been removed from the list
-        selectLocation(undefined)
+        selectLocation(undefined)                                                                          //unset the currently selected location, since its removed from the location array                                                                                   
         setData({...data, posts: copy}); 
+      }
+
+      const editAppointmentStatus = (location_id, appointment_id, new_status) =>{
+
+        data.posts.find( (loc) => loc.id === location_id )                                                 // find location object by id            
+          .appointments.find( (apt) => apt.id === appointment_id )                                         // find the location appointment by id
+            .status = new_status                                                                           // update the status
+
+        setData({...data, posts: data.posts}); 
       }
 
   return [
     data, loading,
-    {editLocation, addLocation, removeLocation},
+    {editLocation, addLocation, removeLocation, editAppointmentStatus},
   ]; 
 
 }

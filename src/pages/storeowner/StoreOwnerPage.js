@@ -18,8 +18,14 @@ function StoreOwnerPage() {
     }
 
     const [
-      data, loading,
-      {editLocation, addLocation, removeLocation}
+      data, 
+      loading,
+      {
+        editLocation, 
+        addLocation, 
+        removeLocation,
+        editAppointmentStatus
+      }
    ] = useDataContext(selectLocation)
 
     function getPosts(data){
@@ -37,13 +43,14 @@ function StoreOwnerPage() {
       data,
       loading, 
       selectedLocation,
-      selectLocation,
-      handlers: { editLocation, addLocation, removeLocation }   
+      //selectLocation,
+      handlers: { editLocation, addLocation, removeLocation, selectLocation }   
     }
 
     const appt_deps = {
       selectedLocation,
       posts: getPosts(data), 
+      handlers: { editAppointmentStatus }
     }
 
    return (<>

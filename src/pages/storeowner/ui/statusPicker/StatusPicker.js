@@ -11,7 +11,7 @@ const StatusPicker = (props) =>{
     //TEMP. get the values from a file in utils, the valid values for each user type will be determined from a fetch for config data
     const values = ['Approved', 'In Progress', 'Completed', 'Canceled'].filter( (val) => val !== initialVal)
 
-    const [ status, {handleStatusChange, handleSubmit} ] = useStatusPicker(updateStatus)
+    const [{handleStatusChange, handleSubmit}] = useStatusPicker(values[0], updateStatus)
 
     return <>
     <div className="picker_child">
@@ -19,7 +19,7 @@ const StatusPicker = (props) =>{
             {values.map( (status) => (<option value={status}>{status}</option>))}          
         </select>
         <span className="close" onClick={toggleEdit}>x</span><br/>
-        <button name="status" disabled={status === null} onClick={handleSubmit}>Confirm New Status</button>
+        <button name="status" onClick={handleSubmit}>Confirm New Status</button>
     </div>
     </>
 }
