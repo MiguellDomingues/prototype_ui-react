@@ -1,6 +1,6 @@
 /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_USER = 'http://localhost:8080/posts/user'
+const ENDPOINT_URL_USER = 'http://localhost:8080/locations'
 
 const GET_USER_POSTS_FAILURE = 
 {
@@ -31,7 +31,7 @@ const fetchUserLocations = (key) => {
 
 /***************************GUEST USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_GUEST = 'http://localhost:8080/posts/guest'
+const ENDPOINT_URL_GUEST = 'http://localhost:8080/locations'
 
 const GET_GUEST_POSTS_FAILURE = 
 {
@@ -64,7 +64,7 @@ const fetchGuestLocations = (key) => {
 /************************************************************************************************/
 /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_STOREOWNER = 'http://localhost:8080/posts/storeowner'
+const ENDPOINT_URL_STOREOWNER = 'http://localhost:8080/locations'
 
 const GET_STOREOWNER_POSTS_FAILURE = 
 {

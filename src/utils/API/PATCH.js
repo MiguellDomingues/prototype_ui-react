@@ -37,7 +37,7 @@ const editStoreOwnerLocation = (location, key) => {
 
     console.log("edit storeowner location SERVER REQUEST BODY:", request_body)
 
-    fetch(ENDPOINT_URL_LOCATION, {
+    fetch(ENDPOINT_URL_LOCATION+ '?key=' + key, {
       method: 'PATCH',
       body: JSON.stringify(request_body),
       headers: {
@@ -88,7 +88,7 @@ const updateAppointmentStatus = (payload, key) => {
 
     console.log("updateAppointmentStatus SERVER REQUEST BODY:", request_body)
 
-    fetch(ENDPOINT_URL_APPOINTMENT, {
+    fetch(ENDPOINT_URL_APPOINTMENT+ '?key=' + key, {
       method: 'PATCH',
       body: JSON.stringify(request_body),
       headers: { 'Content-Type': 'application/json'}

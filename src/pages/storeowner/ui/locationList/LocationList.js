@@ -28,9 +28,7 @@ const LocationList = ( props ) =>{
                         handlers={handlers}
                         key={location.id}
                         isSelected={isSelectedLocation(selectedLocation, location.id)}
-                        location={location} 
-                        //selectedHandler={handlers.selectLocation}
-                        />
+                        location={location} />
                 </div> )) }
             </>
         }else{

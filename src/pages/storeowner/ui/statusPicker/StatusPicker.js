@@ -9,6 +9,17 @@ const StatusPicker = (props) =>{
     const toggleEdit = props.toggleEdit
     
     //TEMP. get the values from a file in utils, the valid values for each user type will be determined from a fetch for config data
+    /*
+    User:
+        Approved : ["Canceled"]
+
+    StoreOwner 
+        Approved :      ["In Progress", "Canceled"]
+        In Progress :   ["Completed", "Canceled"]
+        Canceled :      []
+        Completed :     []
+
+    */
     const values = ['Approved', 'In Progress', 'Completed', 'Canceled'].filter( (val) => val !== initialVal)
 
     const [{handleStatusChange, handleSubmit}] = useStatusPicker(values[0], updateStatus)

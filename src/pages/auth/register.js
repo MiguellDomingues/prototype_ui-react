@@ -14,7 +14,7 @@ function Registration() {
       useState({
          username: "",
          password: "",
-         type: "user"})
+         type: "USER"})
 
    //use another state for registration response
    const [registerStatus, setStatus] = 
@@ -71,9 +71,9 @@ function Registration() {
                      <input type="text" placeholder="UserName: " value={formInput.username} name="username" onChange={onChange}/>
                      <input type="password" placeholder="Password: " value={formInput.password} name="password" onChange={onChange}/>
                      <select name="type" onChange={onChange}>
-                        <option value="user">User</option>
-                        <option value="storeowner">Store Owner</option>
-                        <option value="admin">Admin</option>
+                        <option value="USER">User</option>
+                        <option value="STOREOWNER">Store Owner</option>
+                        <option value="ADMIN">Admin</option>
                      </select>
                      <button disabled={submitting} name="status">Register</button><br/>
                   </form>

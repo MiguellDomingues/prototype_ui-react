@@ -22,7 +22,7 @@ const deleteLocation = (loc_id, key) => {
     
     console.log("deleteLocation: ", request_body)
 
-      fetch(ENDPOINT_URL_LOCATION, {
+      fetch(ENDPOINT_URL_LOCATION + '?key=' + key, {
       method: 'DELETE',
       body: JSON.stringify(request_body),
       headers: {
@@ -74,7 +74,7 @@ const deleteUserAppointment = (appointment_id, key) => {
     
     console.log("deleteUserApt: ", request_body)
 
-      fetch(ENDPOINT_URL_APPOINTMENT, {
+      fetch(ENDPOINT_URL_APPOINTMENT + '?key=' + key, {
       method: 'DELETE',
       body: JSON.stringify(request_body),
       headers: {

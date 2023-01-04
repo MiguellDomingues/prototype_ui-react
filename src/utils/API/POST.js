@@ -31,7 +31,7 @@ const putStoreOwnerLocation = (location, key) => {
       ...location
     }
 
-    fetch(ENDPOINT_URL_LOCATION, {
+    fetch(ENDPOINT_URL_LOCATION+ '?key=' + key, {
       method: 'POST',
       body: JSON.stringify(request_body),
       headers: {
@@ -82,7 +82,7 @@ const postUserAppointment = (appointment, key) => {
       end_time:   appointment.end_time
     }
 
-    fetch(ENDPOINT_URL_APPOINTMENT, {
+    fetch(ENDPOINT_URL_APPOINTMENT + '?key=' + key, {
       method: 'POST',
       body: JSON.stringify(request_body),
       headers: {
