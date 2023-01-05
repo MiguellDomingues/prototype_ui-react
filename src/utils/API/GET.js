@@ -1,4 +1,4 @@
-/***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
+/***************************FETCH CONFIGS***********************/
 
 const ENDPOINT_URL_CONFIGS = 'http://localhost:8080/configs'
 
