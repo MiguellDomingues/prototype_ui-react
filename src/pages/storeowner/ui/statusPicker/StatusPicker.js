@@ -2,7 +2,11 @@
 import useStatusPicker from './useStatusPicker'
 import './StatusPicker.css'
 
+import { useConfig } from '../../../../features/AuthProvider'
+
 const StatusPicker = (props) =>{
+
+    const { config } = useConfig()  
 
     const initialVal = props.initialVal
     const updateStatus= props.updateStatus
@@ -19,8 +23,13 @@ const StatusPicker = (props) =>{
         Canceled :      []
         Completed :     []
 
+          const values = ['Approved', 'In Progress', 'Completed', 'Canceled'].filter( (val) => val !== initialVal)
+
     */
-    const values = ['Approved', 'In Progress', 'Completed', 'Canceled'].filter( (val) => val !== initialVal)
+
+    console.log("STAT PICKER STATUSES: ", config.STATUS)
+
+    const values = config.STATUS.filter( (val) => val !== initialVal)
 
     const [{handleStatusChange, handleSubmit}] = useStatusPicker(values[0], updateStatus)
 

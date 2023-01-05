@@ -1,6 +1,6 @@
 /***************************DELETE LOCATION ENDPOINT***********************/
 
-const ENDPOINT_URL_LOCATION = 'http://localhost:8080/location/'
+const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
 
 const DELETE_STOREOWNER_LOCATION_FAILURE = {
   success:false,
