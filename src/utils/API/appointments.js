@@ -1,6 +1,5 @@
 
-const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
-
+//const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
 
 /***************************DELETE APPOINTMENT ENDPOINT***********************/
 const DELETE_USER_APPOINTMENT_FAILURE = {
@@ -8,7 +7,7 @@ const DELETE_USER_APPOINTMENT_FAILURE = {
   reason: "failed to deletet user appointment"
 }
 
-const deleteUserAppointment = (appointment_id, key) => {
+const deleteUserAppointment = (appointment_id, key,path) => {
 
   console.log("delete user appointment mock:")
   console.log("appointment id: ", appointment_id)
@@ -23,7 +22,7 @@ const deleteUserAppointment = (appointment_id, key) => {
     
     console.log("deleteUserApt: ", request_body)
 
-      fetch(ENDPOINT_URL_APPOINTMENT + '?key=' + key, {
+      fetch(path + '?key=' + key, {
       method: 'DELETE',
       body: JSON.stringify(request_body),
       headers: {
@@ -58,7 +57,7 @@ const PATCH_STOREOWNER_APPOINTMENT_FAILURE = {
   reason: "failed to edit storeowner location"
 }
 
-const updateAppointmentStatus = (payload, key) => {
+const updateAppointmentStatus = (payload, key,path) => {
 
   console.log("edit storeowner appointment:")
   console.log("apt_id: ",     payload.apt_id)
@@ -74,7 +73,7 @@ const updateAppointmentStatus = (payload, key) => {
 
     console.log("updateAppointmentStatus SERVER REQUEST BODY:", request_body)
 
-    fetch(ENDPOINT_URL_APPOINTMENT+ '?key=' + key, {
+    fetch(path+ '?key=' + key, {
       method: 'PATCH',
       body: JSON.stringify(request_body),
       headers: { 'Content-Type': 'application/json'}
@@ -105,7 +104,7 @@ const POST_USER_APPOINTMENT_FAILURE = {
   reason: "failed to post user appointment"
 }
 
-const postUserAppointment = (appointment, key) => {
+const postUserAppointment = (appointment, key,path) => {
 
   console.log("post user appointment mock:")
   console.log("appointment: ", appointment)
@@ -121,7 +120,7 @@ const postUserAppointment = (appointment, key) => {
       end_time:   appointment.end_time
     }
 
-    fetch(ENDPOINT_URL_APPOINTMENT + '?key=' + key, {
+    fetch(path + '?key=' + key, {
       method: 'POST',
       body: JSON.stringify(request_body),
       headers: {
@@ -147,4 +146,4 @@ const postUserAppointment = (appointment, key) => {
 
 });}
 
-export const appointments = { postUserAppointment, updateAppointmentStatus, deleteUserAppointment }
+export const appointments = { postUserAppointment, updateAppointmentStatus, deleteUserAppointment}

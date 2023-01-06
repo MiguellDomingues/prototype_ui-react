@@ -6,7 +6,7 @@ const GuestContext = React.createContext(null);
 
 export const GuestContextProvider = ( { children } ) =>{
 
-    const { fetchLocationsGuest } = useAPI()
+    const { fetchLocationsGuest, config } = useAPI()
 
     /* primarly JSON returned from callout */
     const [data, setData] = useState();
@@ -90,7 +90,7 @@ export const GuestContextProvider = ( { children } ) =>{
     useEffect( () => {
         
       /* this is the pattern utilized for all async calls in functional components */
-        if(dataFetchedRef.current) return
+        if(dataFetchedRef.current || !config) return
 
         const dataFetch = async () => {     
           fetchLocationsGuest(success, failure, finish)

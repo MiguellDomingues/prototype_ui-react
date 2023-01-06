@@ -1,13 +1,12 @@
 /***************************USER LOGGING ON ENDPOINT***********************/
-
-const ENDPOINT_URL_AUTHENTICATE = 'http://localhost:8080/auth'
+//const ENDPOINT_URL_AUTHENTICATE = 'http://localhost:8080/auth'
 
 const START_SESSION_FAILURE = {
   reason: "bad crddddeds"
 }
 
-const startSession = (request) => {
-  console.log("---logging on---", request)
+const startSession = (request,path) => {
+  console.log("---logging on---", request, path)
 
   return new Promise( (resolve, reject) => {
 
@@ -16,7 +15,7 @@ const startSession = (request) => {
       password: request.password
     }
 
-    fetch(ENDPOINT_URL_AUTHENTICATE, {
+    fetch(path, {
       method: 'POST',
       body: JSON.stringify(request_body),
       // need to set header to 'application/json' to send POST methods
@@ -48,13 +47,13 @@ const startSession = (request) => {
 
 /***************************REGISTER NEW USER ACCOUNT ENDPOINT***********************/
 
-const ENDPOINT_URL_CREATEUSER = 'http://localhost:8080/register'
+//const ENDPOINT_URL_CREATEUSER = 'http://localhost:8080/register'
 
 const REGISTER_USER_FAILURE = {
   reason: "username taken"
 }
 
-const registerUser = (request) => {
+const registerUser = (request,path) => {
 
   console.log("---creating new user---", request)
 
@@ -66,7 +65,7 @@ const registerUser = (request) => {
       password: request.password
     }
 
-    fetch(ENDPOINT_URL_CREATEUSER, {
+    fetch(path, {
       method: 'POST',
       body: JSON.stringify(request_body),
       headers: {
@@ -108,4 +107,4 @@ const endSession = (success, request) => {
 
 /************************************************************************************************/
 
-export const auth = { startSession, registerUser, endSession }
+export const auth = { startSession, registerUser, endSession}

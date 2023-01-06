@@ -1,12 +1,12 @@
 
-import {useRef, useEffect } from "react";
+import {useRef, useEffect,createContext } from "react";
 
 import React from 'react'
 
 import { auth } from '../utils/API/auth'
 import { configs } from '../utils/API/configs'
 
-const AuthContext = React.createContext(null);
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 
@@ -21,14 +21,13 @@ export const AuthProvider = ({ children }) => {
 
 ///////////////TEMP FETCHING CONFIGS HERE ///////////////////////////////
 
-
-    /* arr of filtered posts to be displayed in list */
     /* prevent the double useEffect call/double fetch() on first render */
     const dataFetchedRef = useRef(false);
 
-    const success = (r) => {
-      console.log("CONFIG OBJECT: ", r)
-      setConfig(r); 
+    const success = (configs) => {
+
+      console.log("CONFIG OBJECT: ", configs)
+      setConfig(configs); 
     }
 
     const failure = (r) => {
@@ -59,8 +58,8 @@ export const AuthProvider = ({ children }) => {
 
     /* PUBLIC FUNCTIONS */
     const handleLogin = async (request, callback) => { 
-      //await fakeAuth(true, request).then(setToken, callback)  
-      await startSession(request).then(setToken, callback) 
+      const auth_path = `${config.DOMAIN}${config.ENDPOINT_URL_AUTH}`  
+      await startSession(request,auth_path).then(setToken, callback) 
     };
   
     const handleLogout = () => {
@@ -71,7 +70,8 @@ export const AuthProvider = ({ children }) => {
   
     const handleRegistration  = async (request, callback) => {
       console.log("handle regis: ", request)
-      await registerUser(request).then(setToken, callback)
+      const register_path = `${config.DOMAIN}${config.ENDPOINT_URL_REGISTER}`
+      await registerUser(request,register_path).then(setToken, callback)
     };
 
     const value = {

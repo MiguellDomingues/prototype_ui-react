@@ -1,4 +1,5 @@
-const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
+
+//const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
 
 /***************************DELETE LOCATION ENDPOINT***********************/
 
@@ -7,7 +8,7 @@ const DELETE_STOREOWNER_LOCATION_FAILURE = {
   reason: "failed to deletet storeowner location"
 }
 
-const deleteLocation = (loc_id, key) => {
+const deleteLocation = (loc_id, key,path) => {
 
   console.log("delete storeowner location:")
   console.log("location id: ", loc_id)
@@ -22,7 +23,7 @@ const deleteLocation = (loc_id, key) => {
     
     console.log("deleteLocation: ", request_body)
 
-      fetch(ENDPOINT_URL_LOCATION + '?key=' + key, {
+      fetch(path + '?key=' + key, {
       method: 'DELETE',
       body: JSON.stringify(request_body),
       headers: {
@@ -61,11 +62,11 @@ const GET_USER_POSTS_FAILURE =
   reason: "session expired USER. please refresh your browser"
 }
 
-const fetchUserLocations = (key) => {
+const fetchUserLocations = (key,path) => {
 
   return new Promise( (resolve, reject) => {
 
-    fetch(ENDPOINT_URL_LOCATION + '?key=' + key)
+    fetch(path + '?key=' + key)
     .then((res) => res.json())
     .then((data) => {
       data.success = true
@@ -92,11 +93,11 @@ const GET_GUEST_POSTS_FAILURE =
   reason: "session expired GUEST. please refresh your browser"
 }
 
-const fetchGuestLocations = (key) => {
+const fetchGuestLocations = (key,path) => {
 
   return new Promise( (resolve, reject) => {    
 
-    fetch(ENDPOINT_URL_LOCATION)
+    fetch(path)
     .then((res) => { 
       return res.json()})
     .then((data) => {
@@ -124,11 +125,11 @@ const GET_STOREOWNER_POSTS_FAILURE =
   reason: "session expired USER. please refresh your browser"
 }
 
-const fetchLocationsStoreOwner = (key) => {
+const fetchLocationsStoreOwner = (key,path) => {
 
   return new Promise( (resolve, reject) => {
 
-    fetch(ENDPOINT_URL_LOCATION + '?key=' + key)
+    fetch(path + '?key=' + key)
     .then((res) => res.json())
     .then((data) => {
       data.success = true
@@ -151,7 +152,7 @@ const PATCH_STOREOWNER_LOCATION_FAILURE = {
   reason: "failed to edit storeowner location"
 }
 
-const editStoreOwnerLocation = (location, key) => {
+const editStoreOwnerLocation = (location, key,path) => {
 
   console.log("edit storeowner location:")
   console.log("location: ", location)
@@ -181,7 +182,7 @@ const editStoreOwnerLocation = (location, key) => {
 
     console.log("edit storeowner location SERVER REQUEST BODY:", request_body)
 
-    fetch(ENDPOINT_URL_LOCATION+ '?key=' + key, {
+    fetch(path + '?key=' + key, {
       method: 'PATCH',
       body: JSON.stringify(request_body),
       headers: {
@@ -214,7 +215,7 @@ const POST_STOREOWNER_LOCATION_FAILURE = {
   reason: "failed to post storeowner location"
 }
 
-const putStoreOwnerLocation = (location, key) => {
+const putStoreOwnerLocation = (location, key, path) => {
 
   console.log("post storeowner location:")
   console.log("location: ", location)
@@ -237,7 +238,7 @@ const putStoreOwnerLocation = (location, key) => {
       ...location
     }
 
-    fetch(ENDPOINT_URL_LOCATION+ '?key=' + key, {
+    fetch(path+ '?key=' + key, {
       method: 'POST',
       body: JSON.stringify(request_body),
       headers: {
