@@ -1,53 +1,63 @@
 import React from "react";
 
 import  { useAuth } from './AuthProvider'
+import  { useConfigs } from './AuthProvider'
 
-import { POST }   from '../utils/API/POST'
-import { GET }    from '../utils/API/GET'
-import { DELETE } from '../utils/API/DELETE'
-import { PATCH } from '../utils/API/PATCH'
+import { locations }   from '../utils/API/locations'
+import { appointments }    from '../utils/API/appointments'
 
 const DataContext = React.createContext(null);
 
 export const DataProvider = ({ children }) => {
 
+  
   const { token } = useAuth()
+
+  /*
+  const { configs } = useAuth()
+
+  //const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
+
+const { ENDPOINT_URL_LOCATION,  DOMAIN} = useConfig().configs
+//const DATABASE_URI      = `mongodb://${DATABASE_DOMAIN}/${DATABASE_NAME}`;
+const PATH = 'DOMAIN'
+*/
 
   const value = {
 
     fetchLocationsGuest: async function(onSuccess , onFail, onFinish){
-      await GET.fetchGuestLocations(token).then(onSuccess, onFail).finally(onFinish)  
+      await locations.fetchGuestLocations(token).then(onSuccess, onFail).finally(onFinish)  
     }, 
 
     fetchLocationsUser: async function(onSuccess , onFail, onFinish){
-      await GET.fetchUserLocations(token.key).then(onSuccess, onFail).finally(onFinish)  
+      await locations.fetchUserLocations(token.key).then(onSuccess, onFail).finally(onFinish)  
     },
     
     fetchLocationsStoreOwner: async function(onSuccess , onFail, onFinish){
-      await GET.fetchLocationsStoreOwner(token.key).then(onSuccess, onFail).finally(onFinish)  
+      await locations.fetchLocationsStoreOwner(token.key).then(onSuccess, onFail).finally(onFinish)  
     }, 
 
     createAppointment:  async function(payload, onSuccess , onFail, onFinish){
-      await POST.postUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await appointments.postUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
     createLocation:  async function(payload, onSuccess , onFail, onFinish){
-      await POST.putStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await locations.putStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
     deleteAppointment: async function(payload, onSuccess , onFail, onFinish){
-      await DELETE.deleteUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await appointments.deleteUserAppointment(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
     deleteLocation: async function(payload, onSuccess , onFail, onFinish){
-      await DELETE.deleteLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await locations.deleteLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
     editStoreOwnerLocation: async function(payload, onSuccess , onFail, onFinish){
-      await PATCH.editStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await locations.editStoreOwnerLocation(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
     updateAppointmentStatus: async function(payload, onSuccess , onFail, onFinish){
-      await PATCH.updateAppointmentStatus(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
+      await appointments.updateAppointmentStatus(payload, token.key).then(onSuccess, onFail).finally(onFinish)  
     },
 
   };

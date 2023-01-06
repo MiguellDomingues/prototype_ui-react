@@ -1,7 +1,8 @@
-/***************************DELETE APPOINTMENT ENDPOINT***********************/
 
 const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
 
+
+/***************************DELETE APPOINTMENT ENDPOINT***********************/
 const DELETE_USER_APPOINTMENT_FAILURE = {
   success:false,
   reason: "failed to deletet user appointment"
@@ -52,8 +53,6 @@ const deleteUserAppointment = (appointment_id, key) => {
 
 /***************************EDIT APPOINTMENT ENDPOINT***********************/
 
-//const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
-
 const PATCH_STOREOWNER_APPOINTMENT_FAILURE = {
   success:false,
   reason: "failed to edit storeowner location"
@@ -100,8 +99,6 @@ const updateAppointmentStatus = (payload, key) => {
 });}
 
 /***************************CREATE APPOINTMENT ENDPOINT***********************/
-
-//const ENDPOINT_URL_APPOINTMENT = 'http://localhost:8080/appointment/'
 
 const POST_USER_APPOINTMENT_FAILURE = {
   success:false,

@@ -3,8 +3,8 @@ import {useRef, useEffect } from "react";
 
 import React from 'react'
 
-import { POST } from '../utils/API/POST'
-import { GET } from '../utils/API/GET'
+import { auth } from '../utils/API/auth'
+import { configs } from '../utils/API/configs'
 
 const AuthContext = React.createContext(null);
 
@@ -14,8 +14,8 @@ export const AuthProvider = ({ children }) => {
 
     const [config, setConfig] = React.useState(null);
 
-    const { startSession, registerUser, endSession } = POST
-    const { fetchClientConfigs } = GET
+    const { startSession, registerUser, endSession } = auth
+    const { fetchClientConfigs } = configs
 
     const [loading, setLoading] = React.useState(true);
 

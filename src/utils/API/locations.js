@@ -1,6 +1,6 @@
-/***************************DELETE LOCATION ENDPOINT***********************/
-
 const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
+
+/***************************DELETE LOCATION ENDPOINT***********************/
 
 const DELETE_STOREOWNER_LOCATION_FAILURE = {
   success:false,
@@ -53,7 +53,7 @@ const deleteLocation = (loc_id, key) => {
 
 /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_USER = 'http://localhost:8080/locations'
+
 
 const GET_USER_POSTS_FAILURE = 
 {
@@ -65,7 +65,7 @@ const fetchUserLocations = (key) => {
 
   return new Promise( (resolve, reject) => {
 
-    fetch(ENDPOINT_URL_USER + '?key=' + key)
+    fetch(ENDPOINT_URL_LOCATION + '?key=' + key)
     .then((res) => res.json())
     .then((data) => {
       data.success = true
@@ -84,7 +84,7 @@ const fetchUserLocations = (key) => {
 
 /***************************GUEST USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_GUEST = 'http://localhost:8080/locations'
+
 
 const GET_GUEST_POSTS_FAILURE = 
 {
@@ -96,7 +96,7 @@ const fetchGuestLocations = (key) => {
 
   return new Promise( (resolve, reject) => {    
 
-    fetch(ENDPOINT_URL_GUEST )
+    fetch(ENDPOINT_URL_LOCATION)
     .then((res) => { 
       return res.json()})
     .then((data) => {
@@ -118,8 +118,6 @@ const fetchGuestLocations = (key) => {
 
 /***************************AUTHENTICATED USER POSTS ENDPOINT***********************/
 
-const ENDPOINT_URL_STOREOWNER = 'http://localhost:8080/locations'
-
 const GET_STOREOWNER_POSTS_FAILURE = 
 {
   success: false, 
@@ -130,7 +128,7 @@ const fetchLocationsStoreOwner = (key) => {
 
   return new Promise( (resolve, reject) => {
 
-    fetch(ENDPOINT_URL_STOREOWNER + '?key=' + key)
+    fetch(ENDPOINT_URL_LOCATION + '?key=' + key)
     .then((res) => res.json())
     .then((data) => {
       data.success = true
@@ -210,8 +208,6 @@ const editStoreOwnerLocation = (location, key) => {
 });}
 
 /***************************CREATE LOCATION ENDPOINT***********************/
-
-//const ENDPOINT_URL_LOCATION = 'http://localhost:8080/locations/'
 
 const POST_STOREOWNER_LOCATION_FAILURE = {
   success:false,
