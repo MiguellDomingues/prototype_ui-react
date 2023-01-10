@@ -35,7 +35,7 @@ import LocationFilter from './ui/locationFilter/LocationFilter'
 import MyMap from './ui/map/Map.tsx'
 import AppointmentList from './ui/appointmentList/AppointmentList'
 
-import './userpage.css'
+import './UserPage.css'
 
   const UserPage = ( props ) =>{
 
