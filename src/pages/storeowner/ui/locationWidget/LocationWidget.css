@@ -1,0 +1,27 @@
+.selected-bg-col{
+    background-color: aqua;
+}
+
+.bg-col{
+  
+  background-color: orange;
+}
+
+.storeowner_location_widget_selected{
+  float: right;
+}
+
+.close:hover {
+  float:right;
+  display:inline-block;
+  padding:2px 2px;
+  background:#ccc;
+  color:#fff;
+}
+
+.close {
+float:right;
+display:inline-block;
+padding:2px 2px;
+background:#ccc;
+}

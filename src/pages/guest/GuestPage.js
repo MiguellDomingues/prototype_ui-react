@@ -1,30 +1,65 @@
+/*
 
-import Footer from '../../components/footer'
-import Header from '../../components/header'
+- clean up header bar; add links to authed pages, like a profile
+- change data fetching for diff users (user/storeowner/admin) into a GetContext hook
+  - takes data from auth token, does a switch() on type to resolve user data
+- put the diff callouts into a single module
+- clean up file structure
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+- add a filter for the diff types
+  - put in corner of list
+  - 
 
-//import './guestpage.css'
+- COMBINE AUTHPROVIDER AND DATA PROVIDER INTO SINGLE obj:
+  - ContextProvider
+    - stores the auth key AND the data for the UI
+      - users list, profile, config, etc
+*/
 
-function GuestPage() {
 
-    return (
-       <div>
-        <Container style={ {border: "1px solid #ccc" , maxWidth: "100%", maxHeight: "100%", height: "85%"} }>
-            <Row style={ {border: "1px dashed green" , maxWidth: "100%", maxHeight: "25%", height: "15%"} } >
-                <Header/>
-            </Row>
-            <Row style={ { border: "1px dashed green" , maxWidth: "100%", maxHeight: "70%", height: "70%",box_sizing: "border-box"} } >
-                <p>Hello Guest Page</p>
-            </Row>
-            <Row style={ {border: "1px dashed green" , margin:"0px", maxWidth: "100%", maxHeight: "25%", height: "15%"} }>
-                <Footer/>
-            </Row>
-        </Container>
-       </div>);
+import LocationList from './ui/locationList/LocationList'
+import LocationFilter from './ui/locationFilter/LocationFilter'
+import MyMap from './ui/map/Map.tsx'
+import { useGuestContext } from './GuestContextProvider'
+
+import './guestpage.css'
+
+  const GuestPage = () =>{
+
+    return (<>
+
+    <div className="guestpage_container">
+
+      <div className="map_container col">
+        <MyMap context={useGuestContext()} />
+      </div>
+      
+      <div className="right_container col">
+
+        <div className="top_child_filter row">
+          <LocationFilter context={useGuestContext()} />
+        </div>
+
+        <div className="top_child_list row"> 
+          <LocationList context={useGuestContext()}/>
+        </div>
+        
+        <div className="bottom_child row">
+          <p>
+            <b>BOTTOM STUFF GUEST PAGE</b> (fills remaining space)
+          </p>
+          <p>
+            <b>BOTTOM STUFF</b> (fills remaining space)
+          </p>
+        </div>
+    
+      </div>
+
+    </div>
+    </>
+      );
   }
   
   export default GuestPage;
 
-  //style={ {backgroundColor: "red", margin:"0px", maxWidth: "100%", maxHeight: "85%", height: "85%"} }
+ 
