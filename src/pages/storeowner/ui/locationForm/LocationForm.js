@@ -1,5 +1,5 @@
 
-import './locationForm.css'
+import './locationform.css'
 import { useLocationForm } from './useLocationForm'
 import { InfinitySpin } from 'react-loader-spinner'
 
